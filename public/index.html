@@ -13,6 +13,16 @@
   <!-- CSS Files -->
   <link href="<%= BASE_URL %>assets/css/bootstrap.min.css" rel="stylesheet" />
   <link href="<%= BASE_URL %>assets/css/now-ui-kit.css" rel="stylesheet" />
+
+  <!-- update the version number as needed -->
+  <script defer src="/__/firebase/7.2.1/firebase-app.js"></script>
+  <!-- include only the Firebase features as you need -->
+  <script defer src="/__/firebase/7.2.1/firebase-auth.js"></script>
+  <script defer src="/__/firebase/7.2.1/firebase-database.js"></script>
+  <script defer src="/__/firebase/7.2.1/firebase-messaging.js"></script>
+  <script defer src="/__/firebase/7.2.1/firebase-storage.js"></script>
+  <!-- initialize the SDK after all desired features are loaded -->
+  <script defer src="/__/firebase/init.js"></script>
 </head>
 
 <body class="index-page">
@@ -41,7 +51,6 @@
 <script src="<%= BASE_URL %>assets/js/now-ui-kit.js?v=1.2.0" type="text/javascript"></script>
 <script type="text/javascript">
   $(document).ready(function () {
-    // the body of this function is in assets/js/now-ui-kit.js
     nowuiKit.initContactUsMap();
   });
 </script>
