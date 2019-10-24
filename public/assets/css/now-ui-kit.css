@@ -4584,7 +4584,7 @@ textarea.form-control:active {
 
 .form-check.disabled .form-check-label,
 .form-check.disabled .form-check-label {
-    color: #9A9A9A;
+    color: #0C0C0C;
     opacity: .5;
     cursor: not-allowed;
 }
@@ -4649,12 +4649,12 @@ textarea.form-control:active {
 }
 
 .form-check-radio input[type="radio"]:disabled+.form-check-sign {
-    color: #9A9A9A;
+    color: #0C0C0C;
 }
 
 .form-check-radio input[type="radio"]:disabled+.form-check-sign::before,
 .form-check-radio input[type="radio"]:disabled+.form-check-sign::after {
-    color: #9A9A9A;
+    color: #0C0C0C;
 }
 
 .progress-container {
@@ -5037,7 +5037,7 @@ h6,
 
 p {
     line-height: 1.61em;
-    font-weight: 300;
+    /* font-weight: 300; */
     font-size: 1.2em;
 }
 
@@ -5062,14 +5062,14 @@ p {
 .description,
 .card-description,
 .footer-big p {
-    color: #9A9A9A;
-    font-weight: 300;
+    color: #0C0C0C;
+    /* font-weight: 300; nhut.vo */
 }
 
 .category {
     text-transform: capitalize;
     font-weight: 700;
-    color: #9A9A9A;
+    color: #0C0C0C;
 }
 
 .text-primary {
@@ -5259,7 +5259,7 @@ body {
 .nav-pills .nav-item .nav-link.active,
 .nav-pills .nav-item .nav-link.active:focus,
 .nav-pills .nav-item .nav-link.active:hover {
-    background-color: #9A9A9A;
+    background-color: #0C0C0C;
     color: #FFFFFF;
     box-shadow: 0px 5px 35px 0px rgba(0, 0, 0, 0.3);
 }
@@ -5461,7 +5461,7 @@ body {
 
 .navbar .navbar-nav .nav-link:not(.btn) {
     text-transform: uppercase;
-    font-size: 0.7142em;
+    /* comment by nhut.vo font-size: 0.7142em; */
     padding: 0.5rem 0.7rem;
     line-height: 1.625rem;
 }
@@ -5514,7 +5514,7 @@ body {
 
 .navbar .navbar-brand {
     text-transform: uppercase;
-    font-size: 0.8571em;
+    /* comment by nhut.vo font-size: 0.8571em; */
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
     line-height: 1.625rem;
@@ -5556,7 +5556,8 @@ body {
 }
 
 .navbar.bg-white:not(.navbar-transparent) a:not(.dropdown-item):not(.btn) {
-    color: #888888;
+    color: #000; 
+    /* nhut.vo */
 }
 
 .navbar.bg-white:not(.navbar-transparent) a:not(.dropdown-item):not(.btn).disabled {
@@ -6853,7 +6854,7 @@ Created using IcoMoon - icomoon.io
 }
 
 .table-shopping .td-name small {
-    color: #9A9A9A;
+    color: #0C0C0C;
     font-size: 0.75em;
     font-weight: 300;
 }
@@ -6982,7 +6983,7 @@ Created using IcoMoon - icomoon.io
 }
 
 .info p {
-    color: #888888;
+    color: #0c0c0c;
     padding: 0 15px;
     font-size: 1.1em;
 }
@@ -8027,7 +8028,7 @@ Created using IcoMoon - icomoon.io
 }
 
 .card .author span {
-    color: #9A9A9A;
+    color: #0C0C0C;
 }
 
 .card .info {
@@ -8761,7 +8762,7 @@ Created using IcoMoon - icomoon.io
 
 .footer .footer-brand {
     float: left;
-    font-size: 0.875rem;
+    font-size: 1.5rem;
     line-height: 44px;
 }
 
@@ -8798,7 +8799,6 @@ Created using IcoMoon - icomoon.io
 .footer ul li a {
     color: inherit;
     padding: 13px 0.5rem;
-    font-size: 0.8571em;
     text-transform: uppercase;
     text-decoration: none;
 }
@@ -9525,7 +9525,7 @@ Created using IcoMoon - icomoon.io
 .section-image .card:not(.card-plain) .info p,
 .section-image .card:not(.card-plain) .info .icon,
 .section-image .card:not(.card-plain) .description {
-    color: #9A9A9A;
+    color: #0C0C0C;
 }
 
 .section-image .footer {
@@ -9888,7 +9888,7 @@ Created using IcoMoon - icomoon.io
 [data-background-color]:not([data-background-color="gray"]) .card:not(.card-plain) .card-description,
 [data-background-color]:not([data-background-color="gray"]) .card:not(.card-plain) .category,
 [data-background-color]:not([data-background-color="gray"]) .card:not(.card-plain) .category {
-    color: #9A9A9A;
+    color: #0C0C0C;
 }
 
 [data-background-color]:not([data-background-color="gray"]) .card:not(.card-plain) .card-title,

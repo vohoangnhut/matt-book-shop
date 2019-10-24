@@ -1,16 +1,13 @@
 <template>
   <footer class="footer footer-white">
     <div class="container">
-      <a class="footer-brand" href="http://www.creative-tim.com">Now Ui Kit PRO</a>
+      <a class="footer-brand" href="http://google.com">VERES BOOKS</a>
       <ul class="pull-center">
         <li>
-          <a href="#pablo" class="nav-link">Creative Tim</a>
+          <a href="#pablo" class="nav-link">About</a>
         </li>
         <li>
-          <a href="#pablo" class="nav-link">About Us</a>
-        </li>
-        <li>
-          <a href="#pablo" class="nav-link">Blog</a>
+          <a href="#pablo" class="nav-link">Author</a>
         </li>
         <li>
           <a href="#pablo" class="nav-link">Licenses</a>
@@ -22,6 +19,7 @@
             href="https://twitter.com/CreativeTim"
             target="_blank"
             class="btn btn-icon btn-neutral btn-twitter"
+            style="font-size: 1.5em;"
           >
             <i class="fa fa-twitter"></i>
           </a>
@@ -31,6 +29,7 @@
             href="https://www.facebook.com/CreativeTim"
             target="_blank"
             class="btn btn-icon btn-neutral btn-dribbble"
+            style="font-size: 1.5em;"
           >
             <i class="fa fa-dribbble"></i>
           </a>
@@ -40,6 +39,7 @@
             href="https://www.instagram.com/CreativeTimOfficial"
             target="_blank"
             class="btn btn-icon btn-neutral btn-google"
+            style="font-size: 1.5em;"
           >
             <i class="fa fa-google-plus"></i>
           </a>
