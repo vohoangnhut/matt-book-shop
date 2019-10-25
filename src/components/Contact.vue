@@ -80,12 +80,14 @@
                     type="submit"
                     class="btn btn-primary btn-raised btn-round"
                     value="Continue"
+                    style="margin-right: 15px;"
                   />
                   <input
                     type="button"
                     class="btn btn-second btn-raised btn-round"
                     value="Cancel"
                     @click="onCancel"
+                    style="margin-left: 15px;"
                   />
                 </div>
               </form>

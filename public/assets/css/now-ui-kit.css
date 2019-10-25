@@ -4146,7 +4146,7 @@ fieldset[disabled] .btn-link.active {
 
 .form-control {
     background-color: transparent;
-    border: 1px solid #E3E3E3;
+    border: 2px solid #aba9a9;
     border-radius: 30px;
     color: #2c2c2c;
     line-height: normal;
@@ -4366,7 +4366,7 @@ fieldset[disabled] .btn-link.active {
 
 .input-group-text {
     background-color: #FFFFFF;
-    border: 1px solid #E3E3E3;
+    border: 2px solid #aba9a9;
     border-radius: 30px;
     color: #555555;
     padding: -0.5rem 0 -0.5rem -0.3rem;
@@ -4424,7 +4424,7 @@ fieldset[disabled] .btn-link.active {
 }
 
 .input-group .input-group-prepend .input-group-text {
-    border-left: 1px solid #E3E3E3 !important;
+    border-left: 2px solid #aba9a9 !important;
 }
 
 .input-group .input-group-append .input-group-text {
@@ -4485,7 +4485,7 @@ textarea.form-control {
     padding: 10px 10px 0 0;
     resize: none;
     border: none;
-    border-bottom: 1px solid #E3E3E3;
+    border-bottom: 2px solid #aba9a9;
     border-radius: 0;
     line-height: 2;
 }
@@ -4562,7 +4562,7 @@ textarea.form-control:active {
     border-radius: 3px;
     top: 0;
     background-color: transparent;
-    border: 1px solid #E3E3E3;
+    border: 2px solid #aba9a9;
     -webkit-transition: opacity 0.3s linear;
     -moz-transition: opacity 0.3s linear;
     -o-transition: opacity 0.3s linear;

@@ -154,52 +154,161 @@
                 </div>
               </div>
             </div>
-            <div class="row justify-content-end">
-              <button @click="dialogFormVisible = true" class="btn btn-primary mr-3">Continue</button>
-            </div>
+            <!-- <div class="row justify-content-end">
+              <button @click="dialogFormVisible = true" class="btn btn-primary mr-3">BUY</button>
+            </div> -->
           </div>
         </div>
-        <div class="section">
-          <div class="row">
-            <div class="col-md-8 ml-auto mr-auto text-center mr-5">
-              <h2 class="title">How to wear it</h2>
-              <h4
-                class="description"
-              >You need more information? Check what other persons are saying about our product. They are very happy with their purchase.</h4>
-            </div>
-          </div>
-          <div class="section-story-overview">
+          <div class="container">
             <div class="row">
-              <div class="col-md-4 ml-auto mr-auto">
-                <div
-                  class="image-container image-left"
-                  style="background-image: url('/assets//img/pp-5.jpg')"
-                >
-                  <!-- First image on the left side -->
-                  <p class="blockquote blockquote-primary">
-                    "Over the span of the satellite record, Arctic sea ice has been declining significantly, while sea ice in the Antarctichas increased very slightly"
-                    <br />
-                    <br />
-                    <small>- NOAA</small>
-                  </p>
-                </div>
-                <!-- Second image on the left side of the article -->
-                <div class="image-container" style="background-image: url('/assets//img/bg29.jpg')"></div>
-              </div>
-              <div class="col-md-4 ml-auto mr-auto">
-                <!-- First image on the right side, above the article -->
-                <div
-                  class="image-container image-right"
-                  style="background-image: url('/assets//img/pp-4.jpg')"
-                ></div>
-                <h3>So what does the new record for the lowest level of winter ice actually mean</h3>
-                <p>The Arctic Ocean freezes every winter and much of the sea-ice then thaws every summer, and that process will continue whatever happens with climate change. Even if the Arctic continues to be one of the fastest-warming regions of the world, it will always be plunged into bitterly cold polar dark every winter. And year-by-year, for all kinds of natural reasons, there’s huge variety of the state of the ice.</p>
-                <p>For a start, it does not automatically follow that a record amount of ice will melt this summer. More important for determining the size of the annual thaw is the state of the weather as the midnight sun approaches and temperatures rise. But over the more than 30 years of satellite records, scientists have observed a clear pattern of decline, decade-by-decade.</p>
+              <div class="col-md-12 ml-auto mr-auto">
+                <h2 class="title text-center">Purchase Information</h2>
+                
+                  <form role="form" id="contact-form" method="post">
+                      <div class="alert alert-success" role="alert">
+                          <div class="container">
+                              <div class="alert-icon">
+                                  <i class="now-ui-icons shopping_delivery-fast"></i>
+                              </div>
+                              <strong>Shipping Information</strong>
+                          </div>
+                      </div>
+                      <label>Your name</label>
+                      <div class="input-group">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="now-ui-icons users_circle-08"></i></span>
+                          </div>
+                          <input type="text" class="form-control" placeholder="Your Name..." aria-label="Your Name...">
+                      </div>
+                      
+                      <div class="row">
+                        <div class="col-lg-6 col-md-8 col-sm-5 remove-margin-top">
+                          <label>Country</label>
+                          <select class="selectpicker dropdown-countries" data-size="7" data-style="btn btn-round" title="Single Select">
+                              <option disabled selected>Single Option</option>
+                              <option value="2">Foobar</option>
+                              <option value="3">Is great</option>
+                          </select>
+                        </div>
+                        <div class="col-lg-6 col-md-8 col-sm-5">
+                          <label>Postal Code</label>
+                          <div class="input-group">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="now-ui-icons location_pin"></i></span>
+                              </div>
+                              <input type="text" class="form-control" placeholder="Your Name..." aria-label="Your Name...">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                          <label>Address</label>
+                          <textarea name="message" class="form-control" id="message" rows="6"></textarea>
+                      </div>
+                      
+                      
+                      <label>Phone</label>
+                      <div class="input-group">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="now-ui-icons tech_mobile"></i></span>
+                          </div>
+                          <input type="text" class="form-control" placeholder="Number Here...">
+                      </div>
+
+                      <label>Email</label>
+                      <div class="input-group">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="now-ui-icons ui-1_email-85"></i></span>
+                          </div>
+                          <input type="email" class="form-control" placeholder="Email Here..." aria-label="Email Here...">
+                      </div>
+                      
+                      <div class="alert alert-success" role="alert">
+                        <div class="container">
+                            <div class="alert-icon">
+                                <i class="now-ui-icons shopping_bag-16"></i>
+                            </div>
+                            <strong>Order Information</strong>
+                        </div>
+                      </div>
+                      
+                      <label>Product Name</label>
+                      <div class="input-group">
+                          <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="now-ui-icons education_agenda-bookmark"></i></span>
+                          </div>
+                          <input type="text" class="form-control" placeholder="Your Name..." aria-label="Your Name...">
+                      </div>
+
+                      <div class="row">
+                        <div class="col-lg-6 col-md-8 col-sm-5">
+                          <label>Unit Price</label>
+                          <div class="input-group">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="now-ui-icons shopping_tag-content"></i></span>
+                              </div>
+                              <input type="text" class="form-control" placeholder="Your Name..." aria-label="Your Name...">
+                          </div>
+                        </div>
+                        <div class="col-lg-6 col-md-8 col-sm-5 remove-margin-top">
+                          <label>Quantity</label>
+                          <select class="selectpicker dropdown-countries" data-size="7" data-style="btn btn-round" title="Single Select">
+                              <option disabled selected>1</option>
+                              <option value="2">2</option>
+                              <option value="3">3</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="alert alert-success" role="alert">
+                          <div class="container">
+                              <div class="alert-icon">
+                                  <i class="now-ui-icons shopping_delivery-fast"></i>
+                              </div>
+                              <strong>Payment Information</strong>
+                          </div>
+                      </div>
+
+                           <label>Total Price</label>
+                          <div class="input-group">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="now-ui-icons business_money-coins"></i></span>
+                              </div>
+                              <input type="text" class="form-control" placeholder="Your Name..." aria-label="Your Name...">
+                          </div>
+                           <label>Shipping Rate</label>
+                          <div class="input-group">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="now-ui-icons objects_globe"></i></span>
+                              </div>
+                              <input type="text" class="form-control" placeholder="Your Name..." aria-label="Your Name...">
+                          </div>
+                           <label>Total Payment</label>
+                          <div class="input-group">
+                              <div class="input-group-prepend">
+                                  <span class="input-group-text"><i class="now-ui-icons objects_diamond"></i></span>
+                              </div>
+                              <input type="text" class="form-control" placeholder="Your Name..." aria-label="Your Name...">
+                          </div>
+                      
+
+                      <div class="submit text-center">
+                          <input type="submit" class="btn btn-primary btn-raised btn-round" value="Continue" style="margin-right: 15px;"/>
+
+                          <input type="submit" class="btn btn-second btn-raised btn-round" value="Cancel" style="margin-left: 15px;"/>
+                      </div>
+
+                
+
+
+                      
+                  </form>
               </div>
             </div>
           </div>
-        </div>
-        <div class="features-4">
+        
+
+
+        <!-- <div class="features-4">
           <div class="container">
             <div class="row">
               <div class="col-md-8 ml-auto mr-auto text-center">
@@ -266,49 +375,49 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
-    <div>
-      <el-dialog title="Shipping & Order Information" :visible.sync="dialogFormVisible">
-        <el-form :model="form" size="mini">
-          <el-form-item label="Name:" :label-width="formLabelWidth">
-            <el-input v-model="form.name" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-divider content-position="left">Shipping</el-divider>
-          <el-form-item label="Contact No.:" :label-width="formLabelWidth">
-            <el-input v-model="form.contact_no" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="Email:" :label-width="formLabelWidth">
-            <el-input v-model="form.email" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="Product Name:" :label-width="formLabelWidth">
-            <el-input v-model="form.product_name" autocomplete="off">asd{{ item.title }}</el-input>
-          </el-form-item>
-          <el-form-item label="Unit Price:" :label-width="formLabelWidth">
-            <el-input v-model="form.unit_price" autocomplete="off"></el-input>
-          </el-form-item>
-          <el-form-item label="Quantity:" :label-width="formLabelWidth">
-            <el-select v-model="form.quantity" placeholder="Please select a quantity">
-              <el-option label="1" value="1"></el-option>
-              <el-option label="2" value="2"></el-option>
-              <el-option label="3" value="3"></el-option>
-              <el-option label="4" value="4"></el-option>
-              <el-option label="5" value="5"></el-option>
-              <el-option label="6" value="6"></el-option>
-              <el-option label="7" value="7"></el-option>
-              <el-option label="8" value="8"></el-option>
-              <el-option label="9" value="9"></el-option>
-              <el-option label="10" value="10"></el-option>
-            </el-select>
-          </el-form-item>
-        </el-form>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="dialogFormVisible = false">Cancel</el-button>
-          <el-button type="primary" @click="onSubmit">Confirm</el-button>
-        </span>
-      </el-dialog>
-    </div>
+<!--     
+    <el-dialog title="Shipping & Order Information" :visible.sync="dialogFormVisible">
+      <el-form :model="form" size="mini">
+        <el-form-item label="Name:" :label-width="formLabelWidth">
+          <el-input v-model="form.name" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-divider content-position="left">Shipping</el-divider>
+        <el-form-item label="Contact No.:" :label-width="formLabelWidth">
+          <el-input v-model="form.contact_no" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="Email:" :label-width="formLabelWidth">
+          <el-input v-model="form.email" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="Product Name:" :label-width="formLabelWidth">
+          <el-input v-model="form.product_name" autocomplete="off">asd{{ item.title }}</el-input>
+        </el-form-item>
+        <el-form-item label="Unit Price:" :label-width="formLabelWidth">
+          <el-input v-model="form.unit_price" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="Quantity:" :label-width="formLabelWidth">
+          <el-select v-model="form.quantity" placeholder="Please select a quantity">
+            <el-option label="1" value="1"></el-option>
+            <el-option label="2" value="2"></el-option>
+            <el-option label="3" value="3"></el-option>
+            <el-option label="4" value="4"></el-option>
+            <el-option label="5" value="5"></el-option>
+            <el-option label="6" value="6"></el-option>
+            <el-option label="7" value="7"></el-option>
+            <el-option label="8" value="8"></el-option>
+            <el-option label="9" value="9"></el-option>
+            <el-option label="10" value="10"></el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="onSubmit">Confirm</el-button>
+      </span>
+    </el-dialog> -->
+    
   </div>
 </template>
 <script>
@@ -375,3 +484,9 @@ export default {
   }
 };
 </script>
+
+<style>
+.remove-margin-top > div > button {
+    margin-top: 0px !important;
+}
+</style>
