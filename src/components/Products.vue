@@ -25,32 +25,16 @@
               </ol>
               <div class="carousel-inner" role="listbox">
                 <div class="carousel-item active">
-                  <img
-                    class="d-block img-raised"
-                    src="/assets//img/pp-1.jpg"
-                    alt="First slide"
-                  />
+                  <img class="d-block img-raised" src="/assets//img/pp-1.jpg" alt="First slide" />
                 </div>
                 <div class="carousel-item">
-                  <img
-                    class="d-block img-raised"
-                    src="/assets//img/pp-2.jpg"
-                    alt="Second slide"
-                  />
+                  <img class="d-block img-raised" src="/assets//img/pp-2.jpg" alt="Second slide" />
                 </div>
                 <div class="carousel-item">
-                  <img
-                    class="d-block img-raised"
-                    src="/assets//img/pp-3.jpg"
-                    alt="Third slide"
-                  />
+                  <img class="d-block img-raised" src="/assets//img/pp-3.jpg" alt="Third slide" />
                 </div>
                 <div class="carousel-item">
-                  <img
-                    class="d-block img-raised"
-                    src="/assets//img/pp-4.jpg"
-                    alt="Third slide"
-                  />
+                  <img class="d-block img-raised" src="/assets//img/pp-4.jpg" alt="Third slide" />
                 </div>
               </div>
               <a
@@ -171,10 +155,7 @@
               </div>
             </div>
             <div class="row justify-content-end">
-              <button @click="addItem" class="btn btn-primary mr-3">
-                Add to Cart &nbsp;
-                <i class="now-ui-icons shopping_cart-simple"></i>
-              </button>
+              <button @click="dialogFormVisible = true" class="btn btn-primary mr-3">Continue</button>
             </div>
           </div>
         </div>
@@ -203,10 +184,7 @@
                   </p>
                 </div>
                 <!-- Second image on the left side of the article -->
-                <div
-                  class="image-container"
-                  style="background-image: url('/assets//img/bg29.jpg')"
-                ></div>
+                <div class="image-container" style="background-image: url('/assets//img/bg29.jpg')"></div>
               </div>
               <div class="col-md-4 ml-auto mr-auto">
                 <!-- First image on the right side, above the article -->
@@ -291,39 +269,108 @@
         </div>
       </div>
     </div>
+    <div>
+      <el-dialog title="Shipping & Order Information" :visible.sync="dialogFormVisible">
+        <el-form :model="form" size="mini">
+          <el-form-item label="Name:" :label-width="formLabelWidth">
+            <el-input v-model="form.name" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-divider content-position="left">Shipping</el-divider>
+          <el-form-item label="Contact No.:" :label-width="formLabelWidth">
+            <el-input v-model="form.contact_no" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="Email:" :label-width="formLabelWidth">
+            <el-input v-model="form.email" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="Product Name:" :label-width="formLabelWidth">
+            <el-input v-model="form.product_name" autocomplete="off">asd{{ item.title }}</el-input>
+          </el-form-item>
+          <el-form-item label="Unit Price:" :label-width="formLabelWidth">
+            <el-input v-model="form.unit_price" autocomplete="off"></el-input>
+          </el-form-item>
+          <el-form-item label="Quantity:" :label-width="formLabelWidth">
+            <el-select v-model="form.quantity" placeholder="Please select a quantity">
+              <el-option label="1" value="1"></el-option>
+              <el-option label="2" value="2"></el-option>
+              <el-option label="3" value="3"></el-option>
+              <el-option label="4" value="4"></el-option>
+              <el-option label="5" value="5"></el-option>
+              <el-option label="6" value="6"></el-option>
+              <el-option label="7" value="7"></el-option>
+              <el-option label="8" value="8"></el-option>
+              <el-option label="9" value="9"></el-option>
+              <el-option label="10" value="10"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">Cancel</el-button>
+          <el-button type="primary" @click="onSubmit">Confirm</el-button>
+        </span>
+      </el-dialog>
+    </div>
   </div>
 </template>
 <script>
-import { mapActions } from 'vuex';
-import { db, firebaseAuth } from '../config/firebaseConfig';
+import { db } from "../config/firebaseConfig";
 export default {
-  name: 'Products',
-  data () {
+  name: "Products",
+  data() {
     return {
-      item: {}
-    }
+      item: {},
+      dialogTableVisible: false,
+      dialogFormVisible: false,
+      form: {},
+      formLabelWidth: "120px",
+      shipping: db.collection('shipping'),
+      order: db.collection('order'),
+    };
   },
-  created(){
-    let ref = db.collection('product').doc(this.$route.params.id).get().then(snapshot => {
+  created() {
+    db.collection("product").doc(this.$route.params.id).get().then(snapshot => {
       if (snapshot.exists) {
-          let data = snapshot.data();
-          this.item = data;
+        let data = snapshot.data();
+        this.item = data;
       } else {
-          // snapshot.data() will be undefined in this case
-          console.log("No such document!");
-      }  
-    })
+        // snapshot.data() will be undefined in this case
+        console.log("No such document!");
+      }
+    });
   },
   methods: {
-    ...mapActions(['updateCart']),
-    addItem() {
-      const order = {
-        item: Object.assign({}, this.item),
-        quantity: 1,
-        isAdd: true
-      };
-      console.log(order);
-      //this.updateCart(order);
+    onSubmit(){
+      /*if (!this.onValidation()) {
+        return;
+      }*/
+
+      this.shipping.add({
+        address: this.form.address,
+        contact_no: this.form.contact_no,
+        country: this.form.country,
+        email: this.form.email,
+        name: this.form.name,
+        postal_code: this.form.postal_code
+      }).then((docRef) => {
+        this.order.add({
+          product_name: this.form.product_name,
+          quantity: this.form.quantity,
+          shipping_id: docRef.id,
+          shipping_rate: this.form.shipping_rate,
+          total_payment: this.form.total_payment,
+          total_price: this.form.total_price,
+          unit_price: this.form.unit_price
+        }).then(() => {
+          this.form = {};
+        })
+        .catch((error) => {
+          alert('Error adding document: ', error);
+        });
+      })
+      .catch((error) => {
+        alert('Error adding document: ', error);
+      });
+    },
+    onValidation () {
     }
   }
 };

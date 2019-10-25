@@ -6,11 +6,14 @@ import store from './stores/store';
 import { firebaseListener } from './config/firebaseConfig';
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 
 import App from './App.vue';
 
 Vue.use(VueRouter);
 Vue.use(VueSweetalert2);
+Vue.use(ElementUI);
 
 
 firebaseListener(authStatusChange);
