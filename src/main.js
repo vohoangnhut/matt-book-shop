@@ -15,6 +15,7 @@ Vue.use(VueRouter);
 Vue.use(VueSweetalert2);
 Vue.use(ElementUI);
 
+Vue.prototype.$scrollToTop = () => window.scrollTo(0,0)
 
 firebaseListener(authStatusChange);
 
