@@ -14,11 +14,15 @@
             <div class="col-md-5 ml-auto mr-auto">
               <h2 class="title">Contact Information</h2>
               <p class="description">
-                (<i class="required-label">*</i> : Required information)
+                (
+                <i class="required-label">*</i> : Required information)
                 <br />
               </p>
               <form @submit="onSubmit">
-                <label>First Name:<i class="required-label">*</i></label>
+                <label>
+                  First Name:
+                  <i class="required-label">*</i>
+                </label>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
@@ -34,7 +38,10 @@
                     v-model.trim="customer.first_name"
                   />
                 </div>
-                <label>Last Name:<i class="required-label">*</i></label>
+                <label>
+                  Last Name:
+                  <i class="required-label">*</i>
+                </label>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
@@ -50,29 +57,47 @@
                     v-model.trim="customer.last_name"
                   />
                 </div>
-                <label>Contact No:<i class="required-label">*</i></label>
+                <label>
+                  Contact No:
+                  <i class="required-label">*</i>
+                </label>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
                       <i class="now-ui-icons tech_mobile"></i>
                     </span>
                   </div>
-                  <input type="text" class="form-control" placeholder="Contact No..." id="contactNo" v-model.trim="customer.contact_no" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Contact No..."
+                    id="contactNo"
+                    v-model.trim="customer.contact_no"
+                  />
                 </div>
-                <label>Email:<i class="required-label">*</i></label>
+                <label>
+                  Email:
+                  <i class="required-label">*</i>
+                </label>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
                       <i class="now-ui-icons ui-1_email-85"></i>
                     </span>
                   </div>
-                  <input type="email" class="form-control" placeholder="Email..." id="email" v-model.trim="customer.email" />
+                  <input
+                    type="email"
+                    class="form-control"
+                    placeholder="Email..."
+                    id="email"
+                    v-model.trim="customer.email"
+                  />
                 </div>
                 <div class="form-check" style="margin-top: 15px;">
                   <label class="form-check-label">
-                      <input class="form-check-label" type="checkbox" v-model.trim="customer.pdpa" />
-                      <span class="form-check-sign"></span>
-                      By submitting the above details in this form, you are agreeing to us contacting you. We will maintain confidentiality of all personal particulars provided.
+                    <input class="form-check-label" type="checkbox" v-model.trim="customer.pdpa" />
+                    <span class="form-check-sign"></span>
+                    By submitting the above details in this form, you are agreeing to us contacting you. We will maintain confidentiality of all personal particulars provided.
                   </label>
                 </div>
                 <div class="submit text-center">
@@ -142,76 +167,104 @@
   </div>
 </template>
 <script>
-import firebase from './../config/firebaseConfig'
+import firebase from "./../config/firebaseConfig";
+import axios from "axios";
 
 export default {
-  name: 'Contact',
-  data () {
+  name: "Contact",
+  data() {
     return {
-      ref: firebase.firestore().collection('customer'),
+      ref: firebase.firestore().collection("customer"),
       customer: {}
-    }
+    };
   },
   methods: {
-    onSubmit (e) {
+    onSubmit(e) {
       e.preventDefault();
 
       if (!this.onValidation(e)) {
         return;
       }
-      this.ref.add(this.customer).then(() => {
-        this.customer.contact_no = ''
-        this.customer.email = ''
-        this.customer.first_name = ''
-        this.customer.last_name = ''
-        this.customer.pdpa = ''
-      })
-        .catch((error) => {
-          alert('Error adding document: ', error);
+      this.ref
+        .add(this.customer)
+        .then(() => {
+          axios
+            .get(
+              "https://us-central1-book-store-sg-x.cloudfunctions.net/sendMail?to=" +
+                "book.store.sg.x@gmail.com" +
+                "&subject=" +
+                "Contact" +
+                "&body=" +
+                this.customer.first_name +
+                " - " +
+                this.customer.last_name
+            )
+            .then(function(response) {})
+            .catch(function(error) {
+              // handle error
+              console.log(error);
+            });
+          this.customer.contact_no = "";
+          this.customer.email = "";
+          this.customer.first_name = "";
+          this.customer.last_name = "";
+          this.customer.pdpa = "";
+          this.$swal({
+            type: "success",
+            title: "Thanks !!!",
+            html: "We will contact you soon"
+          });
+        })
+        .catch(error => {
+          alert("Error adding document: ", error);
         });
     },
-    onCancel (e) {
+    onCancel(e) {
       e.preventDefault();
-      this.customer.contact_no = ''
-      this.customer.email = ''
-      this.customer.first_name = ''
-      this.customer.last_name = ''
-      this.customer.pdpa = ''
+      this.customer.contact_no = "";
+      this.customer.email = "";
+      this.customer.first_name = "";
+      this.customer.last_name = "";
+      this.customer.pdpa = "";
     },
-    onValidation (e) {
+    onValidation(e) {
       e.preventDefault();
-      var message = '';
+      var message = "";
       var flag = true;
 
       if (!this.customer.contact_no) {
-        message += 'Contact No.' + '<br/>';
+        message += "Contact No." + "<br/>";
         flag = false;
       }
 
       if (!this.customer.email) {
-        message += 'Email' + '<br/>';
+        message += "Email" + "<br/>";
         flag = false;
       }
 
       if (!this.customer.first_name) {
-        message += 'First Name' + '<br/>';
+        message += "First Name" + "<br/>";
         flag = false;
       }
 
       if (!this.customer.last_name) {
-        message += 'Last Name' + '<br/>';
+        message += "Last Name" + "<br/>";
         flag = false;
       }
 
       if (!this.customer.pdpa) {
-        message += 'PDPA consent' + '<br/>';
+        message += "PDPA consent" + "<br/>";
         flag = false;
       }
-      this.$swal({
-        type: 'error',
-        title: 'Please input',
-        html: message,
+
+      if (!flag) {
+        this.$swal({
+          type: "error",
+          title: "Please input",
+          html: message
         });
+      }
+
       return flag;
     }
   }

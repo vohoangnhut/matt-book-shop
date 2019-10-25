@@ -649,6 +649,7 @@
                     @click="onCancel"
                   />
                 </div>
+                <div class="submit text-center" id="paypal-button"></div>
               </form>
             </div>
           </div>
@@ -659,6 +660,7 @@
 </template>
 <script>
 import { db } from "../config/firebaseConfig";
+import axios from "axios";
 export default {
   name: "Products",
   data() {
@@ -667,8 +669,8 @@ export default {
       dialogTableVisible: false,
       dialogFormVisible: false,
       form: {
-        country: 'Singapore',
-        quantity: '1'
+        country: "Singapore",
+        quantity: "1"
       },
       formLabelWidth: "120px",
       shipping: db.collection("shipping"),
@@ -685,7 +687,7 @@ export default {
           this.item = data;
           this.form.product_name = data.title;
           this.form.unit_price = data.price;
-          this.form.shipping_rate = '5';
+          this.form.shipping_rate = "5";
           this.onPaymentCal();
         } else {
           // snapshot.data() will be undefined in this case
@@ -698,106 +700,143 @@ export default {
       if (!this.onValidation()) {
         return;
       }
+      var totalPayment = this.form.total_payment;
+      var shipping = this.shipping;
+      var order = this.order;
+      var form = this.form;
 
-      this.shipping
-        .add({
-          address: this.form.address,
-          contact_no: this.form.contact_no,
-          country: this.form.country,
-          email: this.form.email,
-          name: this.form.name,
-          postal_code: this.form.postal_code
-        })
-        .then(docRef => {
-          this.order
-            .add({
-              product_name: this.form.product_name,
-              quantity: this.form.quantity,
-              shipping_id: docRef.id,
-              shipping_rate: this.form.shipping_rate,
-              total_payment: this.form.total_payment,
-              total_price: this.form.total_price,
-              unit_price: this.form.unit_price
-            })
-            .then(() => {
-              this.form = {};
-            })
-            .catch(error => {
-              alert("Error adding document: ", error);
+      // Render the PayPal button into #paypal-button-container
+      paypal
+        .Buttons({
+          // Set up the transaction
+          createOrder: function(data, actions) {
+            return actions.order.create({
+              purchase_units: [
+                {
+                  amount: {
+                    value: totalPayment.toString()
+                  }
+                }
+              ]
             });
+          },
+          // Finalize the transaction
+          onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+              shipping
+                .add({
+                  address: form.address,
+                  contact_no: form.contact_no,
+                  country: form.country,
+                  email: form.email,
+                  name: form.name,
+                  postal_code: form.postal_code
+                })
+                .then(docRef => {
+                  order
+                    .add({
+                      product_name: form.product_name,
+                      quantity: form.quantity,
+                      shipping_id: docRef.id,
+                      shipping_rate: form.shipping_rate,
+                      total_payment: form.total_payment,
+                      total_price: form.total_price,
+                      unit_price: form.unit_price
+                    })
+                    .then(() => {
+                      axios
+                        .get(
+                          "https://us-central1-book-store-sg-x.cloudfunctions.net/sendMail?to=" +
+                            form.email +
+                            "&subject=" +
+                            "Thanks" +
+                            "&body=" +
+                            totalPayment.toString() +
+                            " - " +
+                            form.country
+                        )
+                        .then(function(response) {
+                        })
+                        .catch(function(error) {
+                          // handle error
+                          console.log(error);
+                        });
+                        this.$swal({
+                          type: "success",
+                          title: "Bravo !!!",
+                          html: "A receipt was sent to your email. The book will come later. Thanks"
+                        });
+                    })
+                    .catch(error => {
+                      alert("Error adding document: ", error);
+                    });
+                })
+                .catch(error => {
+                  alert("Error adding document: ", error);
+                });
+            });
+          }
         })
-        .catch(error => {
-          alert("Error adding document: ", error);
-        });
+        .render("#paypal-button");
     },
-    onCancel (e) {
+    onCancel(e) {
       e.preventDefault();
       this.form = {};
     },
     onValidation() {
-      var message = '';
+      var message = "";
       var flag = true;
 
       if (!this.form.name) {
-        message += 'Name' + '<br/>';
+        message += "Name" + "<br/>";
         flag = false;
       }
 
       if (!this.form.country) {
-        message += 'Country' + '<br/>';
+        message += "Country" + "<br/>";
         flag = false;
       }
 
       if (!this.form.address) {
-        message += 'Address' + '<br/>';
+        message += "Address" + "<br/>";
         flag = false;
       }
 
       if (!this.form.postal_code) {
-        message += 'Postal Code' + '<br/>';
+        message += "Postal Code" + "<br/>";
         flag = false;
       }
 
       if (!this.form.contact_no) {
-        message += 'Contact No.' + '<br/>';
+        message += "Contact No." + "<br/>";
         flag = false;
       }
 
       if (!this.form.email) {
-        message += 'Email' + '<br/>';
+        message += "Email" + "<br/>";
         flag = false;
       }
 
       if (!this.form.quantity) {
-        message += 'Quantity' + '<br/>';
+        message += "Quantity" + "<br/>";
         flag = false;
       }
 
-      if (!this.form.total_price) {
-        message += 'Total Price' + '<br/>';
-        flag = false;
-      }
-
-      if (!this.form.shipping_rate) {
-        message += 'Shipping Rate' + '<br/>';
-        flag = false;
-      }
-
-      if (!this.form.total_payment) {
-        message += 'Total Payment' + '<br/>';
-        flag = false;
-      }
-
-      this.$swal({
-        type: 'error',
-        title: 'Please input',
-        html: message,
+      if (!flag) {
+        this.$swal({
+          type: "error",
+          title: "Please input",
+          html: message
         });
+      }
+
       return flag;
     },
     onPaymentCal() {
-      this.form.total_price = parseFloat(this.form.unit_price) * parseFloat(this.form.quantity);
-      this.form.total_payment = parseFloat(this.form.total_price) + parseFloat(this.form.shipping_rate);
+      this.form.total_price =
+        parseFloat(this.form.unit_price) * parseFloat(this.form.quantity);
+      this.form.total_payment =
+        parseFloat(this.form.total_price) + parseFloat(this.form.shipping_rate);
     }
   }
 };
