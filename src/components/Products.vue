@@ -508,6 +508,7 @@
                   />
                 </div>
 
+                <div class="section-space-cus"></div>
                 <div class="alert alert-success" role="alert">
                   <div class="container">
                     <div class="alert-icon">
@@ -518,7 +519,7 @@
                 </div>
 
                 <label>Product Name</label>
-                <div class="input-group">
+                <div class="input-group" disabled>
                   <div class="input-group-prepend">
                     <span class="input-group-text">
                       <i class="now-ui-icons education_agenda-bookmark"></i>
@@ -537,7 +538,7 @@
                 <div class="row">
                   <div class="col-lg-6 col-md-8 col-sm-5">
                     <label>Unit Price</label>
-                    <div class="input-group">
+                    <div class="input-group" disabled>
                       <div class="input-group-prepend">
                         <span class="input-group-text">
                           <i class="now-ui-icons shopping_tag-content"></i>
@@ -576,6 +577,7 @@
                     </select>
                   </div>
                 </div>
+                <div class="section-space-cus"></div>
                 <div class="alert alert-success" role="alert">
                   <div class="container">
                     <div class="alert-icon">
@@ -585,7 +587,7 @@
                   </div>
                 </div>
                 <label>Total Price</label>
-                <div class="input-group">
+                <div class="input-group" disabled>
                   <div class="input-group-prepend">
                     <span class="input-group-text">
                       <i class="now-ui-icons business_money-coins"></i>
@@ -601,7 +603,7 @@
                   />
                 </div>
                 <label>Shipping Rate</label>
-                <div class="input-group">
+                <div class="input-group" disabled>
                   <div class="input-group-prepend">
                     <span class="input-group-text">
                       <i class="now-ui-icons objects_globe"></i>
@@ -617,7 +619,7 @@
                   />
                 </div>
                 <label>Total Payment</label>
-                <div class="input-group">
+                <div class="input-group" disabled>
                   <div class="input-group-prepend">
                     <span class="input-group-text">
                       <i class="now-ui-icons objects_diamond"></i>
@@ -845,5 +847,10 @@ export default {
 <style>
 .remove-margin-top > div > button {
   margin-top: 0px !important;
+  border: 1px solid #888888;
+}
+
+.section-space-cus {
+  height: 1em;
 }
 </style>

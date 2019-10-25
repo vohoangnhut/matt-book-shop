@@ -10,14 +10,13 @@
     <div class="main">
       <div class="contact-content">
         <div class="container">
-          <div class="row">
-            <div class="col-md-5 ml-auto mr-auto">
-              <h2 class="title">Contact Information</h2>
-              <p class="description">
-                (
-                <i class="required-label">*</i> : Required information)
-                <br />
-              </p>
+          
+          <div class="col-md-8 ml-auto mr-auto text-center">
+            <h2 class="title">Contact Information</h2>
+          </div>
+
+          <div class="row" style="margin-bottom: 60px;">
+            <div class="col-md-5 ml-auto mr-auto" style="margin-top: 23px;">
               <form @submit="onSubmit">
                 <label>
                   First Name:
@@ -100,6 +99,7 @@
                     By submitting the above details in this form, you are agreeing to us contacting you. We will maintain confidentiality of all personal particulars provided.
                   </label>
                 </div>
+                
                 <div class="submit text-center">
                   <input
                     type="submit"
@@ -118,7 +118,7 @@
               </form>
             </div>
             <div class="col-md-5 ml-auto mr-auto">
-              <div class="info info-horizontal mt-5">
+              <div class="info info-horizontal" style="padding: 0px !important;">
                 <div class="icon icon-primary">
                   <i class="now-ui-icons location_pin"></i>
                 </div>
@@ -131,7 +131,7 @@
                   </p>
                 </div>
               </div>
-              <div class="info info-horizontal">
+              <div class="info info-horizontal" style="padding: 0px !important;">
                 <div class="icon icon-primary">
                   <i class="now-ui-icons tech_mobile"></i>
                 </div>
@@ -144,7 +144,7 @@
                   </p>
                 </div>
               </div>
-              <div class="info info-horizontal">
+              <div class="info info-horizontal" style="padding: 0px !important;">
                 <div class="icon icon-primary">
                   <i class="business_briefcase-24 now-ui-icons"></i>
                 </div>

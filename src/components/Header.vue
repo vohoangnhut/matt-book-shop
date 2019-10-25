@@ -30,7 +30,9 @@
                   <a href="/#event" class="nav-link">Events</a>
                 </li>
                 <li class="nav-item">
-                  <router-link class="nav-link" @click.native="$scrollToTop" to="/book/o4T0DlZoqYpLLoLGcBGe">Book Shop</router-link>
+                  <a href="/book/o4T0DlZoqYpLLoLGcBGe" class="nav-link">Book Shop</a>
+
+                  <!-- <router-link class="nav-link" to="/book/o4T0DlZoqYpLLoLGcBGe">Book Shop</router-link> -->
                 </li>
                 <li class="nav-item">
                   <router-link class="nav-link" @click.native="$scrollToTop" to="/contact">Contact Us</router-link>

@@ -1,5 +1,5 @@
 <template>
-  <footer class="footer footer-white">
+  <footer class="footer footer-white" style="border-top: 1px solid #e5e5e5;">
     <div class="container">
       <a class="footer-brand" href="http://google.com">VERES BOOKS</a>
       <ul class="pull-center">
