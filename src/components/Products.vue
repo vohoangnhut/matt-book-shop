@@ -156,268 +156,505 @@
             </div>
             <!-- <div class="row justify-content-end">
               <button @click="dialogFormVisible = true" class="btn btn-primary mr-3">BUY</button>
-            </div> -->
+            </div>-->
           </div>
         </div>
-          <div class="container">
-            <div class="row">
-              <div class="col-md-12 ml-auto mr-auto">
-                <h2 class="title text-center">Purchase Information</h2>
-                
-                  <form role="form" id="contact-form" method="post">
-                      <div class="alert alert-success" role="alert">
-                          <div class="container">
-                              <div class="alert-icon">
-                                  <i class="now-ui-icons shopping_delivery-fast"></i>
-                              </div>
-                              <strong>Shipping Information</strong>
-                          </div>
-                      </div>
-                      <label>Your name</label>
-                      <div class="input-group">
-                          <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="now-ui-icons users_circle-08"></i></span>
-                          </div>
-                          <input type="text" class="form-control" placeholder="Your Name..." aria-label="Your Name...">
-                      </div>
-                      
-                      <div class="row">
-                        <div class="col-lg-6 col-md-8 col-sm-5 remove-margin-top">
-                          <label>Country</label>
-                          <select class="selectpicker dropdown-countries" data-size="7" data-style="btn btn-round" title="Single Select">
-                              <option disabled selected>Single Option</option>
-                              <option value="2">Foobar</option>
-                              <option value="3">Is great</option>
-                          </select>
-                        </div>
-                        <div class="col-lg-6 col-md-8 col-sm-5">
-                          <label>Postal Code</label>
-                          <div class="input-group">
-                              <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="now-ui-icons location_pin"></i></span>
-                              </div>
-                              <input type="text" class="form-control" placeholder="Your Name..." aria-label="Your Name...">
-                          </div>
-                        </div>
-                      </div>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 ml-auto mr-auto">
+              <h2 class="title text-center">Purchase Information</h2>
 
-                      <div class="form-group">
-                          <label>Address</label>
-                          <textarea name="message" class="form-control" id="message" rows="6"></textarea>
-                      </div>
-                      
-                      
-                      <label>Phone</label>
-                      <div class="input-group">
-                          <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="now-ui-icons tech_mobile"></i></span>
-                          </div>
-                          <input type="text" class="form-control" placeholder="Number Here...">
-                      </div>
-
-                      <label>Email</label>
-                      <div class="input-group">
-                          <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="now-ui-icons ui-1_email-85"></i></span>
-                          </div>
-                          <input type="email" class="form-control" placeholder="Email Here..." aria-label="Email Here...">
-                      </div>
-                      
-                      <div class="alert alert-success" role="alert">
-                        <div class="container">
-                            <div class="alert-icon">
-                                <i class="now-ui-icons shopping_bag-16"></i>
-                            </div>
-                            <strong>Order Information</strong>
-                        </div>
-                      </div>
-                      
-                      <label>Product Name</label>
-                      <div class="input-group">
-                          <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="now-ui-icons education_agenda-bookmark"></i></span>
-                          </div>
-                          <input type="text" class="form-control" placeholder="Your Name..." aria-label="Your Name...">
-                      </div>
-
-                      <div class="row">
-                        <div class="col-lg-6 col-md-8 col-sm-5">
-                          <label>Unit Price</label>
-                          <div class="input-group">
-                              <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="now-ui-icons shopping_tag-content"></i></span>
-                              </div>
-                              <input type="text" class="form-control" placeholder="Your Name..." aria-label="Your Name...">
-                          </div>
-                        </div>
-                        <div class="col-lg-6 col-md-8 col-sm-5 remove-margin-top">
-                          <label>Quantity</label>
-                          <select class="selectpicker dropdown-countries" data-size="7" data-style="btn btn-round" title="Single Select">
-                              <option disabled selected>1</option>
-                              <option value="2">2</option>
-                              <option value="3">3</option>
-                          </select>
-                        </div>
-                      </div>
-                      <div class="alert alert-success" role="alert">
-                          <div class="container">
-                              <div class="alert-icon">
-                                  <i class="now-ui-icons shopping_delivery-fast"></i>
-                              </div>
-                              <strong>Payment Information</strong>
-                          </div>
-                      </div>
-
-                           <label>Total Price</label>
-                          <div class="input-group">
-                              <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="now-ui-icons business_money-coins"></i></span>
-                              </div>
-                              <input type="text" class="form-control" placeholder="Your Name..." aria-label="Your Name...">
-                          </div>
-                           <label>Shipping Rate</label>
-                          <div class="input-group">
-                              <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="now-ui-icons objects_globe"></i></span>
-                              </div>
-                              <input type="text" class="form-control" placeholder="Your Name..." aria-label="Your Name...">
-                          </div>
-                           <label>Total Payment</label>
-                          <div class="input-group">
-                              <div class="input-group-prepend">
-                                  <span class="input-group-text"><i class="now-ui-icons objects_diamond"></i></span>
-                              </div>
-                              <input type="text" class="form-control" placeholder="Your Name..." aria-label="Your Name...">
-                          </div>
-                      
-
-                      <div class="submit text-center">
-                          <input type="submit" class="btn btn-primary btn-raised btn-round" value="Continue" style="margin-right: 15px;"/>
-
-                          <input type="submit" class="btn btn-second btn-raised btn-round" value="Cancel" style="margin-left: 15px;"/>
-                      </div>
-
-                
-
-
-                      
-                  </form>
-              </div>
-            </div>
-          </div>
-        
-
-
-        <!-- <div class="features-4">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-8 ml-auto mr-auto text-center">
-                <h2 class="title">Not convinced yet!</h2>
-                <h4
-                  class="description"
-                >Havenly is a convenient, personal and affordable way to redecorate your home room by room. Collaborate with our professional interior designers on our online platform.</h4>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4">
-                <div
-                  class="card card-background card-raised"
-                  data-background-color
-                  style="background-image: url('/assets//img/bg24.jpg')"
-                >
-                  <div class="info">
-                    <div class="icon icon-white">
+              <form role="form" id="contact-form" method="post">
+                <div class="alert alert-success" role="alert">
+                  <div class="container">
+                    <div class="alert-icon">
                       <i class="now-ui-icons shopping_delivery-fast"></i>
                     </div>
-                    <div class="description">
-                      <h4 class="info-title">1 Day Delivery</h4>
-                      <p>Divide details about your product or agency work into parts. Write a few lines about each one. A paragraph describing a feature will be enough.</p>
-                      <a href="#pablo" class="ml-3">Find more...</a>
+                    <strong>Shipping Information</strong>
+                  </div>
+                </div>
+                <label>Your name</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="now-ui-icons users_circle-08"></i>
+                    </span>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Your Name..."
+                    aria-label="Your Name..."
+                    v-model="form.name"
+                  />
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-6 col-md-8 col-sm-5 remove-margin-top">
+                    <label>Country</label>
+                    <select
+                      class="selectpicker dropdown-countries"
+                      data-size="7"
+                      data-style="btn btn-round"
+                      title="Single Select"
+                      v-model="form.country"
+                    >
+                      <option value="Afganistan">Afghanistan</option>
+                      <option value="Albania">Albania</option>
+                      <option value="Algeria">Algeria</option>
+                      <option value="American Samoa">American Samoa</option>
+                      <option value="Andorra">Andorra</option>
+                      <option value="Angola">Angola</option>
+                      <option value="Anguilla">Anguilla</option>
+                      <option value="Antigua & Barbuda">Antigua & Barbuda</option>
+                      <option value="Argentina">Argentina</option>
+                      <option value="Armenia">Armenia</option>
+                      <option value="Aruba">Aruba</option>
+                      <option value="Australia">Australia</option>
+                      <option value="Austria">Austria</option>
+                      <option value="Azerbaijan">Azerbaijan</option>
+                      <option value="Bahamas">Bahamas</option>
+                      <option value="Bahrain">Bahrain</option>
+                      <option value="Bangladesh">Bangladesh</option>
+                      <option value="Barbados">Barbados</option>
+                      <option value="Belarus">Belarus</option>
+                      <option value="Belgium">Belgium</option>
+                      <option value="Belize">Belize</option>
+                      <option value="Benin">Benin</option>
+                      <option value="Bermuda">Bermuda</option>
+                      <option value="Bhutan">Bhutan</option>
+                      <option value="Bolivia">Bolivia</option>
+                      <option value="Bonaire">Bonaire</option>
+                      <option value="Bosnia & Herzegovina">Bosnia & Herzegovina</option>
+                      <option value="Botswana">Botswana</option>
+                      <option value="Brazil">Brazil</option>
+                      <option value="British Indian Ocean Ter">British Indian Ocean Ter</option>
+                      <option value="Brunei">Brunei</option>
+                      <option value="Bulgaria">Bulgaria</option>
+                      <option value="Burkina Faso">Burkina Faso</option>
+                      <option value="Burundi">Burundi</option>
+                      <option value="Cambodia">Cambodia</option>
+                      <option value="Cameroon">Cameroon</option>
+                      <option value="Canada">Canada</option>
+                      <option value="Canary Islands">Canary Islands</option>
+                      <option value="Cape Verde">Cape Verde</option>
+                      <option value="Cayman Islands">Cayman Islands</option>
+                      <option value="Central African Republic">Central African Republic</option>
+                      <option value="Chad">Chad</option>
+                      <option value="Channel Islands">Channel Islands</option>
+                      <option value="Chile">Chile</option>
+                      <option value="China">China</option>
+                      <option value="Christmas Island">Christmas Island</option>
+                      <option value="Cocos Island">Cocos Island</option>
+                      <option value="Colombia">Colombia</option>
+                      <option value="Comoros">Comoros</option>
+                      <option value="Congo">Congo</option>
+                      <option value="Cook Islands">Cook Islands</option>
+                      <option value="Costa Rica">Costa Rica</option>
+                      <option value="Cote DIvoire">Cote DIvoire</option>
+                      <option value="Croatia">Croatia</option>
+                      <option value="Cuba">Cuba</option>
+                      <option value="Curaco">Curacao</option>
+                      <option value="Cyprus">Cyprus</option>
+                      <option value="Czech Republic">Czech Republic</option>
+                      <option value="Denmark">Denmark</option>
+                      <option value="Djibouti">Djibouti</option>
+                      <option value="Dominica">Dominica</option>
+                      <option value="Dominican Republic">Dominican Republic</option>
+                      <option value="East Timor">East Timor</option>
+                      <option value="Ecuador">Ecuador</option>
+                      <option value="Egypt">Egypt</option>
+                      <option value="El Salvador">El Salvador</option>
+                      <option value="Equatorial Guinea">Equatorial Guinea</option>
+                      <option value="Eritrea">Eritrea</option>
+                      <option value="Estonia">Estonia</option>
+                      <option value="Ethiopia">Ethiopia</option>
+                      <option value="Falkland Islands">Falkland Islands</option>
+                      <option value="Faroe Islands">Faroe Islands</option>
+                      <option value="Fiji">Fiji</option>
+                      <option value="Finland">Finland</option>
+                      <option value="France">France</option>
+                      <option value="French Guiana">French Guiana</option>
+                      <option value="French Polynesia">French Polynesia</option>
+                      <option value="French Southern Ter">French Southern Ter</option>
+                      <option value="Gabon">Gabon</option>
+                      <option value="Gambia">Gambia</option>
+                      <option value="Georgia">Georgia</option>
+                      <option value="Germany">Germany</option>
+                      <option value="Ghana">Ghana</option>
+                      <option value="Gibraltar">Gibraltar</option>
+                      <option value="Great Britain">Great Britain</option>
+                      <option value="Greece">Greece</option>
+                      <option value="Greenland">Greenland</option>
+                      <option value="Grenada">Grenada</option>
+                      <option value="Guadeloupe">Guadeloupe</option>
+                      <option value="Guam">Guam</option>
+                      <option value="Guatemala">Guatemala</option>
+                      <option value="Guinea">Guinea</option>
+                      <option value="Guyana">Guyana</option>
+                      <option value="Haiti">Haiti</option>
+                      <option value="Hawaii">Hawaii</option>
+                      <option value="Honduras">Honduras</option>
+                      <option value="Hong Kong">Hong Kong</option>
+                      <option value="Hungary">Hungary</option>
+                      <option value="Iceland">Iceland</option>
+                      <option value="Indonesia">Indonesia</option>
+                      <option value="India">India</option>
+                      <option value="Iran">Iran</option>
+                      <option value="Iraq">Iraq</option>
+                      <option value="Ireland">Ireland</option>
+                      <option value="Isle of Man">Isle of Man</option>
+                      <option value="Israel">Israel</option>
+                      <option value="Italy">Italy</option>
+                      <option value="Jamaica">Jamaica</option>
+                      <option value="Japan">Japan</option>
+                      <option value="Jordan">Jordan</option>
+                      <option value="Kazakhstan">Kazakhstan</option>
+                      <option value="Kenya">Kenya</option>
+                      <option value="Kiribati">Kiribati</option>
+                      <option value="Korea North">Korea North</option>
+                      <option value="Korea Sout">Korea South</option>
+                      <option value="Kuwait">Kuwait</option>
+                      <option value="Kyrgyzstan">Kyrgyzstan</option>
+                      <option value="Laos">Laos</option>
+                      <option value="Latvia">Latvia</option>
+                      <option value="Lebanon">Lebanon</option>
+                      <option value="Lesotho">Lesotho</option>
+                      <option value="Liberia">Liberia</option>
+                      <option value="Libya">Libya</option>
+                      <option value="Liechtenstein">Liechtenstein</option>
+                      <option value="Lithuania">Lithuania</option>
+                      <option value="Luxembourg">Luxembourg</option>
+                      <option value="Macau">Macau</option>
+                      <option value="Macedonia">Macedonia</option>
+                      <option value="Madagascar">Madagascar</option>
+                      <option value="Malaysia">Malaysia</option>
+                      <option value="Malawi">Malawi</option>
+                      <option value="Maldives">Maldives</option>
+                      <option value="Mali">Mali</option>
+                      <option value="Malta">Malta</option>
+                      <option value="Marshall Islands">Marshall Islands</option>
+                      <option value="Martinique">Martinique</option>
+                      <option value="Mauritania">Mauritania</option>
+                      <option value="Mauritius">Mauritius</option>
+                      <option value="Mayotte">Mayotte</option>
+                      <option value="Mexico">Mexico</option>
+                      <option value="Midway Islands">Midway Islands</option>
+                      <option value="Moldova">Moldova</option>
+                      <option value="Monaco">Monaco</option>
+                      <option value="Mongolia">Mongolia</option>
+                      <option value="Montserrat">Montserrat</option>
+                      <option value="Morocco">Morocco</option>
+                      <option value="Mozambique">Mozambique</option>
+                      <option value="Myanmar">Myanmar</option>
+                      <option value="Nambia">Nambia</option>
+                      <option value="Nauru">Nauru</option>
+                      <option value="Nepal">Nepal</option>
+                      <option value="Netherland Antilles">Netherland Antilles</option>
+                      <option value="Netherlands">Netherlands (Holland, Europe)</option>
+                      <option value="Nevis">Nevis</option>
+                      <option value="New Caledonia">New Caledonia</option>
+                      <option value="New Zealand">New Zealand</option>
+                      <option value="Nicaragua">Nicaragua</option>
+                      <option value="Niger">Niger</option>
+                      <option value="Nigeria">Nigeria</option>
+                      <option value="Niue">Niue</option>
+                      <option value="Norfolk Island">Norfolk Island</option>
+                      <option value="Norway">Norway</option>
+                      <option value="Oman">Oman</option>
+                      <option value="Pakistan">Pakistan</option>
+                      <option value="Palau Island">Palau Island</option>
+                      <option value="Palestine">Palestine</option>
+                      <option value="Panama">Panama</option>
+                      <option value="Papua New Guinea">Papua New Guinea</option>
+                      <option value="Paraguay">Paraguay</option>
+                      <option value="Peru">Peru</option>
+                      <option value="Phillipines">Philippines</option>
+                      <option value="Pitcairn Island">Pitcairn Island</option>
+                      <option value="Poland">Poland</option>
+                      <option value="Portugal">Portugal</option>
+                      <option value="Puerto Rico">Puerto Rico</option>
+                      <option value="Qatar">Qatar</option>
+                      <option value="Republic of Montenegro">Republic of Montenegro</option>
+                      <option value="Republic of Serbia">Republic of Serbia</option>
+                      <option value="Reunion">Reunion</option>
+                      <option value="Romania">Romania</option>
+                      <option value="Russia">Russia</option>
+                      <option value="Rwanda">Rwanda</option>
+                      <option value="St Barthelemy">St Barthelemy</option>
+                      <option value="St Eustatius">St Eustatius</option>
+                      <option value="St Helena">St Helena</option>
+                      <option value="St Kitts-Nevis">St Kitts-Nevis</option>
+                      <option value="St Lucia">St Lucia</option>
+                      <option value="St Maarten">St Maarten</option>
+                      <option value="St Pierre & Miquelon">St Pierre & Miquelon</option>
+                      <option value="St Vincent & Grenadines">St Vincent & Grenadines</option>
+                      <option value="Saipan">Saipan</option>
+                      <option value="Samoa">Samoa</option>
+                      <option value="Samoa American">Samoa American</option>
+                      <option value="San Marino">San Marino</option>
+                      <option value="Sao Tome & Principe">Sao Tome & Principe</option>
+                      <option value="Saudi Arabia">Saudi Arabia</option>
+                      <option value="Senegal">Senegal</option>
+                      <option value="Seychelles">Seychelles</option>
+                      <option value="Sierra Leone">Sierra Leone</option>
+                      <option value="Singapore" selected>Singapore</option>
+                      <option value="Slovakia">Slovakia</option>
+                      <option value="Slovenia">Slovenia</option>
+                      <option value="Solomon Islands">Solomon Islands</option>
+                      <option value="Somalia">Somalia</option>
+                      <option value="South Africa">South Africa</option>
+                      <option value="Spain">Spain</option>
+                      <option value="Sri Lanka">Sri Lanka</option>
+                      <option value="Sudan">Sudan</option>
+                      <option value="Suriname">Suriname</option>
+                      <option value="Swaziland">Swaziland</option>
+                      <option value="Sweden">Sweden</option>
+                      <option value="Switzerland">Switzerland</option>
+                      <option value="Syria">Syria</option>
+                      <option value="Tahiti">Tahiti</option>
+                      <option value="Taiwan">Taiwan</option>
+                      <option value="Tajikistan">Tajikistan</option>
+                      <option value="Tanzania">Tanzania</option>
+                      <option value="Thailand">Thailand</option>
+                      <option value="Togo">Togo</option>
+                      <option value="Tokelau">Tokelau</option>
+                      <option value="Tonga">Tonga</option>
+                      <option value="Trinidad & Tobago">Trinidad & Tobago</option>
+                      <option value="Tunisia">Tunisia</option>
+                      <option value="Turkey">Turkey</option>
+                      <option value="Turkmenistan">Turkmenistan</option>
+                      <option value="Turks & Caicos Is">Turks & Caicos Is</option>
+                      <option value="Tuvalu">Tuvalu</option>
+                      <option value="Uganda">Uganda</option>
+                      <option value="United Kingdom">United Kingdom</option>
+                      <option value="Ukraine">Ukraine</option>
+                      <option value="United Arab Erimates">United Arab Emirates</option>
+                      <option value="United States of America">United States of America</option>
+                      <option value="Uraguay">Uruguay</option>
+                      <option value="Uzbekistan">Uzbekistan</option>
+                      <option value="Vanuatu">Vanuatu</option>
+                      <option value="Vatican City State">Vatican City State</option>
+                      <option value="Venezuela">Venezuela</option>
+                      <option value="Vietnam">Vietnam</option>
+                      <option value="Virgin Islands (Brit)">Virgin Islands (Brit)</option>
+                      <option value="Virgin Islands (USA)">Virgin Islands (USA)</option>
+                      <option value="Wake Island">Wake Island</option>
+                      <option value="Wallis & Futana Is">Wallis & Futana Is</option>
+                      <option value="Yemen">Yemen</option>
+                      <option value="Zaire">Zaire</option>
+                      <option value="Zambia">Zambia</option>
+                      <option value="Zimbabwe">Zimbabwe</option>
+                    </select>
+                  </div>
+                  <div class="col-lg-6 col-md-8 col-sm-5">
+                    <label>Postal Code</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="now-ui-icons location_pin"></i>
+                        </span>
+                      </div>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Postal Code..."
+                        aria-label="Postal Code..."
+                        v-model="form.postal_code"
+                      />
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-md-4">
-                <div
-                  class="card card-background card-raised"
-                  data-background-color
-                  style="background-image: url('/assets//img/bg28.jpg')"
-                >
-                  <div class="info">
-                    <div class="icon icon-white">
-                      <i class="now-ui-icons business_badge"></i>
+
+                <div class="form-group">
+                  <label>Address</label>
+                  <textarea
+                    name="message"
+                    class="form-control"
+                    id="message"
+                    rows="6"
+                    v-model="form.address"
+                  ></textarea>
+                </div>
+
+                <label>Contact No</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="now-ui-icons tech_mobile"></i>
+                    </span>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Number Here..."
+                    v-model="form.contact_no"
+                  />
+                </div>
+
+                <label>Email</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="now-ui-icons ui-1_email-85"></i>
+                    </span>
+                  </div>
+                  <input
+                    type="email"
+                    class="form-control"
+                    placeholder="Email Here..."
+                    aria-label="Email Here..."
+                    v-model="form.email"
+                  />
+                </div>
+
+                <div class="alert alert-success" role="alert">
+                  <div class="container">
+                    <div class="alert-icon">
+                      <i class="now-ui-icons shopping_bag-16"></i>
                     </div>
-                    <div class="description">
-                      <h4 class="info-title">Refund Policy</h4>
-                      <p>Divide details about your product or agency work into parts. Write a few lines about each one. Very good refund policy just for you.</p>
-                      <a href="#pablo">Find more...</a>
-                    </div>
+                    <strong>Order Information</strong>
                   </div>
                 </div>
-              </div>
-              <div class="col-md-4">
-                <div
-                  class="card card-background card-raised"
-                  data-background-color
-                  style="background-image: url('/assets//img/bg25.jpg')"
-                >
-                  <div class="info">
-                    <div class="icon">
-                      <i class="now-ui-icons ui-2_favourite-28"></i>
-                    </div>
-                    <div class="description">
-                      <h4 class="info-title">Popular Item</h4>
-                      <p>Share a floor plan, and we'll create a visualization of your room. A paragraph describing a feature will be enough. This is a popular item for you.</p>
-                      <a href="#pablo" class="ml-3">Find more...</a>
+
+                <label>Product Name</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="now-ui-icons education_agenda-bookmark"></i>
+                    </span>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Product Name..."
+                    aria-label="Product Name..."
+                    v-model="form.product_name"
+                    disabled
+                  />
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-6 col-md-8 col-sm-5">
+                    <label>Unit Price</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="now-ui-icons shopping_tag-content"></i>
+                        </span>
+                      </div>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Unit Price..."
+                        aria-label="Unit Price..."
+                        v-model="form.unit_price"
+                        disabled
+                      />
                     </div>
                   </div>
+                  <div class="col-lg-6 col-md-8 col-sm-5 remove-margin-top">
+                    <label>Quantity</label>
+                    <select
+                      class="selectpicker dropdown-countries"
+                      data-size="7"
+                      data-style="btn btn-round"
+                      title="Single Select"
+                      v-model="form.quantity"
+                      @change="onPaymentCal"
+                    >
+                      <option value="1" selected>1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                    </select>
+                  </div>
                 </div>
-              </div>
+                <div class="alert alert-success" role="alert">
+                  <div class="container">
+                    <div class="alert-icon">
+                      <i class="now-ui-icons shopping_delivery-fast"></i>
+                    </div>
+                    <strong>Payment Information</strong>
+                  </div>
+                </div>
+                <label>Total Price</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="now-ui-icons business_money-coins"></i>
+                    </span>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Total Price..."
+                    aria-label="Total Price..."
+                    v-model="form.total_price"
+                    disabled
+                  />
+                </div>
+                <label>Shipping Rate</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="now-ui-icons objects_globe"></i>
+                    </span>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Shipping Rate..."
+                    aria-label="Shipping Rate..."
+                    v-model="form.shipping_rate"
+                    disabled
+                  />
+                </div>
+                <label>Total Payment</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="now-ui-icons objects_diamond"></i>
+                    </span>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Total Payment..."
+                    aria-label="Total Payment..."
+                    v-model="form.total_payment"
+                    disabled
+                  />
+                </div>
+                <div class="submit text-center">
+                  <input
+                    type="button"
+                    class="btn btn-primary btn-raised btn-round"
+                    value="Continue"
+                    style="margin-right: 15px;"
+                    @click="onSubmit"
+                  />
+
+                  <input
+                    type="button"
+                    class="btn btn-second btn-raised btn-round"
+                    value="Cancel"
+                    style="margin-left: 15px;"
+                    @click="onCancel"
+                  />
+                </div>
+              </form>
             </div>
           </div>
-        </div> -->
+        </div>
       </div>
     </div>
-<!--     
-    <el-dialog title="Shipping & Order Information" :visible.sync="dialogFormVisible">
-      <el-form :model="form" size="mini">
-        <el-form-item label="Name:" :label-width="formLabelWidth">
-          <el-input v-model="form.name" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-divider content-position="left">Shipping</el-divider>
-        <el-form-item label="Contact No.:" :label-width="formLabelWidth">
-          <el-input v-model="form.contact_no" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="Email:" :label-width="formLabelWidth">
-          <el-input v-model="form.email" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="Product Name:" :label-width="formLabelWidth">
-          <el-input v-model="form.product_name" autocomplete="off">asd{{ item.title }}</el-input>
-        </el-form-item>
-        <el-form-item label="Unit Price:" :label-width="formLabelWidth">
-          <el-input v-model="form.unit_price" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="Quantity:" :label-width="formLabelWidth">
-          <el-select v-model="form.quantity" placeholder="Please select a quantity">
-            <el-option label="1" value="1"></el-option>
-            <el-option label="2" value="2"></el-option>
-            <el-option label="3" value="3"></el-option>
-            <el-option label="4" value="4"></el-option>
-            <el-option label="5" value="5"></el-option>
-            <el-option label="6" value="6"></el-option>
-            <el-option label="7" value="7"></el-option>
-            <el-option label="8" value="8"></el-option>
-            <el-option label="9" value="9"></el-option>
-            <el-option label="10" value="10"></el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="onSubmit">Confirm</el-button>
-      </span>
-    </el-dialog> -->
-    
   </div>
 </template>
 <script>
@@ -429,57 +666,138 @@ export default {
       item: {},
       dialogTableVisible: false,
       dialogFormVisible: false,
-      form: {},
+      form: {
+        country: 'Singapore',
+        quantity: '1'
+      },
       formLabelWidth: "120px",
-      shipping: db.collection('shipping'),
-      order: db.collection('order'),
+      shipping: db.collection("shipping"),
+      order: db.collection("order")
     };
   },
   created() {
-    db.collection("product").doc(this.$route.params.id).get().then(snapshot => {
-      if (snapshot.exists) {
-        let data = snapshot.data();
-        this.item = data;
-      } else {
-        // snapshot.data() will be undefined in this case
-        console.log("No such document!");
-      }
-    });
+    db.collection("product")
+      .doc(this.$route.params.id)
+      .get()
+      .then(snapshot => {
+        if (snapshot.exists) {
+          let data = snapshot.data();
+          this.item = data;
+          this.form.product_name = data.title;
+          this.form.unit_price = data.price;
+          this.form.shipping_rate = '5';
+          this.onPaymentCal();
+        } else {
+          // snapshot.data() will be undefined in this case
+          console.log("No such document!");
+        }
+      });
   },
   methods: {
-    onSubmit(){
-      /*if (!this.onValidation()) {
+    onSubmit() {
+      if (!this.onValidation()) {
         return;
-      }*/
+      }
 
-      this.shipping.add({
-        address: this.form.address,
-        contact_no: this.form.contact_no,
-        country: this.form.country,
-        email: this.form.email,
-        name: this.form.name,
-        postal_code: this.form.postal_code
-      }).then((docRef) => {
-        this.order.add({
-          product_name: this.form.product_name,
-          quantity: this.form.quantity,
-          shipping_id: docRef.id,
-          shipping_rate: this.form.shipping_rate,
-          total_payment: this.form.total_payment,
-          total_price: this.form.total_price,
-          unit_price: this.form.unit_price
-        }).then(() => {
-          this.form = {};
+      this.shipping
+        .add({
+          address: this.form.address,
+          contact_no: this.form.contact_no,
+          country: this.form.country,
+          email: this.form.email,
+          name: this.form.name,
+          postal_code: this.form.postal_code
         })
-        .catch((error) => {
-          alert('Error adding document: ', error);
+        .then(docRef => {
+          this.order
+            .add({
+              product_name: this.form.product_name,
+              quantity: this.form.quantity,
+              shipping_id: docRef.id,
+              shipping_rate: this.form.shipping_rate,
+              total_payment: this.form.total_payment,
+              total_price: this.form.total_price,
+              unit_price: this.form.unit_price
+            })
+            .then(() => {
+              this.form = {};
+            })
+            .catch(error => {
+              alert("Error adding document: ", error);
+            });
+        })
+        .catch(error => {
+          alert("Error adding document: ", error);
         });
-      })
-      .catch((error) => {
-        alert('Error adding document: ', error);
-      });
     },
-    onValidation () {
+    onCancel (e) {
+      e.preventDefault();
+      this.form = {};
+    },
+    onValidation() {
+      var message = '';
+      var flag = true;
+
+      if (!this.form.name) {
+        message += 'Name' + '<br/>';
+        flag = false;
+      }
+
+      if (!this.form.country) {
+        message += 'Country' + '<br/>';
+        flag = false;
+      }
+
+      if (!this.form.address) {
+        message += 'Address' + '<br/>';
+        flag = false;
+      }
+
+      if (!this.form.postal_code) {
+        message += 'Postal Code' + '<br/>';
+        flag = false;
+      }
+
+      if (!this.form.contact_no) {
+        message += 'Contact No.' + '<br/>';
+        flag = false;
+      }
+
+      if (!this.form.email) {
+        message += 'Email' + '<br/>';
+        flag = false;
+      }
+
+      if (!this.form.quantity) {
+        message += 'Quantity' + '<br/>';
+        flag = false;
+      }
+
+      if (!this.form.total_price) {
+        message += 'Total Price' + '<br/>';
+        flag = false;
+      }
+
+      if (!this.form.shipping_rate) {
+        message += 'Shipping Rate' + '<br/>';
+        flag = false;
+      }
+
+      if (!this.form.total_payment) {
+        message += 'Total Payment' + '<br/>';
+        flag = false;
+      }
+
+      this.$swal({
+        type: 'error',
+        title: 'Please input',
+        html: message,
+        });
+      return flag;
+    },
+    onPaymentCal() {
+      this.form.total_price = parseFloat(this.form.unit_price) * parseFloat(this.form.quantity);
+      this.form.total_payment = parseFloat(this.form.total_price) + parseFloat(this.form.shipping_rate);
     }
   }
 };
@@ -487,6 +805,6 @@ export default {
 
 <style>
 .remove-margin-top > div > button {
-    margin-top: 0px !important;
+  margin-top: 0px !important;
 }
 </style>

@@ -177,7 +177,6 @@ export default {
       this.customer.first_name = ''
       this.customer.last_name = ''
       this.customer.pdpa = ''
-      document.getElementById('errorMessage').style.display = 'none';
     },
     onValidation (e) {
       e.preventDefault();
