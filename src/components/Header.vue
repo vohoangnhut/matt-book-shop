@@ -35,14 +35,15 @@
                 <li class="nav-item">
                   <router-link class="nav-link" to="/contact">Contact Us</router-link>
                 </li>
+                <!-- remove by nhut vo
                 <li class="nav-item">
                   <i class="nav-link now-ui-icons shopping_cart-simple" style="
-
-    text-transform: uppercase;
-    font-size: 1.2em;
-    line-height: 1.625rem;
-"></i>
+                      text-transform: uppercase;
+                      font-size: 1.2em;
+                      line-height: 1.625rem;
+                  "></i>
                 </li>
+                -->
               </ul>
             </div>
     </div>
