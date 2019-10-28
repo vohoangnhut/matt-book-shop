@@ -77,6 +77,11 @@ export default {
           }
         );
     }
+  },
+  mounted(){
+    if(window.location.href.indexOf('login') != -1){
+      document.body.className = "login-page";
+    }
   }
 };
 </script>
