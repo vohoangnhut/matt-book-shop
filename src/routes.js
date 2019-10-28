@@ -11,5 +11,6 @@ export const routes = [
 	{path: '/contact', component: Contact, name: 'Contact'},
 	{path: '/admin/contact', component: ContactList, name: 'ContactList', meta: { requiresAuth: true }},
 	{path: '/admin/order', component: OrderList, name: 'OrderList', meta: { requiresAuth: true }},
-	{path: '/admin/login', component: AdminLogin, name: 'AdminLogin'}
+	{path: '/admin/login', component: AdminLogin, name: 'AdminLogin'},
+	{path: '/admin', component: ContactList, name: 'ContactList', meta: { requiresAuth: true }},
 ];
