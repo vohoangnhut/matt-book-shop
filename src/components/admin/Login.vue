@@ -1,25 +1,41 @@
 <template>
-    <div class="mt-5 p-5">
-        <mdb-card>
-            <mdb-card-body>
-                    <form novalidate @submit.prevent="login">
-                        <p class="h4 text-center mb-4">Sign in</p>
-
-                        <div class="grey-text mt-5">
-                            <mdb-input v-model="email" label="Email" icon="envelope" type="email" required />
-                            <mdb-input v-model="password" label="Password" icon="lock" type="password" required />
-                        </div>
-                        <div class="text-center">
-                            <mdb-btn type="submit">Login</mdb-btn>
-                        </div>
-                        <router-link to="register">Register</router-link>
-                    </form>
-            </mdb-card-body>
-        </mdb-card>
-    </div>
+  <div class="login">
+    <h3>Sign In</h3>
+    <input type="text" v-model="email" placeholder="Email" />
+    <br />
+    <input type="password" v-model="password" placeholder="Password" />
+    <br />
+    <button @click="login">Connection</button>
+  </div>
 </template>
 <script>
+import firebase from "../../config/firebaseConfig";
 export default {
-    name: "AdminLogin"
+  name: "AdminLogin",
+  data() {
+    return {
+      email: "",
+      password: ""
+    };
+  },
+  methods: {
+    login: function() {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(
+          user => {
+            this.$router.replace('/admin/contact');
+          },
+          err => {
+            this.$swal({
+              type: "error",
+              title: "Oops",
+              html: err.message
+            });
+          }
+        );
+    }
+  }
 };
 </script>

@@ -675,7 +675,6 @@ export default {
         quantity: "1"
       },
       formLabelWidth: "120px",
-      shipping: db.collection("shipping"),
       order: db.collection("order")
     };
   },
@@ -703,9 +702,9 @@ export default {
         return;
       }
       var totalPayment = this.form.total_payment;
-      var shipping = this.shipping;
       var order = this.order;
       var form = this.form;
+      var swal = this.$swal;
 
       // Render the PayPal button into #paypal-button-container
       paypal
@@ -725,56 +724,58 @@ export default {
           // Finalize the transaction
           onApprove: function(data, actions) {
             return actions.order.capture().then(function(details) {
-              shipping
+              order
                 .add({
-                  address: form.address,
-                  contact_no: form.contact_no,
-                  country: form.country,
-                  email: form.email,
-                  name: form.name,
-                  postal_code: form.postal_code
+                  product_name: form.product_name,
+                  quantity: form.quantity,
+                  shipping_rate: form.shipping_rate,
+                  total_payment: form.total_payment,
+                  total_price: form.total_price,
+                  unit_price: form.unit_price,
+                  shipping: {
+                    address: form.address,
+                    contact_no: form.contact_no,
+                    country: form.country,
+                    email: form.email,
+                    name: form.name,
+                    postal_code: form.postal_code
+                  }
                 })
-                .then(docRef => {
-                  order
-                    .add({
-                      product_name: form.product_name,
-                      quantity: form.quantity,
-                      shipping_id: docRef.id,
-                      shipping_rate: form.shipping_rate,
-                      total_payment: form.total_payment,
-                      total_price: form.total_price,
-                      unit_price: form.unit_price
+                .then(() => {
+                  axios
+                    .get(
+                      "https://us-central1-book-store-sg-x.cloudfunctions.net/sendMail?to=" +
+                        form.email +
+                        "&subject=" +
+                        "Thanks" +
+                        "&body=" +
+                        totalPayment.toString() +
+                        " - " +
+                        form.country
+                    )
+                    .then(function(response) {
+                      swal({
+                        type: "success",
+                        title: "Bravo !!!",
+                        html:
+                          "A receipt was sent to your email. The book will come later. Thanks"
+                      });
                     })
-                    .then(() => {
-                      axios
-                        .get(
-                          "https://us-central1-book-store-sg-x.cloudfunctions.net/sendMail?to=" +
-                            form.email +
-                            "&subject=" +
-                            "Thanks" +
-                            "&body=" +
-                            totalPayment.toString() +
-                            " - " +
-                            form.country
-                        )
-                        .then(function(response) {
-                        })
-                        .catch(function(error) {
-                          // handle error
-                          console.log(error);
-                        });
-                        this.$swal({
-                          type: "success",
-                          title: "Bravo !!!",
-                          html: "A receipt was sent to your email. The book will come later. Thanks"
-                        });
-                    })
-                    .catch(error => {
-                      alert("Error adding document: ", error);
+                    .catch(function(error) {
+                      swal({
+                        type: "error",
+                        title: "Error",
+                        html: error
+                      });
                     });
                 })
                 .catch(error => {
-                  alert("Error adding document: ", error);
+                  swal({
+                    type: "error",
+                    title: "Error",
+                    html: "Error adding document: ",
+                    error
+                  });
                 });
             });
           }
