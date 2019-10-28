@@ -1,9 +1,6 @@
 <template>
   <!-- Navbar -->
-  
-  <nav class="navbar navbar-expand-lg bg-info" color-on-scroll="500">
-
-  <!-- <nav class="navbar navbar-expand-lg bg-white fixed-top navbar-transparent" color-on-scroll="500"> -->
+  <nav id="navHeader" class="navbar navbar-expand-lg bg-white fixed-top navbar-transparent" color-on-scroll="500">
     <div class="container">
       <div class="navbar-translate">
         <router-link class="navbar-brand" to="/">Project B</router-link>
@@ -90,6 +87,14 @@ export default {
           this.$router.replace("/");
         });
     }
+  },
+  mounted(){
+    if(window.location.href.indexOf('admin') != -1){
+      document.getElementById("navHeader").className = "navbar navbar-expand-lg bg-info";
+    }else{
+      document.getElementById("navHeader").className = "navbar navbar-expand-lg bg-white fixed-top navbar-transparent";
+    }
   }
+  
 };
 </script>
