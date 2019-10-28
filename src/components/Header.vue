@@ -3,7 +3,7 @@
   <nav id="navHeader" class="navbar navbar-expand-lg bg-white fixed-top navbar-transparent" color-on-scroll="500">
     <div class="container">
       <div class="navbar-translate">
-        <router-link class="navbar-brand" to="/">Project B</router-link>
+        <a class="navbar-brand" href="/">Project B</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -37,11 +37,15 @@
           <li class="nav-item">
             <router-link class="nav-link" @click.native="$scrollToTop" to="/contact">Contact Us</router-link>
           </li>
+
+          <li class="nav-item" v-if="isLoggedIn">
+            <a href="/admin" class="nav-link">ADMIN</a>
+          </li>
+
           <li class="nav-item" v-if="isLoggedIn == false">
             <a href="/admin" class="nav-link">
               <i
                 class="now-ui-icons users_single-02"
-                
               ></i>
             </a>
           </li>
@@ -90,9 +94,11 @@ export default {
   },
   mounted(){
     if(window.location.href.indexOf('admin') != -1){
-      document.getElementById("navHeader").className = "navbar navbar-expand-lg bg-info";
+      document.getElementById('navHeader').removeAttribute('color-on-scroll');
+      document.getElementById("navHeader").className = "navbar navbar-expand-lg bg-info fixed-top";
     }else{
       document.getElementById("navHeader").className = "navbar navbar-expand-lg bg-white fixed-top navbar-transparent";
+      document.getElementById('navHeader').setAttribute('color-on-scroll',"500");
     }
   }
   
