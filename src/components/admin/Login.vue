@@ -66,7 +66,7 @@ export default {
         .signInWithEmailAndPassword(this.email, this.password)
         .then(
           user => {
-            this.$router.replace("/admin/contact");
+            this.$router.replace("/admin");
           },
           err => {
             this.$swal({

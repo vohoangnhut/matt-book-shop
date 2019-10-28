@@ -84,7 +84,7 @@ export default {
         .auth()
         .signOut()
         .then(() => {
-          this.$router.replace("/");
+          window.location.href = '/';
         });
     }
   },

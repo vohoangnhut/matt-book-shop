@@ -2,7 +2,6 @@ import Home from './components/Home';
 import Contact from './components/Contact';
 import Products from './components/Products';
 import ContactList from './components/admin/ContactList';
-import OrderList from './components/admin/OrderList';
 import AdminLogin from './components/admin/Login';
 
 export const routes = [
