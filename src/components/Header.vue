@@ -41,11 +41,7 @@
             <a href="/admin" class="nav-link">
               <i
                 class="now-ui-icons users_single-02"
-                style="
-                      text-transform: uppercase;
-                      font-size: 1.2em;
-                      line-height: 1.625rem;
-                  "
+                
               ></i>
             </a>
           </li>
@@ -54,11 +50,7 @@
             <a href="#" @click="onSignout" class="nav-link">
               <i
                 class="now-ui-icons arrows-1_share-66"
-                style="
-                      text-transform: uppercase;
-                      font-size: 1.2em;
-                      line-height: 1.625rem;
-                  "
+                style="text-transform: uppercase;font-size: 1.2em;"
               ></i>
             </a>
           </li>
