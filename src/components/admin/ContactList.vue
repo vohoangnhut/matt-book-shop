@@ -1,20 +1,5 @@
 <template>
   <div class="wrapper">
-    <div class="page-header page-header-small">
-      <div
-        class="page-header-image"
-        data-parallax="true"
-        style="background-image: url('/assets/img/bg24.jpg') ;"
-      ></div>
-      <div class="content-center">
-        <div class="row">
-          <div class="col-md-8 ml-auto mr-auto text-center">
-            <h2 class="title">WeChat Lucky Money</h2>
-            <h4>WeChat launched in 2013.</h4>
-          </div>
-        </div>
-      </div>
-    </div>
     <div class="section">
       <div class="container">
         <div class="row">

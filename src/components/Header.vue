@@ -1,6 +1,9 @@
 <template>
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg bg-white fixed-top navbar-transparent" color-on-scroll="500">
+  
+  <nav class="navbar navbar-expand-lg bg-info" color-on-scroll="500">
+
+  <!-- <nav class="navbar navbar-expand-lg bg-white fixed-top navbar-transparent" color-on-scroll="500"> -->
     <div class="container">
       <div class="navbar-translate">
         <router-link class="navbar-brand" to="/">Project B</router-link>
