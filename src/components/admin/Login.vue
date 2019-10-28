@@ -18,7 +18,7 @@
                       <i class="now-ui-icons users_circle-08"></i>
                     </span>
                   </div>
-                  <input type="text" class="form-control" v-model="email" placeholder="Email..." />
+                  <input type="text" class="form-control" v-model="email" placeholder="Email..." @keyup.enter="login" />
                 </div>
                 <div class="input-group form-group-no-border input-lg">
                   <div class="input-group-prepend">
@@ -31,6 +31,7 @@
                     class="form-control"
                     v-model="password"
                     placeholder="Password..."
+                    @keyup.enter="login"
                   />
                 </div>
               </div>
