@@ -25,8 +25,6 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
 	firebase.auth().onAuthStateChanged(user => {
 		if (!user) {
-			//Vue.prototype.$isLoggedIn = false;
-			//console.log('AAA');
 			const currentUser = firebase.auth().currentUser;
 			const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
@@ -34,8 +32,6 @@ router.beforeEach((to, from, next) => {
 			else if (!requiresAuth && currentUser) next('/admin/contactlist');
 			else next();
 		}else{
-			//Vue.prototype.$isLoggedIn = true;
-			//console.log('QQQ');
 			next();
 		}
 	});
