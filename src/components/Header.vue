@@ -37,15 +37,22 @@
                 <li class="nav-item">
                   <router-link class="nav-link" @click.native="$scrollToTop" to="/contact">Contact Us</router-link>
                 </li>
-                <!-- remove by nhut vo
                 <li class="nav-item">
-                  <i class="nav-link now-ui-icons shopping_cart-simple" style="
+                  <i class="nav-link now-ui-icons users_single-02" style="
                       text-transform: uppercase;
                       font-size: 1.2em;
                       line-height: 1.625rem;
                   "></i>
                 </li>
-                -->
+
+                <li class="nav-item">
+                  <i class="nav-link now-ui-icons arrows-1_share-66" style="
+                      text-transform: uppercase;
+                      font-size: 1.2em;
+                      line-height: 1.625rem;
+                  "></i>
+                </li>
+                
               </ul>
             </div>
     </div>
