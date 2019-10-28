@@ -1,9 +1,8 @@
 <template>
   <div id="app">
-    <Header />
-    <message-component></message-component>
+    <Header v-if="checkRoute" />
     <router-view/>
-    <Footer />
+    <Footer v-if="checkRoute" />
   </div>
 </template>
 
@@ -11,20 +10,26 @@
 import { mapActions } from 'vuex';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import MessageComponent from './components/common/MessageComponent.vue';
 export default {
   components: {
     Header,
-    Footer,
-    MessageComponent
+    Footer
   },
   methods: {
     ...mapActions(['getShoppingCart', 'listenToProductList'])
     },
-    created() {
-      //let uid = this.$store.getters.currentUser.uid;
-      this.listenToProductList();
-      //this.getShoppingCart({uid, currentCart: this.$store.getters.cartItemList});
+  created() {
+    //let uid = this.$store.getters.currentUser.uid;
+    this.listenToProductList();
+    //this.getShoppingCart({uid, currentCart: this.$store.getters.cartItemList});
+  },
+  computed: {
+    checkRoute() {
+      if(this.$route.path === '/admin/login'){
+        return false;
+      }
+      return true;
     }
+  }
 }
 </script>
