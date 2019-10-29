@@ -84,7 +84,7 @@ yarn-error.log*
 *.sln
 *.sw?
 
-
+.firebase
 
 # color change from 9A9A9A to #0c0c0c
 #
