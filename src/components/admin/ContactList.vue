@@ -3,10 +3,22 @@
     <div class="container-fluid">
       <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="Contact List" name="first">
-          <mdb-datatable :data="data" striped bordered />
+          <b-table hover :items="dataContact" id="dataContactTable" :per-page="dataContactPerPage" :current-page="dataContactCurrentPage"></b-table>
+          <b-pagination
+            v-model="dataContactCurrentPage"
+            :total-rows="rowsDataContact"
+            :per-page="dataContactPerPage"
+            aria-controls="dataContactTable"
+          ></b-pagination>
         </el-tab-pane>
         <el-tab-pane label="Order List" name="second">
-          <mdb-datatable :data="dataOrder" striped bordered />
+          <b-table hover :items="dataOrder" id="dataOrderTable" :per-page="dataOrderPerPage" :current-page="dataOrderCurrentPage"></b-table>
+          <b-pagination
+            v-model="dataOrderCurrentPage"
+            :total-rows="rowsDataOrder"
+            :per-page="dataOrderPerPage"
+            aria-controls="dataOrderTable"
+          ></b-pagination>
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -14,44 +26,16 @@
 </template>
 <script>
 import { db } from "./../../config/firebaseConfig";
-import { mdbDatatable } from 'mdbvue';
-
 export default {
   name: "ContactList",
-  components: {
-      mdbDatatable
-  },
   data() {
     return {
-      tableData: [],
-      tableDataOrder: [],
-      search: "",
-      data: {
-        columns: [
-          {field: "first_name", label: "First Name"},
-          {field: "last_name", label: "Last Name"},
-          {field: "email", label: "Email Address"},
-          {field: "contact_no", label: "Contact No"}
-        ],
-        rows: []
-      },
-      dataOrder: {
-        columns: [
-          {field: "product_name", label: "Product Name"},
-          {field: "quantity", label: "Quantity"},
-          {field: "unit_price", label: "Unit Price"},
-          {field: "shipping_rate", label: "Shipping Rate"},
-          {field: "total_price", label: "Total Price"},
-          {field: "total_payment", label: "Total Payment"},
-          {field: "shippingAddress", label: "Shipping Address"},
-          {field: "shippingContact_no", label: "Contact No"},
-          {field: "shippingCountry", label: "Country"},
-          {field: "shippingEmail", label: "Email"},
-          {field: "shippingName", label: "Name"},
-          {field: "shippingPostal_code", label: "Postal Code"}
-        ],
-        rows: []
-      }
+      dataContact: [],
+      dataOrder: [],
+      dataContactPerPage: 5,
+      dataContactCurrentPage: 1,
+      dataOrderPerPage: 5,
+      dataOrderCurrentPage: 1
     };
   },
   created() {
@@ -59,7 +43,7 @@ export default {
       .get()
       .then(snapshot => {
         snapshot.docs.forEach(doc => {
-          this.data.rows.push(doc.data());
+          this.dataContact.push(doc.data());
         });
       })
       .catch(error => {
@@ -84,12 +68,21 @@ export default {
           obj.shippingEmail = data.shipping.email;
           obj.shippingName = data.shipping.name;
           obj.shippingPostal_code = data.shipping.postal_code;
-          this.dataOrder.rows.push(obj);
+          obj.orderDate = data.order_date;
+          this.dataOrder.push(obj);
         });
       })
       .catch(error => {
         console.log(error);
       });
+  },
+  computed: {
+    rowsDataContact() {
+      return this.dataContact.length;
+    },
+    rowsDataOrder() {
+      return this.dataOrder.length;
+    }
   }
 };
 </script>

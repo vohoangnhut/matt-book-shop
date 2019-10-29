@@ -7,12 +7,14 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import BootstrapVue from 'bootstrap-vue';
 
 import App from './App.vue';
 
 Vue.use(VueRouter);
 Vue.use(VueSweetalert2);
 Vue.use(ElementUI);
+Vue.use(BootstrapVue);
 
 Vue.prototype.$scrollToTop = () => window.scrollTo(0, 0)
 
