@@ -705,6 +705,7 @@ export default {
       var order = this.order;
       var form = this.form;
       var swal = this.$swal;
+      var orderDate = this.calcTime('Singapore', '+8');
 
       // Render the PayPal button into #paypal-button-container
       paypal
@@ -739,7 +740,8 @@ export default {
                     email: form.email,
                     name: form.name,
                     postal_code: form.postal_code
-                  }
+                  },
+                  order_date: orderDate
                 })
                 .then(() => {
                   axios
@@ -840,6 +842,12 @@ export default {
         parseFloat(this.form.unit_price) * parseFloat(this.form.quantity);
       this.form.total_payment =
         parseFloat(this.form.total_price) + parseFloat(this.form.shipping_rate);
+    },
+    calcTime(city, offset) {
+      var d = new Date();
+      var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
+      var nd = new Date(utc + (3600000*offset));
+      return nd.toLocaleString();
     }
   }
 };

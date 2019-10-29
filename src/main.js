@@ -7,7 +7,6 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import 'mdbvue/lib/css/mdb.min.css';
 
 import App from './App.vue';
 
@@ -27,7 +26,6 @@ router.beforeEach((to, from, next) => {
 		if (!user) {
 			const currentUser = firebase.auth().currentUser;
 			const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
-console.log('AA');
 			if (requiresAuth && !currentUser) next('/admin/login');
 			else if (!requiresAuth && currentUser) next('/admin/contactlist');
 			else next();
