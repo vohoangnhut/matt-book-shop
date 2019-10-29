@@ -1,65 +1,57 @@
 <template>
-    <div class="section">
-      <div class="container-fluid">
-
-        <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
-          <el-tab-pane label="Contact List" name="first">
-            <el-table
-              :data="tableData.filter(data => !search || (data.email).toLowerCase().includes(search.toLowerCase()))"
-              style="width: 100%">
-              <el-table-column label="First Name" prop="first_name"></el-table-column>
-              <el-table-column label="Last Name" prop="last_name"></el-table-column>
-              <el-table-column label="Email Address" prop="email"></el-table-column>
-              <el-table-column label="Contact No" prop="contact_no"></el-table-column>
-              <el-table-column align="right">
-                <template slot="header">
-                  <el-input v-model="search" size="mini" placeholder="Type to search" />
-                </template>
-              </el-table-column>
-            </el-table>
-          </el-tab-pane>
-          <el-tab-pane label="Contact List" name="second">
-                <el-table
-                  :data="tableDataOrder.filter(data => !search || (data.email).toLowerCase().includes(search.toLowerCase()))"
-                  style="width: 100%"
-                >
-                  <el-table-column label="Product Name" prop="product_name"></el-table-column>
-                  <el-table-column label="Quantity" prop="quantity"></el-table-column>
-                  <el-table-column label="Unit Price" prop="unit_price"></el-table-column>
-                  <el-table-column label="Shipping Rate" prop="shipping_rate"></el-table-column>
-                  <el-table-column label="Total Price" prop="total_price"></el-table-column>
-                  <el-table-column label="Total Payment" prop="total_payment"></el-table-column>
-                  <el-table-column label="Shipping Address" prop="shipping.address"></el-table-column>
-                  <el-table-column label="Contact No" prop="shipping.contact_no"></el-table-column>
-                  <el-table-column label="Country" prop="shipping.country"></el-table-column>
-                  <el-table-column label="Email" prop="shipping.email"></el-table-column>
-                  <el-table-column label="Name" prop="shipping.name"></el-table-column>
-                  <el-table-column label="Postal Code" prop="shipping.postal_code"></el-table-column>
-                  <el-table-column align="right">
-                    <template slot="header">
-                      <el-input v-model="search" size="mini" placeholder="Type to search" />
-                    </template>
-                  </el-table-column>
-                </el-table>
-          </el-tab-pane>
-        </el-tabs>
-
-        
-      </div>
+  <div class="section">
+    <div class="container-fluid">
+      <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="Contact List" name="first">
+          <mdb-datatable :data="data" striped bordered />
+        </el-tab-pane>
+        <el-tab-pane label="Order List" name="second">
+          <mdb-datatable :data="dataOrder" striped bordered />
+        </el-tab-pane>
+      </el-tabs>
     </div>
-       
-   
+  </div>
 </template>
 <script>
-import { db, firebaseAuth } from "./../../config/firebaseConfig";
+import { db } from "./../../config/firebaseConfig";
+import { mdbDatatable } from 'mdbvue';
 
 export default {
   name: "ContactList",
+  components: {
+      mdbDatatable
+  },
   data() {
     return {
       tableData: [],
       tableDataOrder: [],
-      search: ""
+      search: "",
+      data: {
+        columns: [
+          {field: "first_name", label: "First Name"},
+          {field: "last_name", label: "Last Name"},
+          {field: "email", label: "Email Address"},
+          {field: "contact_no", label: "Contact No"}
+        ],
+        rows: []
+      },
+      dataOrder: {
+        columns: [
+          {field: "product_name", label: "Product Name"},
+          {field: "quantity", label: "Quantity"},
+          {field: "unit_price", label: "Unit Price"},
+          {field: "shipping_rate", label: "Shipping Rate"},
+          {field: "total_price", label: "Total Price"},
+          {field: "total_payment", label: "Total Payment"},
+          {field: "shippingAddress", label: "Shipping Address"},
+          {field: "shippingContact_no", label: "Contact No"},
+          {field: "shippingCountry", label: "Country"},
+          {field: "shippingEmail", label: "Email"},
+          {field: "shippingName", label: "Name"},
+          {field: "shippingPostal_code", label: "Postal Code"}
+        ],
+        rows: []
+      }
     };
   },
   created() {
@@ -67,7 +59,7 @@ export default {
       .get()
       .then(snapshot => {
         snapshot.docs.forEach(doc => {
-          this.tableData.push(doc.data());
+          this.data.rows.push(doc.data());
         });
       })
       .catch(error => {
@@ -78,7 +70,21 @@ export default {
       .get()
       .then(snapshot => {
         snapshot.docs.forEach(doc => {
-          this.tableDataOrder.push(doc.data());
+          var obj = {};
+          var data = doc.data();
+          obj.product_name = data.product_name;
+          obj.quantity = data.quantity;
+          obj.unit_price = data.unit_price;
+          obj.shipping_rate = data.shipping_rate;
+          obj.total_price = data.total_price;
+          obj.total_payment = data.total_payment;
+          obj.shippingAddress = data.shipping.address;
+          obj.shippingContact_no = data.shipping.contact_no;
+          obj.shippingCountry = data.shipping.country;
+          obj.shippingEmail = data.shipping.email;
+          obj.shippingName = data.shipping.name;
+          obj.shippingPostal_code = data.shipping.postal_code;
+          this.dataOrder.rows.push(obj);
         });
       })
       .catch(error => {

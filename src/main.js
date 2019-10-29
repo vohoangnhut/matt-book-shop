@@ -2,12 +2,12 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import { routes } from './routes';
-import store from './stores/store';
 import firebase from './config/firebaseConfig';
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import 'mdbvue/lib/css/mdb.min.css';
 
 import App from './App.vue';
 
@@ -40,6 +40,5 @@ console.log('AA');
 new Vue({
 	el: '#app',
 	router,
-	store,
 	render: h => h(App)
 })
