@@ -1,7 +1,7 @@
 <template>
   <div class="section">
     <div class="container-fluid">
-      <el-tabs type="border-card" v-model="activeName" @tab-click="handleClick">
+      <el-tabs type="border-card" v-model="activeName">
         <el-tab-pane label="Contact List" name="first">
           <b-table
             hover
@@ -125,7 +125,8 @@ export default {
         id: "info-modal",
         title: ""
       },
-      customer: {}
+      customer: {},
+      activeName: 'first'
     };
   },
   created() {
