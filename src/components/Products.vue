@@ -192,7 +192,6 @@
                 <div class="row">
                   <div class="col-lg-6 col-md-8 col-sm-5 remove-margin-top">
                     <label>Country</label>
-                    <select class="selectpicker countrypicker"></select>
                     <select
                       class="selectpicker dropdown-countries"
                       data-size="7"

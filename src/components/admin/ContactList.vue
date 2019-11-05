@@ -9,8 +9,8 @@
             id="dataContactTable"
             :per-page="dataContactPerPage"
             :current-page="dataContactCurrentPage"
-            :sort-by.sync="sortBy"
-            :sort-desc.sync="sortDesc"
+            :sort-by.sync="sortByContact"
+            :sort-desc.sync="sortDescContact"
             :fields="dataContactFields"
           >
             <template v-slot:cell(actions)="row">
@@ -35,6 +35,9 @@
             id="dataOrderTable"
             :per-page="dataOrderPerPage"
             :current-page="dataOrderCurrentPage"
+            :sort-by.sync="sortByOrder"
+            :sort-desc.sync="sortDescOrder"
+            :fields="dataOrderFields"
           >
             <template v-slot:cell(actions)="row">
               <b-button
@@ -130,8 +133,10 @@ export default {
       },
       customer: {},
       activeName: 'first',
-      sortBy: 'created',
-      sortDesc: true,
+      sortByContact: 'created',
+      sortDescContact: true,
+      sortByOrder: 'orderDate',
+      sortDescOrder: true,
       dataContactFields: [
         { key: 'created', sortable: true },
         { key: 'first_name', sortable: true },
@@ -139,6 +144,23 @@ export default {
         { key: 'contact_no', sortable: true },
         { key: 'email', sortable: true },
         { key: 'pdpa', sortable: true },
+        { key: 'actions' }
+      ],
+      dataOrderFields: [
+        { key: 'invNo', sortable: true },
+        { key: 'orderDate', sortable: true },
+        { key: 'shippingName', sortable: true },
+        { key: 'shippingCountry', sortable: true },
+        { key: 'shippingAddress', sortable: true },
+        { key: 'shippingPostal_code', sortable: true },
+        { key: 'shippingContact_no', sortable: true },
+        { key: 'shippingEmail', sortable: true },
+        { key: 'product_name', sortable: true },
+        { key: 'unit_price', sortable: true },
+        { key: 'quantity', sortable: true },
+        { key: 'total_price', sortable: true },
+        { key: 'shipping_rate', sortable: true },
+        { key: 'total_payment', sortable: true },
         { key: 'actions' }
       ]
     };
@@ -176,6 +198,7 @@ export default {
           obj.shippingName = data.shipping.name;
           obj.shippingPostal_code = data.shipping.postal_code;
           obj.orderDate = data.order_date;
+          obj.invNo = data.inv_no.date + data.inv_no.no;
           obj.actions = "";
           this.dataOrder.push(obj);
         });
