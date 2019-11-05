@@ -705,84 +705,99 @@ export default {
       var order = this.order;
       var form = this.form;
       var swal = this.$swal;
-      var orderDate = this.calcTime('Singapore', '+8');
+      var orderDate = this.calcTime("Singapore", "+8");
+      var today = this.formatDate(orderDate);
+      var invNo = "";
+      this.getInvNo(today).then(snapshot => {
+        if (snapshot.docs.length === 0) {
+          invNo = "0001";
+        }
 
-      // Render the PayPal button into #paypal-button-container
-      paypal
-        .Buttons({
-          // Set up the transaction
-          createOrder: function(data, actions) {
-            return actions.order.create({
-              purchase_units: [
-                {
-                  amount: {
-                    value: totalPayment.toString()
+        snapshot.docs.forEach(doc => {
+          var data = doc.data();
+          invNo = this.pad(parseInt(data.inv_no.no) + 1, 4);
+        });
+        // Render the PayPal button into #paypal-button-container
+        paypal
+          .Buttons({
+            // Set up the transaction
+            createOrder: function(data, actions) {
+              return actions.order.create({
+                purchase_units: [
+                  {
+                    amount: {
+                      value: totalPayment.toString()
+                    }
                   }
-                }
-              ]
-            });
-          },
-          // Finalize the transaction
-          onApprove: function(data, actions) {
-            return actions.order.capture().then(function(details) {
-              order
-                .add({
-                  product_name: form.product_name,
-                  quantity: form.quantity,
-                  shipping_rate: form.shipping_rate,
-                  total_payment: form.total_payment,
-                  total_price: form.total_price,
-                  unit_price: form.unit_price,
-                  shipping: {
-                    address: form.address,
-                    contact_no: form.contact_no,
-                    country: form.country,
-                    email: form.email,
-                    name: form.name,
-                    postal_code: form.postal_code
-                  },
-                  order_date: orderDate
-                })
-                .then(() => {
-                  axios
-                    .get(
-                      "https://us-central1-book-store-sg-x.cloudfunctions.net/sendMail?to=" +
-                        form.email +
-                        "&subject=" +
-                        "Thanks" +
-                        "&body=" +
-                        totalPayment.toString() +
-                        " - " +
-                        form.country
-                    )
-                    .then(function(response) {
-                      swal({
-                        type: "success",
-                        title: "Bravo !!!",
-                        html:
-                          "A receipt was sent to your email. The book will come later. Thanks"
+                ]
+              });
+            },
+            // Finalize the transaction
+            onApprove: function(data, actions) {
+              return actions.order.capture().then(function(details) {
+                order
+                  .add({
+                    product_name: form.product_name,
+                    quantity: form.quantity,
+                    shipping_rate: form.shipping_rate,
+                    total_payment: form.total_payment,
+                    total_price: form.total_price,
+                    unit_price: form.unit_price,
+                    shipping: {
+                      address: form.address,
+                      contact_no: form.contact_no,
+                      country: form.country,
+                      email: form.email,
+                      name: form.name,
+                      postal_code: form.postal_code
+                    },
+                    order_date: orderDate,
+                    inv_no: {
+                      date: today,
+                      no: invNo
+                    }
+                  })
+                  .then(() => {
+                    axios
+                      .get(
+                        "https://us-central1-book-store-sg-x.cloudfunctions.net/sendMail?to=" +
+                          form.email +
+                          "&subject=" +
+                          "Thanks" +
+                          "&body=" +
+                          totalPayment.toString() +
+                          " - " +
+                          form.country
+                      )
+                      .then(function(response) {
+                        swal({
+                          type: "success",
+                          title: "Bravo !!!",
+                          html:
+                            "A receipt was sent to your email. The book will come later. Thanks"
+                        });
+                      })
+                      .catch(function(error) {
+                        swal({
+                          type: "error",
+                          title: "Error",
+                          html: error
+                        });
                       });
-                    })
-                    .catch(function(error) {
-                      swal({
-                        type: "error",
-                        title: "Error",
-                        html: error
-                      });
+                  })
+                  .catch(error => {
+                    swal({
+                      type: "error",
+                      title: "Error",
+                      html: "Error adding document: ",
+                      error
                     });
-                })
-                .catch(error => {
-                  swal({
-                    type: "error",
-                    title: "Error",
-                    html: "Error adding document: ",
-                    error
                   });
-                });
-            });
-          }
-        })
-        .render("#paypal-button");
+              });
+            }
+          })
+          .render("#paypal-button");
+      });
     },
     onCancel(e) {
       e.preventDefault();
@@ -845,9 +860,47 @@ export default {
     },
     calcTime(city, offset) {
       var d = new Date();
-      var utc = d.getTime() + (d.getTimezoneOffset() * 60000);
-      var nd = new Date(utc + (3600000*offset));
+      var utc = d.getTime() + d.getTimezoneOffset() * 60000;
+      var nd = new Date(utc + 3600000 * offset);
       return nd.toLocaleString();
+    },
+    getInvNo(today) {
+      return new Promise((resolve, reject) => {
+        db.collection("order")
+          .where("inv_no.date", "==", today)
+          .orderBy("order_date", "desc")
+          .limit(1)
+          .get()
+          .then(snapshot => {
+            resolve(snapshot);
+          })
+          .catch(error => {
+            reject(error); // the request failed
+          });
+      }).catch(error => {
+        reject(error); // the request failed
+      });
+    },
+    formatDate(date) {
+      var d = new Date(date),
+        month = "" + (d.getMonth() + 1),
+        day = "" + d.getDate(),
+        year = d
+          .getFullYear()
+          .toString()
+          .substring(2, 4);
+
+      if (month.length < 2) month = "0" + month;
+      if (day.length < 2) day = "0" + day;
+
+      return [day, month, year].join("");
+    },
+    pad(n, width, z) {
+      z = z || "0";
+      n = n + "";
+      return n.length >= width
+        ? n
+        : new Array(width - n.length + 1).join(z) + n;
     }
   }
 };
