@@ -8,6 +8,7 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import BootstrapVue from 'bootstrap-vue';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
 
 import App from './App.vue';
 
