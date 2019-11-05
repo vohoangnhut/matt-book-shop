@@ -182,9 +182,13 @@ export default {
     onSubmit(e) {
       e.preventDefault();
 
+      this.customer.created = this.calcTime("Singapore", "+8");
+
       if (!this.onValidation(e)) {
         return;
       }
+      
+
       this.ref
         .add(this.customer)
         .then(() => {
@@ -266,6 +270,12 @@ export default {
       }
 
       return flag;
+    },
+    calcTime(city, offset) {
+      var d = new Date();
+      var utc = d.getTime() + d.getTimezoneOffset() * 60000;
+      var nd = new Date(utc + 3600000 * offset);
+      return nd.toLocaleString();
     }
   }
 };

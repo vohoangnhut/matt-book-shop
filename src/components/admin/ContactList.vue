@@ -9,6 +9,9 @@
             id="dataContactTable"
             :per-page="dataContactPerPage"
             :current-page="dataContactCurrentPage"
+            :sort-by.sync="sortBy"
+            :sort-desc.sync="sortDesc"
+            :fields="dataContactFields"
           >
             <template v-slot:cell(actions)="row">
               <b-button
@@ -126,7 +129,18 @@ export default {
         title: ""
       },
       customer: {},
-      activeName: 'first'
+      activeName: 'first',
+      sortBy: 'created',
+      sortDesc: true,
+      dataContactFields: [
+        { key: 'created', sortable: true },
+        { key: 'first_name', sortable: true },
+        { key: 'last_name', sortable: true },
+        { key: 'contact_no', sortable: true },
+        { key: 'email', sortable: true },
+        { key: 'pdpa', sortable: true },
+        { key: 'actions' }
+      ]
     };
   },
   created() {
