@@ -215,8 +215,8 @@ export default {
           this.customer.pdpa = "";
           this.$swal({
             type: "success",
-            title: "Thanks !!!",
-            html: "We will contact you soon"
+            title: "Thank you !",
+            html: "We will be keeping in touch with you shortly"
           });
         })
         .catch(error => {
@@ -237,34 +237,34 @@ export default {
       var flag = true;
 
       if (!this.customer.contact_no) {
-        message += "Contact No." + "<br/>";
+        message += "Contact No. is mandatory !" + "<br/>";
         flag = false;
       }
 
       if (!this.customer.email) {
-        message += "Email" + "<br/>";
+        message += "Email is mandatory !" + "<br/>";
         flag = false;
       }
 
       if (!this.customer.first_name) {
-        message += "First Name" + "<br/>";
+        message += "First Name is mandatory !" + "<br/>";
         flag = false;
       }
 
       if (!this.customer.last_name) {
-        message += "Last Name" + "<br/>";
+        message += "Last Name is mandatory !" + "<br/>";
         flag = false;
       }
 
       if (!this.customer.pdpa) {
-        message += "PDPA consent" + "<br/>";
+        message += "PDPA consent is mandatory !" + "<br/>";
         flag = false;
       }
 
       if (!flag) {
         this.$swal({
-          type: "error",
-          title: "Please input",
+          type: "warning",
+          title: "Warning",
           html: message
         });
       }

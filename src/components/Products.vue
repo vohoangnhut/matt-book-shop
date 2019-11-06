@@ -198,6 +198,7 @@
                       data-style="btn btn-round"
                       title="Single Select"
                       v-model="form.country"
+                      id="cbxCountry"
                     >
                       <option value="Afganistan">Afghanistan</option>
                       <option value="Albania">Albania</option>
@@ -563,6 +564,7 @@
                       title="Single Select"
                       v-model="form.quantity"
                       @change="onPaymentCal"
+                      id="cbxQuantity"
                     >
                       <option value="1" selected>1</option>
                       <option value="2">2</option>
@@ -717,91 +719,100 @@ export default {
           var data = doc.data();
           invNo = this.pad(parseInt(data.inv_no.no) + 1, 4);
         });
-        // Render the PayPal button into #paypal-button-container
-        paypal
-          .Buttons({
-            // Set up the transaction
-            createOrder: function(data, actions) {
-              return actions.order.create({
-                purchase_units: [
-                  {
-                    amount: {
-                      value: totalPayment.toString()
+        if ($("#paypal-button").is(":empty")) {
+          // Render the PayPal button into #paypal-button-container
+          paypal
+            .Buttons({
+              // Set up the transaction
+              createOrder: function(data, actions) {
+                return actions.order.create({
+                  purchase_units: [
+                    {
+                      amount: {
+                        value: totalPayment.toString()
+                      }
                     }
-                  }
-                ]
-              });
-            },
-            // Finalize the transaction
-            onApprove: function(data, actions) {
-              return actions.order.capture().then(function(details) {
-                order
-                  .add({
-                    product_name: form.product_name,
-                    quantity: form.quantity,
-                    shipping_rate: form.shipping_rate,
-                    total_payment: form.total_payment,
-                    total_price: form.total_price,
-                    unit_price: form.unit_price,
-                    shipping: {
-                      address: form.address,
-                      contact_no: form.contact_no,
-                      country: form.country,
-                      email: form.email,
-                      name: form.name,
-                      postal_code: form.postal_code
-                    },
-                    order_date: orderDate,
-                    inv_no: {
-                      date: today,
-                      no: invNo
-                    }
-                  })
-                  .then(() => {
-                    axios
-                      .get(
-                        "https://us-central1-book-store-sg-x.cloudfunctions.net/sendMail?to=" +
-                          form.email +
-                          "&subject=" +
-                          "Thanks" +
-                          "&body=" +
-                          totalPayment.toString() +
-                          " - " +
-                          form.country
-                      )
-                      .then(function(response) {
-                        swal({
-                          type: "success",
-                          title: "Bravo !!!",
-                          html:
-                            "A receipt was sent to your email. The book will come later. Thanks"
+                  ]
+                });
+              },
+              // Finalize the transaction
+              onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+                  order
+                    .add({
+                      product_name: form.product_name,
+                      quantity: form.quantity,
+                      shipping_rate: form.shipping_rate,
+                      total_payment: form.total_payment,
+                      total_price: form.total_price,
+                      unit_price: form.unit_price,
+                      shipping: {
+                        address: form.address,
+                        contact_no: form.contact_no,
+                        country: form.country,
+                        email: form.email,
+                        name: form.name,
+                        postal_code: form.postal_code
+                      },
+                      order_date: orderDate,
+                      inv_no: {
+                        date: today,
+                        no: invNo
+                      }
+                    })
+                    .then(() => {
+                      axios
+                        .get(
+                          "https://us-central1-book-store-sg-x.cloudfunctions.net/sendMail?to=" +
+                            form.email +
+                            "&subject=" +
+                            "[thelandlordclub] Your payment has been completed" +
+                            "&body=" +
+                            totalPayment.toString() +
+                            " - " +
+                            form.country
+                        )
+                        .then(function(response) {
+                          swal({
+                            type: "success",
+                            title: "Thank you !",
+                            html:
+                              "Your order will be on its way. Receipt of this purchase will be sent to your email"
+                          });
+                        })
+                        .catch(function(error) {
+                          swal({
+                            type: "error",
+                            title: "Error",
+                            html: error
+                          });
                         });
-                      })
-                      .catch(function(error) {
-                        swal({
-                          type: "error",
-                          title: "Error",
-                          html: error
-                        });
+                    })
+                    .catch(error => {
+                      swal({
+                        type: "error",
+                        title: "Error",
+                        html: "Error adding document: ",
+                        error
                       });
-                  })
-                  .catch(error => {
-                    swal({
-                      type: "error",
-                      title: "Error",
-                      html: "Error adding document: ",
-                      error
                     });
-                  });
-              });
-            }
-          })
-          .render("#paypal-button");
+                });
+              }
+            })
+            .render("#paypal-button");
+        }
       });
     },
     onCancel(e) {
       e.preventDefault();
-      this.form = {};
+      this.form;
+      $("#cbxCountry").val("Singapore");
+      $("#cbxQuantity").val("1");
+      this.form.name = "";
+      this.form.postal_code = "";
+      this.form.address = "";
+      this.form.contact_no = "";
+      this.form.email = "";
     },
     onValidation() {
       var message = "";
