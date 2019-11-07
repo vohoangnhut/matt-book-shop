@@ -337,11 +337,15 @@ export default {
         .doc(this.customer.documentId)
         .update(this.customer)
         .then(result => {
-          this.customerDataLoad();
+          var idx = this.dataContact.findIndex(x => x.documentId === this.customer.documentId);
+          this.dataContact[idx].first_name = this.customer.first_name;
+          this.dataContact[idx].last_name = this.customer.last_name;
+          this.dataContact[idx].contact_no = this.customer.contact_no;
+          this.dataContact[idx].email = this.customer.email;
+          this.dataContact[idx].pdpa = this.customer.pdpa;
         });
     },
     saveOrderData() {
-      console.log(this.order.documentId);
       db.collection("order")
         .doc(this.order.documentId)
         .update({
@@ -366,7 +370,21 @@ export default {
           }
     })
         .then(result => {
-          this.orderDataLoad();
+          var idx = this.dataOrder.findIndex(x => x.documentId === this.order.documentId);
+          this.dataOrder[idx].product_name = this.order.product_name;
+          this.dataOrder[idx].quantity = this.order.quantity;
+          this.dataOrder[idx].unit_price = this.order.unit_price;
+          this.dataOrder[idx].shipping_rate = this.order.shipping_rate;
+          this.dataOrder[idx].total_price = this.order.total_price;
+          this.dataOrder[idx].total_payment = this.order.total_payment;
+          this.dataOrder[idx].shippingAddress = this.order.shippingAddress;
+          this.dataOrder[idx].shippingContact_no = this.order.shippingContact_no;
+          this.dataOrder[idx].shippingCountry = this.order.shippingCountry;
+          this.dataOrder[idx].shippingEmail = this.order.shippingEmail;
+          this.dataOrder[idx].shippingName = this.order.shippingName;
+          this.dataOrder[idx].shippingPostal_code = this.order.shippingPostal_code;
+          this.dataOrder[idx].order_date = this.order.orderDate;
+          this.dataOrder[idx].invNo = this.order.invNo;
         });
     },
     customerDataLoad() {
