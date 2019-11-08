@@ -18,7 +18,7 @@
                 size="sm"
                 @click="contactInfo(row.item, row.index, $event.target)"
                 class="mr-1"
-              >Info</b-button>
+              >Update</b-button>
             </template>
           </b-table>
           <b-pagination
@@ -44,7 +44,7 @@
                 size="sm"
                 @click="orderInfo(row.item, row.index, $event.target)"
                 class="mr-1"
-              >Info</b-button>
+              >Update</b-button>
             </template>
           </b-table>
           <b-pagination
@@ -68,7 +68,7 @@
                 size="sm"
                 @click="productInfo(row.item, row.index, $event.target)"
                 class="mr-1"
-              >Info</b-button>
+              >Update</b-button>
             </template>
           </b-table>
           <b-pagination
@@ -92,7 +92,7 @@
                 size="sm"
                 @click="roleInfo(row.item, row.index, $event.target)"
                 class="mr-1"
-              >Info</b-button>
+              >Update</b-button>
             </template>
           </b-table>
           <b-pagination

@@ -697,6 +697,8 @@ export default {
           console.log("No such document!");
         }
       });
+
+    //this.test();
   },
   methods: {
     onSubmit() {
@@ -711,27 +713,46 @@ export default {
       var orderDate = this.formatDate(nowDate);
       var today = this.formatDateInvNo(nowDate);
       var invNo = "";
-      var templateEmail = '';
-      templateEmail += '<html><head><style>* {margin: 0;padding: 0;}#page-wrap {width: 800px;margin: 0 auto;}table {border-collapse: collapse;}';
-      templateEmail += 'table td,table th {border: 1px solid black;padding: 5px;}#customer {overflow: hidden;}';
-      templateEmail += '#meta {margin-top: 1px;width: 300px;float: right;}#meta td {text-align: right;}';
-      templateEmail += '#meta td.meta-head {text-align: left;background: #eee;}#items {clear: both;width: 100%;margin: 30px 0 0 0;border: 1px solid black;}';
-      templateEmail += '#items th {background: #eee;}#items td.meta-head {text-align: left;background: #eee;}.text-center {text-align: center;}';
-      templateEmail += '</style></head><body><div id="page-wrap"><div><p>Hi! [get Name],</p><br/>';
-      templateEmail += '<p>Thank you for your purchase. Your payment for the purchase has been completed. Please check the order/shipping information</p>';
-      templateEmail += '<br/><p>1. Order Information</p></div><table id="items"><thead><tr><th>Invoice No.</th><th>Product Name</th><th>Quantity</th>';
-      templateEmail += '<th>Unit Price</th><th>Total Price</th></tr></thead><tr><tr><td class="text-center">0711190001</td><td class="text-center">Book</td>';
-      templateEmail += '<td class="text-center">3</td><td class="text-center">50</td><td class="text-center">100</td></tr></tr></table><br/><div id="customer">';
-      templateEmail += '<table id="meta"><tbody><tr><td class="meta-head">Shipping Rate</th><td class="text-center">5</td></tr><tr><td class="meta-head">Total Payment</th>';
-      templateEmail += '<td class="text-center">100</td></tr></tbody></table></div><div><p>2. Delivery Information</p><br/></div><table id="items">';
-      templateEmail += '<tbody><tr><td class="meta-head">Name</td><td class="text-center">AAA</td></tr><tr><td class="meta-head">Shipping Country</td>';
-      templateEmail += '<td class="text-center">AAA</td></tr><tr><td class="meta-head">Shipping Address</td><td class="text-center">AAA</td></tr>';
-      templateEmail += '<tr><td class="meta-head">Contact No.</td><td class="text-center">AAA</td></tr></tbody></table>';
-      templateEmail += '<div><br/><p>3. Payment Information</p></div><table id="items"><tbody><tr><td class="meta-head">Payment Mothod</td>';
-      templateEmail += '<td class="text-center">AAA</td></tr><tr><td class="meta-head">Amount</td><td class="text-center">AAA</td></tr></tbody></table>';
-      templateEmail += '<br/><div><p>Please do not reply to this e-mail as we are not able to respond to this messages sent to this e-mail address.</p>';
-      templateEmail += '<br/><p>Thank You,</p><p>thelandlordclub</p></div></div></body></html>';
-      
+      var templateEmail = "";
+      templateEmail +=
+        "<html><head><style>* {margin: 0;padding: 0;}#page-wrap {width: 800px;margin: 0 auto;}table {border-collapse: collapse;}";
+      templateEmail +=
+        "table td,table th {border: 1px solid black;padding: 5px;}#customer {overflow: hidden;}";
+      templateEmail +=
+        "#meta {margin-top: 1px;width: 300px;float: right;}#meta td {text-align: right;}";
+      templateEmail +=
+        "#meta td.meta-head {text-align: left;background: #eee;}#items {clear: both;width: 100%;margin: 30px 0 0 0;border: 1px solid black;}";
+      templateEmail +=
+        "#items th {background: #eee;}#items td.meta-head {text-align: left;background: #eee;}.text-center {text-align: center;}";
+      templateEmail +=
+        '</style></head><body><div id="page-wrap"><div><p>Hi! [get Name],</p><br/>';
+      templateEmail +=
+        "<p>Thank you for your purchase. Your payment for the purchase has been completed. Please check the order/shipping information</p>";
+      templateEmail +=
+        '<br/><p>1. Order Information</p></div><table id="items"><thead><tr><th>Invoice No.</th><th>Product Name</th><th>Quantity</th>';
+      templateEmail +=
+        '<th>Unit Price</th><th>Total Price</th></tr></thead><tr><tr><td class="text-center">0711190001</td><td class="text-center">Book</td>';
+      templateEmail +=
+        '<td class="text-center">3</td><td class="text-center">50</td><td class="text-center">100</td></tr></tr></table><br/><div id="customer">';
+      templateEmail +=
+        '<table id="meta"><tbody><tr><td class="meta-head">Shipping Rate</th><td class="text-center">5</td></tr><tr><td class="meta-head">Total Payment</th>';
+      templateEmail +=
+        '<td class="text-center">100</td></tr></tbody></table></div><div><p>2. Delivery Information</p><br/></div><table id="items">';
+      templateEmail +=
+        '<tbody><tr><td class="meta-head">Name</td><td class="text-center">AAA</td></tr><tr><td class="meta-head">Shipping Country</td>';
+      templateEmail +=
+        '<td class="text-center">AAA</td></tr><tr><td class="meta-head">Shipping Address</td><td class="text-center">AAA</td></tr>';
+      templateEmail +=
+        '<tr><td class="meta-head">Contact No.</td><td class="text-center">AAA</td></tr></tbody></table>';
+      templateEmail +=
+        '<div><br/><p>3. Payment Information</p></div><table id="items"><tbody><tr><td class="meta-head">Payment Mothod</td>';
+      templateEmail +=
+        '<td class="text-center">AAA</td></tr><tr><td class="meta-head">Amount</td><td class="text-center">AAA</td></tr></tbody></table>';
+      templateEmail +=
+        "<br/><div><p>Please do not reply to this e-mail as we are not able to respond to this messages sent to this e-mail address.</p>";
+      templateEmail +=
+        "<br/><p>Thank You,</p><p>thelandlordclub</p></div></div></body></html>";
+
       this.getInvNo(today).then(snapshot => {
         if (snapshot.docs.length === 0) {
           invNo = "0001";
@@ -941,7 +962,49 @@ export default {
       if (month.length < 2) month = "0" + month;
       if (day.length < 2) day = "0" + day;
 
-      return [day, month, year].join("-") + ' ' + [hours, minutes, seconds].join(':');
+      return (
+        [day, month, year].join("-") + " " + [hours, minutes, seconds].join(":")
+      );
+    },
+    test() {
+      var templateEmail = '';
+      templateEmail += '<html><body><div style="width: 800px;margin: 0 auto;"><div><p>Hi! [get Name],</p><br/>';
+      templateEmail += '<p>Thank you for your purchase. Your payment for the purchase has been completed. Please check the order/shipping information</p>';
+      templateEmail += '<br/><p>1. Order Information</p></div><table style="border-collapse: collapse;clear: both;width: 100%;margin: 30px 0 0 0;border: 1px solid black;">';
+      templateEmail += '<thead><tr><th style="border: 1px solid black;padding: 5px;background: #eee;">Invoice No.</th><th style="border: 1px solid black;padding: 5px;background: #eee;">Product Name</th>';
+      templateEmail += '<th style="border: 1px solid black;padding: 5px;background: #eee;">Quantity</th><th style="border: 1px solid black;padding: 5px;background: #eee;">Unit Price</th>';
+      templateEmail += '<th style="border: 1px solid black;padding: 5px;background: #eee;">Total Price</th></tr></thead>';
+      templateEmail += '<tr><tr><td style="border: 1px solid black;padding: 5px;text-align: center;">0711190001</td>';
+      templateEmail += '<td style="border: 1px solid black;padding: 5px;text-align: center;">Book</td><td style="border: 1px solid black;padding: 5px;text-align: center;">3</td>';
+      templateEmail += '<td style="border: 1px solid black;padding: 5px;text-align: center;">50</td><td style="border: 1px solid black;padding: 5px;text-align: center;">100</td>';
+      templateEmail += '</tr></tr></table><br/><div style="overflow: hidden;"><table style="border-collapse: collapse;margin-top: 1px;width: 300px;float: right;">';
+      templateEmail += '<tbody><tr><td style="border: 1px solid black;padding: 5px;text-align: right;text-align: left;background: #eee;">Shipping Rate</td>';
+      templateEmail += '<td style="border: 1px solid black;padding: 5px;text-align: right;text-align: center;">5</td></tr><tr>';
+      templateEmail += '<td style="border: 1px solid black;padding: 5px;text-align: right;text-align: left;background: #eee;">Total Payment</td>';
+      templateEmail += '<td style="border: 1px solid black;padding: 5px;text-align: right;text-align: center;">100</td></tr></tbody></table></div>';
+      templateEmail += '<div><p>2. Delivery Information</p><br/></div><table style="border-collapse: collapse;clear: both;width: 100%;margin: 30px 0 0 0;border: 1px solid black;">';
+      templateEmail += '<tbody><tr><td style="border: 1px solid black;padding: 5px;text-align: left;background: #eee;text-align: left;background: #eee;">Name</td>';
+      templateEmail += '<td style="border: 1px solid black;padding: 5px;text-align: center;">AAA</td></tr><tr><td style="border: 1px solid black;padding: 5px;text-align: left;background: #eee;text-align: left;background: #eee;">Shipping Country</td>';
+      templateEmail += '<td style="border: 1px solid black;padding: 5px;text-align: center;">AAA</td></tr><tr><td style="border: 1px solid black;padding: 5px;text-align: left;background: #eee;text-align: left;background: #eee;">Shipping Address</td>';
+      templateEmail += '<td style="border: 1px solid black;padding: 5px;text-align: center;">AAA</td></tr><tr><td style="border: 1px solid black;padding: 5px;text-align: left;background: #eee;text-align: left;background: #eee;">Contact No.</td>';
+      templateEmail += '<td style="border: 1px solid black;padding: 5px;text-align: center;">AAA</td></tr></tbody></table><div><br/><p>3. Payment Information</p></div>';
+      templateEmail += '<table style="border-collapse: collapse;clear: both;width: 100%;margin: 30px 0 0 0;border: 1px solid black;"><tbody><tr>';
+      templateEmail += '<td style="border: 1px solid black;padding: 5px;text-align: left;background: #eee;text-align: left;background: #eee;">Payment Mothod</td>';
+      templateEmail += '<td style="border: 1px solid black;padding: 5px;text-align: center;">AAA</td></tr><tr><td style="border: 1px solid black;padding: 5px;text-align: left;background: #eee;text-align: left;background: #eee;">Amount</td>';
+      templateEmail += '<td style="border: 1px solid black;padding: 5px;text-align: center;">AAA</td></tr></tbody></table><br/><div>';
+      templateEmail += '<p>Please do not reply to this e-mail as we are not able to respond to this messages sent to this e-mail address.</p><br/><p>Thank You,</p><p>thelandlordclub</p>';
+      templateEmail += '</div></div></body></html>';
+
+      axios
+        .get(
+          'https://us-central1-book-store-sg-x.cloudfunctions.net/sendMailHTML?to=ntran0994@gmail.com&subject=Test'
+        )
+        .then(function(response) {
+          console.log('Done');
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   }
 };
