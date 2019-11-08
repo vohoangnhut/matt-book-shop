@@ -707,9 +707,31 @@ export default {
       var order = this.order;
       var form = this.form;
       var swal = this.$swal;
-      var orderDate = this.calcTime("Singapore", "+8");
-      var today = this.formatDate(orderDate);
+      var nowDate = this.calcTime("Singapore", "+8");
+      var orderDate = this.formatDate(nowDate);
+      var today = this.formatDateInvNo(nowDate);
       var invNo = "";
+      var templateEmail = '';
+      templateEmail += '<html><head><style>* {margin: 0;padding: 0;}#page-wrap {width: 800px;margin: 0 auto;}table {border-collapse: collapse;}';
+      templateEmail += 'table td,table th {border: 1px solid black;padding: 5px;}#customer {overflow: hidden;}';
+      templateEmail += '#meta {margin-top: 1px;width: 300px;float: right;}#meta td {text-align: right;}';
+      templateEmail += '#meta td.meta-head {text-align: left;background: #eee;}#items {clear: both;width: 100%;margin: 30px 0 0 0;border: 1px solid black;}';
+      templateEmail += '#items th {background: #eee;}#items td.meta-head {text-align: left;background: #eee;}.text-center {text-align: center;}';
+      templateEmail += '</style></head><body><div id="page-wrap"><div><p>Hi! [get Name],</p><br/>';
+      templateEmail += '<p>Thank you for your purchase. Your payment for the purchase has been completed. Please check the order/shipping information</p>';
+      templateEmail += '<br/><p>1. Order Information</p></div><table id="items"><thead><tr><th>Invoice No.</th><th>Product Name</th><th>Quantity</th>';
+      templateEmail += '<th>Unit Price</th><th>Total Price</th></tr></thead><tr><tr><td class="text-center">0711190001</td><td class="text-center">Book</td>';
+      templateEmail += '<td class="text-center">3</td><td class="text-center">50</td><td class="text-center">100</td></tr></tr></table><br/><div id="customer">';
+      templateEmail += '<table id="meta"><tbody><tr><td class="meta-head">Shipping Rate</th><td class="text-center">5</td></tr><tr><td class="meta-head">Total Payment</th>';
+      templateEmail += '<td class="text-center">100</td></tr></tbody></table></div><div><p>2. Delivery Information</p><br/></div><table id="items">';
+      templateEmail += '<tbody><tr><td class="meta-head">Name</td><td class="text-center">AAA</td></tr><tr><td class="meta-head">Shipping Country</td>';
+      templateEmail += '<td class="text-center">AAA</td></tr><tr><td class="meta-head">Shipping Address</td><td class="text-center">AAA</td></tr>';
+      templateEmail += '<tr><td class="meta-head">Contact No.</td><td class="text-center">AAA</td></tr></tbody></table>';
+      templateEmail += '<div><br/><p>3. Payment Information</p></div><table id="items"><tbody><tr><td class="meta-head">Payment Mothod</td>';
+      templateEmail += '<td class="text-center">AAA</td></tr><tr><td class="meta-head">Amount</td><td class="text-center">AAA</td></tr></tbody></table>';
+      templateEmail += '<br/><div><p>Please do not reply to this e-mail as we are not able to respond to this messages sent to this e-mail address.</p>';
+      templateEmail += '<br/><p>Thank You,</p><p>thelandlordclub</p></div></div></body></html>';
+      
       this.getInvNo(today).then(snapshot => {
         if (snapshot.docs.length === 0) {
           invNo = "0001";
@@ -768,9 +790,7 @@ export default {
                             "&subject=" +
                             "[thelandlordclub] Your payment has been completed" +
                             "&body=" +
-                            totalPayment.toString() +
-                            " - " +
-                            form.country
+                            templateEmail
                         )
                         .then(function(response) {
                           swal({
@@ -806,8 +826,6 @@ export default {
     onCancel(e) {
       e.preventDefault();
       this.form;
-      $("#cbxCountry").val("Singapore");
-      $("#cbxQuantity").val("1");
       this.form.name = "";
       this.form.postal_code = "";
       this.form.address = "";
@@ -888,11 +906,9 @@ export default {
           .catch(error => {
             reject(error); // the request failed
           });
-      }).catch(error => {
-        reject(error); // the request failed
       });
     },
-    formatDate(date) {
+    formatDateInvNo(date) {
       var d = new Date(date),
         month = "" + (d.getMonth() + 1),
         day = "" + d.getDate(),
@@ -912,6 +928,20 @@ export default {
       return n.length >= width
         ? n
         : new Array(width - n.length + 1).join(z) + n;
+    },
+    formatDate(date) {
+      var d = new Date(date),
+        month = "" + (d.getMonth() + 1),
+        day = "" + d.getDate(),
+        year = d.getFullYear(),
+        hours = d.getHours(),
+        minutes = d.getMinutes(),
+        seconds = d.getSeconds();
+
+      if (month.length < 2) month = "0" + month;
+      if (day.length < 2) day = "0" + day;
+
+      return [day, month, year].join("-") + ' ' + [hours, minutes, seconds].join(':');
     }
   }
 };

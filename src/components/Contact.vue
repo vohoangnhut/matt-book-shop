@@ -182,7 +182,7 @@ export default {
     onSubmit(e) {
       e.preventDefault();
 
-      this.customer.created = this.calcTime("Singapore", "+8");
+      this.customer.created = this.formatDate(this.calcTime("Singapore", "+8"));
 
       if (!this.onValidation(e)) {
         return;
@@ -276,6 +276,20 @@ export default {
       var utc = d.getTime() + d.getTimezoneOffset() * 60000;
       var nd = new Date(utc + 3600000 * offset);
       return nd.toLocaleString();
+    },
+    formatDate(date) {
+      var d = new Date(date),
+        month = "" + (d.getMonth() + 1),
+        day = "" + d.getDate(),
+        year = d.getFullYear(),
+        hours = d.getHours(),
+        minutes = d.getMinutes(),
+        seconds = d.getSeconds();
+
+      if (month.length < 2) month = "0" + month;
+      if (day.length < 2) day = "0" + day;
+
+      return [day, month, year].join("-") + ' ' + [hours, minutes, seconds].join(':');
     }
   }
 };

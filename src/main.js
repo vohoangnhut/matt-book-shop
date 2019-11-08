@@ -34,7 +34,7 @@ router.beforeEach((to, from, next) => {
 			if (requiresAuth && !currentUser) next('/admin/login');
 			else if (!requiresAuth && currentUser) next('/admin/contactlist');
 			else next();
-		}else{
+		} else {
 			next();
 		}
 	});

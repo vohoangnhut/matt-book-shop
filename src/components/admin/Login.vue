@@ -18,7 +18,13 @@
                       <i class="now-ui-icons users_circle-08"></i>
                     </span>
                   </div>
-                  <input type="text" class="form-control" v-model="email" placeholder="Email..." @keyup.enter="login" />
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="email"
+                    placeholder="Email..."
+                    @keyup.enter="login"
+                  />
                 </div>
                 <div class="input-group form-group-no-border input-lg">
                   <div class="input-group-prepend">
@@ -51,6 +57,7 @@
 </template>
 <script>
 import firebase from "../../config/firebaseConfig";
+import { db } from "../../config/firebaseConfig";
 export default {
   name: "AdminLogin",
   data() {
@@ -60,13 +67,20 @@ export default {
     };
   },
   methods: {
-    login: function() {
+    login() {
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(
           user => {
-            this.$router.replace("/admin");
+            this.checkExistsUser(this.email).then(snapshot => {
+              var insertFlag = false;
+              if (snapshot.size === 0)
+                insertFlag = true;
+              this.insertUserRole(this.email, insertFlag).then(result => {
+                this.$router.replace("/admin");
+              });
+            });
           },
           err => {
             this.$swal({
@@ -76,10 +90,42 @@ export default {
             });
           }
         );
+    },
+    checkExistsUser(email) {
+      return new Promise((resolve, reject) => {
+        db.collection("role")
+          .where("email", "==", email)
+          .get()
+          .then(snapshot => {
+            resolve(snapshot);
+          })
+          .catch(error => {
+            reject(error); // the request failed
+          });
+      });
+    },
+    insertUserRole(email, flag) {
+      return new Promise((resolve, reject) => {
+        if (flag === false) {
+          resolve(true);
+        } else {
+          db.collection("role")
+            .add({
+              email: email,
+              role: "ba"
+            })
+            .then(() => {
+              resolve(true);
+            })
+            .catch(error => {
+              reject(error); // the request failed
+            });
+        }
+      });
     }
   },
-  mounted(){
-    if(window.location.href.indexOf('login') != -1){
+  mounted() {
+    if (window.location.href.indexOf("login") != -1) {
       document.body.className = "login-page";
     }
   }

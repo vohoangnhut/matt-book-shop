@@ -54,9 +54,57 @@
             aria-controls="dataOrderTable"
           ></b-pagination>
         </el-tab-pane>
+        <el-tab-pane label="Product List" name="third">
+          <b-table
+            hover
+            :items="dataProduct"
+            id="dataContactTable"
+            :per-page="dataProductPerPage"
+            :current-page="dataProductCurrentPage"
+            :fields="dataProductFields"
+          >
+            <template v-slot:cell(actions)="row">
+              <b-button
+                size="sm"
+                @click="productInfo(row.item, row.index, $event.target)"
+                class="mr-1"
+              >Info</b-button>
+            </template>
+          </b-table>
+          <b-pagination
+            v-model="dataProductCurrentPage"
+            :total-rows="rowsDataProduct"
+            :per-page="dataProductPerPage"
+            aria-controls="dataProductTable"
+          ></b-pagination>
+        </el-tab-pane>
+        <el-tab-pane label="User Role List" name="four">
+          <b-table
+            hover
+            :items="dataRole"
+            id="dataRoleTable"
+            :per-page="dataRolePerPage"
+            :current-page="dataRoleCurrentPage"
+            :fields="dataRoleFields"
+          >
+            <template v-slot:cell(actions)="row">
+              <b-button
+                size="sm"
+                @click="roleInfo(row.item, row.index, $event.target)"
+                class="mr-1"
+              >Info</b-button>
+            </template>
+          </b-table>
+          <b-pagination
+            v-model="dataRoleCurrentPage"
+            :total-rows="rowsDataRole"
+            :per-page="dataRolePerPage"
+            aria-controls="dataRoleTable"
+          ></b-pagination>
+        </el-tab-pane>
       </el-tabs>
     </div>
-    <!-- Info modal -->
+    <!-- Contact modal -->
     <b-modal :id="contactModal.id" :title="contactModal.title" @ok="saveContactData">
       <label>First Name</label>
       <div class="input-group">
@@ -122,10 +170,31 @@
       </div>
       <label>Pdpa</label>
       <div class="input-group">
-        <input class="form-check-label" type="checkbox" v-model.trim="customer.pdpa" />
+        <input
+          class="form-check-label"
+          type="checkbox"
+          v-model.trim="customer.pdpa"
+          :disabled="adminRole === businessAdmin"
+        />
+      </div>
+      <label>Created On</label>
+      <div class="input-group">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">
+              <i class="now-ui-icons ui-1_email-85"></i>
+            </span>
+          </div>
+          <input
+            type="email"
+            class="form-control"
+            v-model.trim="customer.created"
+            :disabled="adminRole === businessAdmin"
+          />
+        </div>
       </div>
     </b-modal>
-    <!-- Info modal -->
+    <!-- Order modal -->
     <b-modal :id="orderModal.id" :title="orderModal.title" @ok="saveOrderData">
       <label>Invoice No.</label>
       <div class="input-group">
@@ -134,7 +203,12 @@
             <i class="now-ui-icons users_circle-08"></i>
           </span>
         </div>
-        <input type="text" class="form-control" v-model.trim="order.invNo" />
+        <input
+          type="text"
+          class="form-control"
+          v-model.trim="order.invNo"
+          :disabled="adminRole === businessAdmin"
+        />
       </div>
       <label>Created On</label>
       <div class="input-group">
@@ -143,7 +217,12 @@
             <i class="now-ui-icons users_circle-08"></i>
           </span>
         </div>
-        <input type="text" class="form-control" v-model.trim="order.orderDate" />
+        <input
+          type="text"
+          class="form-control"
+          v-model.trim="order.orderDate"
+          :disabled="adminRole === businessAdmin"
+        />
       </div>
       <label>Name</label>
       <div class="input-group">
@@ -254,20 +333,102 @@
         <input type="text" class="form-control" v-model.trim="order.total_payment" />
       </div>
     </b-modal>
+    <!-- Product modal -->
+    <b-modal :id="productModal.id" :title="productModal.title" @ok="saveProductData">
+      <label>Product Name</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            <i class="now-ui-icons users_circle-08"></i>
+          </span>
+        </div>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Your First Name..."
+          aria-label="Your First Name..."
+          id="firstName"
+          v-model.trim="product.title"
+        />
+      </div>
+      <label>Unit Price</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            <i class="now-ui-icons users_circle-08"></i>
+          </span>
+        </div>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Your Last Name..."
+          aria-label="Your Last Name..."
+          id="lastName"
+          v-model.trim="product.price"
+        />
+      </div>
+    </b-modal>
+    <!-- Role modal -->
+    <b-modal :id="roleModal.id" :title="roleModal.title" @ok="saveRoleData">
+      <label>Email</label>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            <i class="now-ui-icons users_circle-08"></i>
+          </span>
+        </div>
+        <input
+          type="text"
+          class="form-control"
+          v-model.trim="role.email"
+          :disabled="adminRole === businessAdmin"
+        />
+      </div>
+      <label>System Admin</label>
+      <div class="input-group">
+        <input
+          class="form-check-label"
+          type="radio"
+          name="role"
+          :value="systemAdmin"
+          v-model.trim="role.roleCode"
+        />
+      </div>
+      <label>Business Admin</label>
+      <div class="input-group">
+        <input
+          class="form-check-label"
+          type="radio"
+          name="role"
+          :value="businessAdmin"
+          v-model.trim="role.roleCode"
+        />
+      </div>
+    </b-modal>
   </div>
 </template>
 <script>
 import { db } from "./../../config/firebaseConfig";
+import firebase from "./../../config/firebaseConfig";
 export default {
   name: "ContactList",
   data() {
     return {
+      adminRole: "",
+      systemAdmin: "sa",
+      businessAdmin: "ba",
       dataContact: [],
       dataOrder: [],
+      dataProduct: [],
+      dataRole: [],
       dataContactPerPage: 5,
       dataContactCurrentPage: 1,
       dataOrderPerPage: 5,
       dataOrderCurrentPage: 1,
+      dataProductPerPage: 5,
+      dataProductCurrentPage: 1,
+      dataRolePerPage: 5,
+      dataRoleCurrentPage: 1,
       contactModal: {
         id: "contact-modal",
         title: "Contact Update Data"
@@ -276,8 +437,18 @@ export default {
         id: "order-modal",
         title: "Order Update Data"
       },
+      productModal: {
+        id: "product-modal",
+        title: "Product Update Data"
+      },
+      roleModal: {
+        id: "role-modal",
+        title: "Role Update Data"
+      },
       customer: {},
       order: {},
+      product: {},
+      role: {},
       activeName: "first",
       sortByContact: "created",
       sortDescContact: true,
@@ -308,12 +479,26 @@ export default {
         { key: "shipping_rate", sortable: true },
         { key: "total_payment", sortable: true },
         { key: "actions" }
+      ],
+      dataProductFields: [
+        { key: "product_code", sortable: true },
+        { key: "title", sortable: true },
+        { key: "price", sortable: true },
+        { key: "created", sortable: true },
+        { key: "actions" }
+      ],
+      dataRoleFields: [
+        { key: "email", sortable: true },
+        { key: "role", sortable: true },
+        { key: "actions" }
       ]
     };
   },
   created() {
     this.customerDataLoad();
     this.orderDataLoad();
+    this.productDataLoad();
+    this.roleDataLoad();
   },
   computed: {
     rowsDataContact() {
@@ -321,6 +506,12 @@ export default {
     },
     rowsDataOrder() {
       return this.dataOrder.length;
+    },
+    rowsDataProduct() {
+      return this.dataProduct.length;
+    },
+    rowsDataRole() {
+      return this.dataRole.length;
     }
   },
   methods: {
@@ -332,12 +523,29 @@ export default {
       this.order = JSON.parse(JSON.stringify(item, null, 2));
       this.$root.$emit("bv::show::modal", this.orderModal.id, button);
     },
+    productInfo(item, index, button) {
+      this.product = JSON.parse(JSON.stringify(item, null, 2));
+      this.$root.$emit("bv::show::modal", this.productModal.id, button);
+    },
+    roleInfo(item, index, button) {
+      this.role = JSON.parse(JSON.stringify(item, null, 2));
+      this.$root.$emit("bv::show::modal", this.roleModal.id, button);
+    },
     saveContactData() {
       db.collection("customer")
         .doc(this.customer.documentId)
-        .update(this.customer)
+        .update({
+          contact_no: this.customer.contact_no,
+          email: this.customer.email,
+          first_name: this.customer.first_name,
+          last_name: this.customer.last_name,
+          pdpa: this.customer.pdpa,
+          created: this.customer.created
+        })
         .then(result => {
-          var idx = this.dataContact.findIndex(x => x.documentId === this.customer.documentId);
+          var idx = this.dataContact.findIndex(
+            x => x.documentId === this.customer.documentId
+          );
           this.dataContact[idx].first_name = this.customer.first_name;
           this.dataContact[idx].last_name = this.customer.last_name;
           this.dataContact[idx].contact_no = this.customer.contact_no;
@@ -368,9 +576,11 @@ export default {
             date: this.order.invNo.substring(0, 6),
             no: this.order.invNo.substring(6, this.order.invNo.length)
           }
-    })
+        })
         .then(result => {
-          var idx = this.dataOrder.findIndex(x => x.documentId === this.order.documentId);
+          var idx = this.dataOrder.findIndex(
+            x => x.documentId === this.order.documentId
+          );
           this.dataOrder[idx].product_name = this.order.product_name;
           this.dataOrder[idx].quantity = this.order.quantity;
           this.dataOrder[idx].unit_price = this.order.unit_price;
@@ -378,13 +588,52 @@ export default {
           this.dataOrder[idx].total_price = this.order.total_price;
           this.dataOrder[idx].total_payment = this.order.total_payment;
           this.dataOrder[idx].shippingAddress = this.order.shippingAddress;
-          this.dataOrder[idx].shippingContact_no = this.order.shippingContact_no;
+          this.dataOrder[
+            idx
+          ].shippingContact_no = this.order.shippingContact_no;
           this.dataOrder[idx].shippingCountry = this.order.shippingCountry;
           this.dataOrder[idx].shippingEmail = this.order.shippingEmail;
           this.dataOrder[idx].shippingName = this.order.shippingName;
-          this.dataOrder[idx].shippingPostal_code = this.order.shippingPostal_code;
+          this.dataOrder[
+            idx
+          ].shippingPostal_code = this.order.shippingPostal_code;
           this.dataOrder[idx].order_date = this.order.orderDate;
           this.dataOrder[idx].invNo = this.order.invNo;
+        });
+    },
+    saveProductData() {
+      db.collection("product")
+        .doc(this.product.documentId)
+        .update({
+          title: this.product.title,
+          price: this.product.price
+        })
+        .then(result => {
+          var idx = this.dataProduct.findIndex(
+            x => x.documentId === this.product.documentId
+          );
+          this.dataProduct[idx].title = this.product.title;
+          this.dataProduct[idx].price = this.product.price;
+        });
+    },
+    saveRoleData() {
+      db.collection("role")
+        .doc(this.role.documentId)
+        .update({
+          email: this.role.email,
+          role: this.role.roleCode
+        })
+        .then(result => {
+          var idx = this.dataRole.findIndex(
+            x => x.documentId === this.role.documentId
+          );
+          this.dataRole[idx].email = this.role.email;
+          this.dataRole[idx].role =
+            this.role.roleCode === this.systemAdmin
+              ? "System Admin"
+              : "Business Admin";
+          this.dataRole[idx].roleCode = this.role.roleCode;
+          this.adminRole = this.role.roleCode;
         });
     },
     customerDataLoad() {
@@ -428,6 +677,52 @@ export default {
             obj.actions = "";
             obj.documentId = doc.id;
             this.dataOrder.push(obj);
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    productDataLoad() {
+      this.dataProduct = [];
+      db.collection("product")
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            var obj = {};
+            var data = doc.data();
+            obj.product_code = data.product_code;
+            obj.title = data.title;
+            obj.price = data.price;
+            obj.created = data.created;
+            obj.actions = "";
+            obj.documentId = doc.id;
+            this.dataProduct.push(obj);
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    roleDataLoad() {
+      this.dataRole = [];
+      var user = firebase.auth().currentUser;
+      db.collection("role")
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            var obj = {};
+            var data = doc.data();
+            if (data.email === user.email) this.adminRole = data.role;
+            obj.email = data.email;
+            obj.role =
+              data.role === this.systemAdmin
+                ? "System Admin"
+                : "Business Admin";
+            obj.roleCode = data.role;
+            obj.actions = "";
+            obj.documentId = doc.id;
+            this.dataRole.push(obj);
           });
         })
         .catch(error => {
