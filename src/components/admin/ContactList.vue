@@ -19,6 +19,11 @@
                 @click="contactInfo(row.item, row.index, $event.target)"
                 class="mr-1"
               >Update</b-button>
+              <b-button
+                size="sm"
+                @click="confirmDelete(row.item, row.index, $event.target, 'customer')"
+                class="mr-1"
+              >Delete</b-button>
             </template>
           </b-table>
           <b-pagination
@@ -45,6 +50,11 @@
                 @click="orderInfo(row.item, row.index, $event.target)"
                 class="mr-1"
               >Update</b-button>
+              <b-button
+                size="sm"
+                @click="confirmDelete(row.item, row.index, $event.target, 'order')"
+                class="mr-1"
+              >Delete</b-button>
             </template>
           </b-table>
           <b-pagination
@@ -531,6 +541,24 @@ export default {
       this.role = JSON.parse(JSON.stringify(item, null, 2));
       this.$root.$emit("bv::show::modal", this.roleModal.id, button);
     },
+    confirmDelete(item, index, button, collection) {
+      this.$swal({
+        title: "Do you want to delete?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Delete",
+        cancelButtonText: "Cancel",
+        showCloseButton: true,
+        showLoaderOnConfirm: true
+      }).then(result => {
+        if (result.value) {
+          var data = JSON.parse(JSON.stringify(item, null, 2));
+          this.deleteRowData(collection, data.documentId).then(result => {
+            this.$swal("Deleted!", "Data has been deleted", "success");
+          });
+        }
+      });
+    },
     saveContactData() {
       db.collection("customer")
         .doc(this.customer.documentId)
@@ -639,6 +667,7 @@ export default {
     customerDataLoad() {
       this.dataContact = [];
       db.collection("customer")
+        .where("delt_flag", "==", false)
         .get()
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
@@ -655,6 +684,7 @@ export default {
     orderDataLoad() {
       this.dataOrder = [];
       db.collection("order")
+        .where("delt_flag", "==", false)
         .get()
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
@@ -728,6 +758,32 @@ export default {
         .catch(error => {
           console.log(error);
         });
+    },
+    deleteRowData(collection, documentId) {
+      return new Promise((resolve, reject) => {
+        db.collection(collection)
+          .doc(documentId)
+          .update({
+            delt_flag: true
+          })
+          .then(result => {
+            if(collection === 'customer'){
+              var idx = this.dataContact.findIndex(
+                x => x.documentId === documentId
+              );
+              this.dataContact.splice(idx, 1);
+            }else if(collection === 'order'){
+              var idx = this.dataOrder.findIndex(
+                x => x.documentId === documentId
+              );
+              this.dataOrder.splice(idx, 1);
+            }
+            resolve(true);
+          })
+          .catch(error => {
+            reject(error); // the request failed
+          });
+      });
     }
   }
 };
