@@ -765,7 +765,7 @@ export default {
                     .then(docRef => {
                       axios
                         .get(
-                          "https://us-central1-book-store-sg-x.cloudfunctions.net/sendMail?to=" +
+                          "https://us-central1-book-store-sg-x.cloudfunctions.net/sendMailHTML?to=" +
                             form.email +
                             "&subject=" +
                             "[thelandlordclub] Your payment has been completed" +
