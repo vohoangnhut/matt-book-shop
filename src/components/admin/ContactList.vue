@@ -767,13 +767,14 @@ export default {
             delt_flag: true
           })
           .then(result => {
+            var idx = 0;
             if(collection === 'customer'){
-              var idx = this.dataContact.findIndex(
+              idx = this.dataContact.findIndex(
                 x => x.documentId === documentId
               );
               this.dataContact.splice(idx, 1);
             }else if(collection === 'order'){
-              var idx = this.dataOrder.findIndex(
+              idx = this.dataOrder.findIndex(
                 x => x.documentId === documentId
               );
               this.dataOrder.splice(idx, 1);
