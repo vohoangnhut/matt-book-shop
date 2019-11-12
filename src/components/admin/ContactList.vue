@@ -18,11 +18,13 @@
                 size="sm"
                 @click="contactInfo(row.item, row.index, $event.target)"
                 class="mr-1"
+                variant="info"
               >Update</b-button>
               <b-button
                 size="sm"
                 @click="confirmDelete(row.item, row.index, $event.target, 'customer')"
                 class="mr-1"
+                variant="danger"
               >Delete</b-button>
             </template>
           </b-table>
@@ -49,11 +51,13 @@
                 size="sm"
                 @click="orderInfo(row.item, row.index, $event.target)"
                 class="mr-1"
+                variant="info"
               >Update</b-button>
               <b-button
                 size="sm"
                 @click="confirmDelete(row.item, row.index, $event.target, 'order')"
                 class="mr-1"
+                variant="danger"
               >Delete</b-button>
             </template>
           </b-table>
@@ -78,6 +82,7 @@
                 size="sm"
                 @click="productInfo(row.item, row.index, $event.target)"
                 class="mr-1"
+                variant="info"
               >Update</b-button>
             </template>
           </b-table>
@@ -102,6 +107,7 @@
                 size="sm"
                 @click="roleInfo(row.item, row.index, $event.target)"
                 class="mr-1"
+                variant="info"
               >Update</b-button>
             </template>
           </b-table>
@@ -118,140 +124,62 @@
     <b-modal :id="contactModal.id" :title="contactModal.title" @ok="saveContactData">
       <label>First Name</label>
       <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text">
-            <i class="now-ui-icons users_circle-08"></i>
-          </span>
-        </div>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Your First Name..."
-          aria-label="Your First Name..."
-          id="firstName"
-          v-model.trim="customer.first_name"
-        />
+        <el-input placeholder="Please input" v-model.trim="customer.first_name" id="firstName"></el-input>
       </div>
       <label>Last Name</label>
       <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text">
-            <i class="now-ui-icons users_circle-08"></i>
-          </span>
-        </div>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Your Last Name..."
-          aria-label="Your Last Name..."
-          id="lastName"
-          v-model.trim="customer.last_name"
-        />
+        <el-input placeholder="Please input" v-model.trim="customer.last_name" id="lastName"></el-input>
       </div>
       <label>Contact No</label>
       <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text">
-            <i class="now-ui-icons tech_mobile"></i>
-          </span>
-        </div>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Contact No..."
-          id="contactNo"
-          v-model.trim="customer.contact_no"
-        />
+        <el-input placeholder="Please input" v-model.trim="customer.contact_no" id="contactNo"></el-input>
       </div>
       <label>Email</label>
       <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text">
-            <i class="now-ui-icons ui-1_email-85"></i>
-          </span>
-        </div>
-        <input
-          type="email"
-          class="form-control"
-          placeholder="Email..."
-          id="email"
-          v-model.trim="customer.email"
-        />
+        <el-input placeholder="Please input" v-model.trim="customer.email" id="email"></el-input>
       </div>
       <label>Pdpa</label>
       <div class="input-group">
-        <input
-          class="form-check-label"
-          type="checkbox"
-          v-model.trim="customer.pdpa"
-          :disabled="adminRole === businessAdmin"
-        />
+        <el-checkbox :indeterminate="isIndeterminate" 
+        v-model.trim="customer.pdpa" :disabled="adminRole === businessAdmin"></el-checkbox>
       </div>
       <label>Created On</label>
       <div class="input-group">
-        <div class="input-group">
-          <div class="input-group-prepend">
-            <span class="input-group-text">
-              <i class="now-ui-icons ui-1_email-85"></i>
-            </span>
-          </div>
-          <input
-            type="email"
-            class="form-control"
-            v-model.trim="customer.created"
-            :disabled="adminRole === businessAdmin"
-          />
-        </div>
+        <el-input placeholder="Please input" 
+        v-model.trim="customer.created" 
+        :disabled="adminRole === businessAdmin" id="createdOn"></el-input>
       </div>
     </b-modal>
     <!-- Order modal -->
-    <b-modal :id="orderModal.id" :title="orderModal.title" @ok="saveOrderData">
-      <label>Invoice No.</label>
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text">
-            <i class="now-ui-icons users_circle-08"></i>
-          </span>
-        </div>
-        <input
-          type="text"
-          class="form-control"
-          v-model.trim="order.invNo"
-          :disabled="adminRole === businessAdmin"
-        />
-      </div>
-      <label>Created On</label>
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text">
-            <i class="now-ui-icons users_circle-08"></i>
-          </span>
-        </div>
-        <input
-          type="text"
-          class="form-control"
-          v-model.trim="order.orderDate"
-          :disabled="adminRole === businessAdmin"
-        />
-      </div>
-      <label>Name</label>
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text">
-            <i class="now-ui-icons users_circle-08"></i>
-          </span>
-        </div>
-        <input type="text" class="form-control" v-model.trim="order.shippingName" />
-      </div>
-      <label>Country</label>
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text">
-            <i class="now-ui-icons users_circle-08"></i>
-          </span>
-        </div>
-        <input type="text" class="form-control" v-model.trim="order.shippingCountry" />
-      </div>
+    <b-modal size="xl" :id="orderModal.id" :title="orderModal.title" @ok="saveOrderData">
+      <el-form label-position="left" :inline="true" :model="formInline" class="demo-form-inline" label-width="100px">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="Invoice No.">
+              <el-input v-model.trim="order.invNo" placeholder="Invoice No." :disabled="adminRole === businessAdmin"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="Created On">
+              <el-input v-model.trim="order.orderDate" placeholder="Created On" :disabled="adminRole === businessAdmin"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+         <el-row>
+          <el-col :span="12">
+            <el-form-item label="Name">
+              <el-input v-model.trim="order.shippingName" placeholder="Name"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="Country">
+              <el-input v-model.trim="order.shippingCountry" placeholder="Country"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+
+
       <label>Address</label>
       <div class="input-group">
         <div class="input-group-prepend">
@@ -347,72 +275,25 @@
     <b-modal :id="productModal.id" :title="productModal.title" @ok="saveProductData">
       <label>Product Name</label>
       <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text">
-            <i class="now-ui-icons users_circle-08"></i>
-          </span>
-        </div>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Your First Name..."
-          aria-label="Your First Name..."
-          id="firstName"
-          v-model.trim="product.title"
-        />
+        <el-input placeholder="Product Name" v-model.trim="product.title"></el-input>
       </div>
       <label>Unit Price</label>
       <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text">
-            <i class="now-ui-icons users_circle-08"></i>
-          </span>
-        </div>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Your Last Name..."
-          aria-label="Your Last Name..."
-          id="lastName"
-          v-model.trim="product.price"
-        />
+        <el-input placeholder="Unit Price" v-model.trim="product.price"></el-input>
       </div>
     </b-modal>
     <!-- Role modal -->
     <b-modal :id="roleModal.id" :title="roleModal.title" @ok="saveRoleData">
       <label>Email</label>
       <div class="input-group">
-        <div class="input-group-prepend">
-          <span class="input-group-text">
-            <i class="now-ui-icons users_circle-08"></i>
-          </span>
-        </div>
-        <input
-          type="text"
-          class="form-control"
-          v-model.trim="role.email"
-          :disabled="adminRole === businessAdmin"
-        />
+        <el-input placeholder="Email"  v-model.trim="role.email" :disabled="adminRole === businessAdmin"></el-input>
       </div>
-      <label>System Admin</label>
+      <label>Role</label>
       <div class="input-group">
-        <input
-          class="form-check-label"
-          type="radio"
-          name="role"
-          :value="systemAdmin"
-          v-model.trim="role.roleCode"
-        />
-      </div>
-      <label>Business Admin</label>
-      <div class="input-group">
-        <input
-          class="form-check-label"
-          type="radio"
-          name="role"
-          :value="businessAdmin"
-          v-model.trim="role.roleCode"
-        />
+         <el-radio-group v-model.trim="role.roleCode">
+          <el-radio-button :label="systemAdmin">System Admin</el-radio-button>
+          <el-radio-button :label="businessAdmin">Business Admin</el-radio-button>
+      </el-radio-group>
       </div>
     </b-modal>
   </div>
