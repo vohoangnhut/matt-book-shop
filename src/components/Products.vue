@@ -165,7 +165,7 @@
               <h2 class="title text-center">Purchase Information</h2>
 
               <form role="form" id="contact-form" method="post">
-                <div class="alert alert-success" role="alert">
+                <div class="alert alert-info" role="alert">
                   <div class="container">
                     <div class="alert-icon">
                       <i class="now-ui-icons shopping_delivery-fast"></i>
@@ -520,7 +520,7 @@
                 </div>
 
                 <div class="section-space-cus"></div>
-                <div class="alert alert-success" role="alert">
+                <div class="alert alert-info" role="alert">
                   <div class="container">
                     <div class="alert-icon">
                       <i class="now-ui-icons shopping_bag-16"></i>
@@ -590,7 +590,7 @@
                   </div>
                 </div>
                 <div class="section-space-cus"></div>
-                <div class="alert alert-success" role="alert">
+                <div class="alert alert-info" role="alert">
                   <div class="container">
                     <div class="alert-icon">
                       <i class="now-ui-icons shopping_cart-simple"></i>
