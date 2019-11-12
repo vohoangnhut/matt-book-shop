@@ -688,41 +688,6 @@ export default {
       return (
         [day, month, year].join("-") + " " + [hours, minutes, seconds].join(":")
       );
-    },
-    getAllCountries() {
-      return new Promise((resolve, reject) => {
-        var arr = [];
-        axios
-          .get('https://restcountries.eu/rest/v2/all')
-          .then(function(response) {
-            response.data.forEach(function (item) {
-              arr.push({
-                value: item.alpha2Code,
-                label: item.name
-              });
-            });
-            resolve(arr);
-          })
-          .catch(function(error) {
-            reject(error);
-          });
-      });
-    },
-    getQuantity() {
-      return new Promise((resolve, reject) => {
-        var arr = [];
-        try{
-          [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].forEach(function (item) {
-            arr.push({
-              value: item,
-              label: item
-            });
-          });
-          resolve(arr);
-        }catch(e){
-          reject(e);
-        }
-      });
     }
   }
 };
