@@ -192,6 +192,16 @@
                 <div class="row">
                   <div class="col-lg-6 col-md-8 col-sm-5 remove-margin-top">
                     <label>Country</label>
+                    <div class="input-group">
+                      <el-select v-model="value" placeholder="Select" class="custom-class-dropdown">
+                        <el-option
+                          v-for="item in options"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value">
+                        </el-option>
+                      </el-select>
+                    </div>
                     <select
                       class="selectpicker dropdown-countries"
                       data-size="7"
@@ -583,7 +593,7 @@
                 <div class="alert alert-success" role="alert">
                   <div class="container">
                     <div class="alert-icon">
-                      <i class="now-ui-icons shopping_delivery-fast"></i>
+                      <i class="now-ui-icons shopping_cart-simple"></i>
                     </div>
                     <strong>Payment Information</strong>
                   </div>
@@ -677,7 +687,24 @@ export default {
         quantity: "1"
       },
       formLabelWidth: "120px",
-      order: db.collection("order")
+      order: db.collection("order"),
+      options: [{
+          value: 'Option1',
+          label: 'Option1'
+        }, {
+          value: 'Option2',
+          label: 'Option2'
+        }, {
+          value: 'Option3',
+          label: 'Option3'
+        }, {
+          value: 'Option4',
+          label: 'Option4'
+        }, {
+          value: 'Option5',
+          label: 'Option5'
+        }],
+        value: ''
     };
   },
   created() {
@@ -938,4 +965,17 @@ export default {
 .section-space-cus {
   height: 1em;
 }
+
+.custom-class-dropdown {
+    border: solid 1px;
+    border: 2px solid #aba9a9;
+    border-radius: 30px;
+    width: 100%;
+}
+.custom-class-dropdown > div > input {
+    border-radius: 30px;
+    font-size: 0.8571em;
+    height: 36px;
+}
+
 </style>
