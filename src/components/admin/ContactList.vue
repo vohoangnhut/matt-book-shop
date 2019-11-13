@@ -124,30 +124,39 @@
     <b-modal :id="contactModal.id" :title="contactModal.title" @ok="saveContactData">
       <label>First Name</label>
       <div class="input-group">
-        <el-input placeholder="Please input" v-model.trim="customer.first_name" id="firstName"></el-input>
+        <el-input placeholder="Please input" v-model="customer.first_name" id="firstName"></el-input>
       </div>
       <label>Last Name</label>
       <div class="input-group">
-        <el-input placeholder="Please input" v-model.trim="customer.last_name" id="lastName"></el-input>
+        <el-input placeholder="Please input" v-model="customer.last_name" id="lastName"></el-input>
       </div>
       <label>Contact No</label>
       <div class="input-group">
-        <el-input placeholder="Please input" v-model.trim="customer.contact_no" id="contactNo"></el-input>
+        <el-input placeholder="Please input" v-model="customer.contact_no" id="contactNo"></el-input>
       </div>
       <label>Email</label>
       <div class="input-group">
-        <el-input placeholder="Please input" v-model.trim="customer.email" id="email"></el-input>
+        <el-input placeholder="Please input" v-model="customer.email" id="email"></el-input>
       </div>
       <label>Pdpa</label>
       <div class="input-group">
-        <el-checkbox :indeterminate="isIndeterminate" 
-        v-model.trim="customer.pdpa" :disabled="adminRole === businessAdmin"></el-checkbox>
+        <el-checkbox
+          :indeterminate="isIndeterminate"
+          v-model="customer.pdpa"
+          :disabled="adminRole === businessAdmin"
+        ></el-checkbox>
       </div>
       <label>Created On</label>
       <div class="input-group">
-        <el-input placeholder="Please input" 
-        v-model.trim="customer.created" 
-        :disabled="adminRole === businessAdmin" id="createdOn"></el-input>
+        <el-date-picker
+          style="width:100%"
+          :disabled="adminRole === businessAdmin"
+          v-model="customer.created"
+          type="datetime"
+          placeholder="Select date and time"
+          format="dd-MM-yyyy hh:mm:ss"
+          value-format="dd-MM-yyyy hh:mm:ss"
+        ></el-date-picker>
       </div>
     </b-modal>
     <!-- Order modal -->
@@ -156,33 +165,37 @@
         <el-row>
           <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
             <el-form-item label="Invoice No.">
-              <el-input v-model.trim="order.invNo" placeholder="Invoice No." :disabled="adminRole === businessAdmin"></el-input>
+              <el-input
+                v-model="order.invNo"
+                placeholder="Invoice No."
+                :disabled="adminRole === businessAdmin"
+              ></el-input>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
             <el-form-item label="Created On">
-              <!-- <el-input v-model.trim="order.orderDate" placeholder="Created On" :disabled="adminRole === businessAdmin"></el-input> -->
-              <el-date-picker style="width:100%"
+              <el-date-picker
+                style="width:100%"
                 :disabled="adminRole === businessAdmin"
-                v-model.trim="order.orderDate"
+                v-model="order.orderDate"
                 type="datetime"
-                placeholder="Select date and time">
-              </el-date-picker>
+                placeholder="Select date and time"
+                format="dd-MM-yyyy hh:mm:ss"
+                value-format="dd-MM-yyyy hh:mm:ss"
+              ></el-date-picker>
             </el-form-item>
           </el-col>
         </el-row>
-         <el-row>
+        <el-row>
           <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
             <el-form-item label="Name">
-              <el-input v-model.trim="order.shippingName" placeholder="Name"></el-input>
+              <el-input v-model="order.shippingName" placeholder="Name"></el-input>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
             <el-form-item label="Country">
-              <!-- <el-input v-model.trim="order.shippingCountry" placeholder="Country"></el-input> -->
-              <el-select
-                v-model="order.shippingCountry" style="width:100%"
-                placeholder="Country">
+              <!-- <el-input v-model="order.shippingCountry" placeholder="Country"></el-input> -->
+              <el-select v-model="order.shippingCountry" style="width:100%" placeholder="Country">
                 <el-option
                   v-for="item in countryOptions"
                   :key="item.value"
@@ -194,49 +207,55 @@
           </el-col>
         </el-row>
         <el-row>
-           <el-form-item label="Address">
-              <el-input
-                type="textarea"
-                placeholder="Please input"
-                v-model.trim="order.shippingAddress"
-                show-word-limit
-              ></el-input>
-           </el-form-item>
+          <el-form-item label="Address">
+            <el-input
+              type="textarea"
+              placeholder="Please input"
+              v-model="order.shippingAddress"
+              show-word-limit
+            ></el-input>
+          </el-form-item>
         </el-row>
         <el-row>
           <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
             <el-form-item label="Postal Code">
-              <el-input v-model.trim="order.shippingPostal_code" placeholder="Postal Code"></el-input>
+              <el-input v-model="order.shippingPostal_code" placeholder="Postal Code"></el-input>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
             <el-form-item label="Contact No.">
-              <el-input v-model.trim="order.shippingContact_no" placeholder="Contact No."></el-input>
+              <el-input v-model="order.shippingContact_no" placeholder="Contact No."></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
             <el-form-item label="Email">
-              <el-input v-model.trim="order.shippingEmail" placeholder="Email"></el-input>
+              <el-input v-model="order.shippingEmail" placeholder="Email"></el-input>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
             <el-form-item label="Product Nm">
-              <el-input v-model.trim="order.product_name" placeholder="Product Name"></el-input>
+              <el-input v-model="order.product_name" placeholder="Product Name"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
             <el-form-item label="Unit Price">
-              <el-input v-model.trim="order.unit_price" placeholder="Unit Price"></el-input>
+              <el-input v-model="order.unit_price" placeholder="Unit Price"></el-input>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
             <el-form-item label="Quantity">
-              <el-input-number style="width:100%" v-model.trim="order.quantity" @change="handleChange" :min="1" :max="10"></el-input-number>
-              <!-- <el-input v-model.trim="order.quantity" placeholder="Quantity"></el-input> -->
+              <el-input-number
+                style="width:100%"
+                v-model="order.quantity"
+                @change="handleChange"
+                :min="1"
+                :max="10"
+              ></el-input-number>
+              <!-- <el-input v-model="order.quantity" placeholder="Quantity"></el-input> -->
             </el-form-item>
           </el-col>
         </el-row>
@@ -244,46 +263,45 @@
         <el-row>
           <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
             <el-form-item label="Total Price">
-              <el-input v-model.trim="order.total_price" placeholder="Total Price"></el-input>
+              <el-input v-model="order.total_price" placeholder="Total Price"></el-input>
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
             <el-form-item label="Shipping Rate">
-              <el-input v-model.trim="order.shipping_rate" placeholder="Shipping Rate"></el-input>
+              <el-input v-model="order.shipping_rate" placeholder="Shipping Rate"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-form-item label="Total Payment">
-             <el-input v-model.trim="order.total_payment" placeholder="Total Payment"></el-input>
+            <el-input v-model="order.total_payment" placeholder="Total Payment"></el-input>
           </el-form-item>
         </el-row>
       </el-form>
-
     </b-modal>
     <!-- Product modal -->
     <b-modal :id="productModal.id" :title="productModal.title" @ok="saveProductData">
       <label>Product Name</label>
       <div class="input-group">
-        <el-input placeholder="Product Name" v-model.trim="product.title"></el-input>
+        <el-input placeholder="Product Name" v-model="product.title"></el-input>
       </div>
       <label>Unit Price</label>
       <div class="input-group">
-        <el-input placeholder="Unit Price" v-model.trim="product.price"></el-input>
+        <el-input placeholder="Unit Price" v-model="product.price"></el-input>
       </div>
     </b-modal>
     <!-- Role modal -->
     <b-modal :id="roleModal.id" :title="roleModal.title" @ok="saveRoleData">
       <label>Email</label>
       <div class="input-group">
-        <el-input placeholder="Email"  v-model.trim="role.email" :disabled="adminRole === businessAdmin"></el-input>
+        <el-input placeholder="Email" v-model="role.email" :disabled="adminRole === businessAdmin"></el-input>
       </div>
       <label>Role</label>
       <div class="input-group">
-         <el-radio-group v-model.trim="role.roleCode">
+        <el-radio-group v-model="role.roleCode">
           <el-radio-button :label="systemAdmin">System Admin</el-radio-button>
           <el-radio-button :label="businessAdmin">Business Admin</el-radio-button>
-      </el-radio-group>
+        </el-radio-group>
       </div>
     </b-modal>
   </div>
@@ -373,7 +391,7 @@ export default {
         { key: "role", sortable: true },
         { key: "actions" }
       ],
-      countryOptions: [],
+      countryOptions: []
     };
   },
   created() {
@@ -455,6 +473,7 @@ export default {
           this.dataContact[idx].contact_no = this.customer.contact_no;
           this.dataContact[idx].email = this.customer.email;
           this.dataContact[idx].pdpa = this.customer.pdpa;
+          this.dataContact[idx].created = this.customer.created;
         });
     },
     saveOrderData() {
@@ -492,16 +511,12 @@ export default {
           this.dataOrder[idx].total_price = this.order.total_price;
           this.dataOrder[idx].total_payment = this.order.total_payment;
           this.dataOrder[idx].shippingAddress = this.order.shippingAddress;
-          this.dataOrder[
-            idx
-          ].shippingContact_no = this.order.shippingContact_no;
+          this.dataOrder[idx].shippingContact_no = this.order.shippingContact_no;
           this.dataOrder[idx].shippingCountry = this.order.shippingCountry;
           this.dataOrder[idx].shippingEmail = this.order.shippingEmail;
           this.dataOrder[idx].shippingName = this.order.shippingName;
-          this.dataOrder[
-            idx
-          ].shippingPostal_code = this.order.shippingPostal_code;
-          this.dataOrder[idx].order_date = this.order.orderDate;
+          this.dataOrder[idx].shippingPostal_code = this.order.shippingPostal_code;
+          this.dataOrder[idx].orderDate = this.order.orderDate;
           this.dataOrder[idx].invNo = this.order.invNo;
         });
     },
@@ -644,15 +659,13 @@ export default {
           })
           .then(result => {
             var idx = 0;
-            if(collection === 'customer'){
+            if (collection === "customer") {
               idx = this.dataContact.findIndex(
                 x => x.documentId === documentId
               );
               this.dataContact.splice(idx, 1);
-            }else if(collection === 'order'){
-              idx = this.dataOrder.findIndex(
-                x => x.documentId === documentId
-              );
+            } else if (collection === "order") {
+              idx = this.dataOrder.findIndex(x => x.documentId === documentId);
               this.dataOrder.splice(idx, 1);
             }
             resolve(true);
@@ -668,9 +681,7 @@ export default {
 
 
 <style>
-
 .width100per {
   display: block;
 }
-
 </style>

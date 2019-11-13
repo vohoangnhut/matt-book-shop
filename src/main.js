@@ -65,7 +65,7 @@ Vue.mixin({
 					.then(function (response) {
 						response.data.forEach(function (item) {
 							arr.push({
-								value: item.alpha2Code,
+								value: item.name,
 								label: item.name
 							});
 						});
