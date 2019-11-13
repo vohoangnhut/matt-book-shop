@@ -183,6 +183,7 @@ export default {
       e.preventDefault();
 
       this.customer.created = this.formatDate(this.calcTime("Singapore", "+8"));
+      this.customer.delt_flag = false;
 
       if (!this.onValidation(e)) {
         return;

@@ -524,7 +524,8 @@ export default {
                       inv_no: {
                         date: today,
                         no: invNo
-                      }
+                      },
+                      delt_flag: false
                     })
                     .then(docRef => {
                       axios
