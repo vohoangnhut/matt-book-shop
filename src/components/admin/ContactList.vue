@@ -324,13 +324,13 @@ export default {
       dataOrder: [],
       dataProduct: [],
       dataRole: [],
-      dataContactPerPage: 5,
+      dataContactPerPage: 10,
       dataContactCurrentPage: 1,
-      dataOrderPerPage: 5,
+      dataOrderPerPage: 10,
       dataOrderCurrentPage: 1,
-      dataProductPerPage: 5,
+      dataProductPerPage: 10,
       dataProductCurrentPage: 1,
-      dataRolePerPage: 5,
+      dataRolePerPage: 10,
       dataRoleCurrentPage: 1,
       contactModal: {
         id: "contact-modal",
@@ -681,7 +681,15 @@ export default {
     },
 
     refresh(index){
-
+      if(index === 1){ // Customer List
+        this.customerDataLoad();
+      }else if(index === 2){ // Order List
+        this.orderDataLoad();
+      }else if(index === 3){ // Product List
+        this.productDataLoad();
+      }else if(index === 4){ // Role List
+        this.roleDataLoad();
+      }
     }
   }
 };
