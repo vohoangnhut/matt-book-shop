@@ -10,6 +10,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import jquery from 'jquery';
+import axios from "axios";
 window.$ = window.jQuery = jquery;
 
 import App from './App.vue';
@@ -39,6 +40,46 @@ router.beforeEach((to, from, next) => {
 		}
 	});
 });
+
+Vue.mixin({
+	methods: {
+		getAllCountries() {
+			return new Promise((resolve, reject) => {
+				var arr = [];
+				axios
+					.get('https://restcountries.eu/rest/v2/all')
+					.then(function (response) {
+						response.data.forEach(function (item) {
+							arr.push({
+								value: item.alpha2Code,
+								label: item.name
+							});
+						});
+						resolve(arr);
+					})
+					.catch(function (error) {
+						reject(error);
+					});
+			});
+		},
+		getQuantity() {
+			return new Promise((resolve, reject) => {
+				var arr = [];
+				try {
+					[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].forEach(function (item) {
+						arr.push({
+							value: item,
+							label: item
+						});
+					});
+					resolve(arr);
+				} catch (e) {
+					reject(e);
+				}
+			});
+		}
+	}
+})
 
 new Vue({
 	el: '#app',
