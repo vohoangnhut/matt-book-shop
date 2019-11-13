@@ -3,6 +3,7 @@
     <div class="container-fluid">
       <el-tabs type="border-card" v-model="activeName">
         <el-tab-pane label="Contact List" name="first">
+          <b-button size="sm" @click="refresh(1)" class="mr-1" variant="info">Refresh</b-button>
           <b-table
             hover
             :items="dataContact"
@@ -36,6 +37,7 @@
           ></b-pagination>
         </el-tab-pane>
         <el-tab-pane label="Order List" name="second">
+          <b-button size="sm" @click="refresh(2)" class="mr-1" variant="info">Refresh</b-button>
           <b-table
             hover
             :items="dataOrder"
@@ -69,6 +71,7 @@
           ></b-pagination>
         </el-tab-pane>
         <el-tab-pane label="Product List" name="third">
+          <b-button size="sm" @click="refresh(3)" class="mr-1" variant="info">Refresh</b-button>
           <b-table
             hover
             :items="dataProduct"
@@ -94,6 +97,7 @@
           ></b-pagination>
         </el-tab-pane>
         <el-tab-pane label="User Role List" name="four">
+          <b-button size="sm" @click="refresh(4)" class="mr-1" variant="info">Refresh</b-button>
           <b-table
             hover
             :items="dataRole"
@@ -674,6 +678,10 @@ export default {
             reject(error); // the request failed
           });
       });
+    },
+
+    refresh(index){
+
     }
   }
 };
