@@ -38,6 +38,7 @@
         </el-tab-pane>
         <el-tab-pane label="Order List" name="second">
           <b-button size="sm" @click="refresh(2)" class="mr-1" variant="info">Refresh</b-button>
+          <b-button size="sm" @click="exportData(2)" class="mr-1" variant="info">Export Excel</b-button>
           <b-table
             hover
             :items="dataOrder"
@@ -145,7 +146,6 @@
       <label>Pdpa</label>
       <div class="input-group">
         <el-checkbox
-          :indeterminate="isIndeterminate"
           v-model="customer.pdpa"
           :disabled="adminRole === businessAdmin"
         ></el-checkbox>
@@ -255,7 +255,6 @@
               <el-input-number
                 style="width:100%"
                 v-model="order.quantity"
-                @change="handleChange"
                 :min="1"
                 :max="10"
               ></el-input-number>
@@ -679,7 +678,6 @@ export default {
           });
       });
     },
-
     refresh(index){
       if(index === 1){ // Customer List
         this.customerDataLoad();
@@ -689,6 +687,30 @@ export default {
         this.productDataLoad();
       }else if(index === 4){ // Role List
         this.roleDataLoad();
+      }
+    },
+    formatJson(filterVal, jsonData) {
+      return jsonData.map(v => filterVal.map(j => {
+        return v[j];
+      }))
+    },
+    exportData(index){
+      if(index === 1){ // Customer List
+      }else if(index === 2){ // Order List
+        import('@/vendor/Export2Excel').then(excel => {
+          const tHeader = ['Inv No', 'Order Date', 'Shipping Name', 'Shipping Country', 'Shipping Address', 'Shipping Postal Code', 'Shipping Contact No',
+                            'Shipping Email', 'Product Name', 'Unit Price', 'Quantity', 'Total Price', 'Shipping Rate', 'Total Payment'];
+          const filterVal = ['invNo', 'orderDate', 'shippingName', 'shippingCountry', 'shippingAddress', 'shippingPostal_code', 'shippingContact_no',
+                            'shippingEmail', 'product_name', 'unit_price', 'quantity', 'total_price', 'shipping_rate', 'total_payment'];
+          const data = this.formatJson(filterVal, this.dataOrder);
+          excel.export_json_to_excel({
+            header: tHeader,
+            data,
+            filename: 'Order List'
+          });
+        })
+      }else if(index === 3){ // Product List
+      }else if(index === 4){ // Role List
       }
     }
   }
