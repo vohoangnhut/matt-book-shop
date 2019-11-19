@@ -467,6 +467,11 @@ export default {
       if (!this.onValidation()) {
         return;
       }
+      var productName = this.item.title;
+      var unitPrice = this.form.unit_price;
+      var quantity = this.form.quantity;
+      var totalPrice = this.form.total_price;
+      var shippingRate = this.form.shipping_rate;
       var totalPayment = this.form.total_payment;
       var order = this.order;
       var form = this.form;
@@ -494,9 +499,35 @@ export default {
                 return actions.order.create({
                   purchase_units: [
                     {
+                      description: "Matt Book Shop",
+
+                      custom_id: "CUST-MattBookShop",
+                      soft_descriptor: "MattBookShop",
                       amount: {
-                        value: totalPayment.toString()
-                      }
+                        currency_code: "USD",
+                        value: totalPayment.toString(),
+                        breakdown: {
+                          item_total: {
+                            currency_code: "USD",
+                            value: totalPrice.toString()
+                          },
+                          shipping: {
+                            currency_code: "USD",
+                            value: shippingRate.toString()
+                          }
+                        }
+                      },
+                      items: [
+                        {
+                          name: productName.toString(),
+                          sku: "sku01",
+                          unit_amount: {
+                            currency_code: "USD",
+                            value: unitPrice.toString()
+                          },
+                          quantity: quantity.toString()
+                        }
+                      ]
                     }
                   ]
                 });
