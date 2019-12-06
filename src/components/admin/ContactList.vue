@@ -123,6 +123,30 @@
             aria-controls="dataRoleTable"
           ></b-pagination>
         </el-tab-pane>
+        <el-tab-pane label="Log List" name="five">
+          <b-button size="sm" @click="refresh(5)" class="mr-1" variant="info">Refresh</b-button>
+          <b-table
+            hover
+            :items="dataLog"
+            id="dataLogTable"
+            :per-page="dataLogPerPage"
+            :current-page="dataLogCurrentPage"
+            :fields="dataLogFields"
+          >
+          <template v-slot:cell(old)="data">
+            <span v-html="data.value"></span>
+          </template>
+          <template v-slot:cell(new)="data">
+            <span v-html="data.value"></span>
+          </template>
+          </b-table>
+          <b-pagination
+            v-model="dataLogCurrentPage"
+            :total-rows="rowsDataLog"
+            :per-page="dataLogPerPage"
+            aria-controls="dataLogTable"
+          ></b-pagination>
+        </el-tab-pane>
       </el-tabs>
     </div>
     <!-- Contact modal -->
@@ -323,6 +347,7 @@ export default {
       dataOrder: [],
       dataProduct: [],
       dataRole: [],
+      dataLog: [],
       dataContactPerPage: 10,
       dataContactCurrentPage: 1,
       dataOrderPerPage: 10,
@@ -331,6 +356,8 @@ export default {
       dataProductCurrentPage: 1,
       dataRolePerPage: 10,
       dataRoleCurrentPage: 1,
+      dataLogPerPage: 10,
+      dataLogCurrentPage: 1,
       contactModal: {
         id: "contact-modal",
         title: "Contact Update Data"
@@ -387,6 +414,7 @@ export default {
         { key: "title", sortable: true },
         { key: "price", sortable: true },
         { key: "created", sortable: true },
+        { key: "updated", sortable: true },
         { key: "actions" }
       ],
       dataRoleFields: [
@@ -394,7 +422,15 @@ export default {
         { key: "role", sortable: true },
         { key: "actions" }
       ],
-      countryOptions: []
+      dataLogFields: [
+        { key: "updated", sortable: true },
+        { key: "updated_by", sortable: true },
+        { key: "old", sortable: true },
+        { key: "new", sortable: true }
+      ],
+      countryOptions: [],
+      oldObj: {},
+      user: firebase.auth().currentUser
     };
   },
   created() {
@@ -402,6 +438,7 @@ export default {
     this.orderDataLoad();
     this.productDataLoad();
     this.roleDataLoad();
+    this.logDataLoad();
 
     this.getAllCountries().then(result => {
       this.countryOptions = result;
@@ -419,23 +456,30 @@ export default {
     },
     rowsDataRole() {
       return this.dataRole.length;
+    },
+    rowsDataLog() {
+      return this.dataLog.length;
     }
   },
   methods: {
     contactInfo(item, index, button) {
       this.customer = JSON.parse(JSON.stringify(item, null, 2));
+      this.oldObj = JSON.parse(JSON.stringify(item, null, 2));
       this.$root.$emit("bv::show::modal", this.contactModal.id, button);
     },
     orderInfo(item, index, button) {
       this.order = JSON.parse(JSON.stringify(item, null, 2));
+      this.oldObj = JSON.parse(JSON.stringify(item, null, 2));
       this.$root.$emit("bv::show::modal", this.orderModal.id, button);
     },
     productInfo(item, index, button) {
       this.product = JSON.parse(JSON.stringify(item, null, 2));
+      this.oldObj = JSON.parse(JSON.stringify(item, null, 2));
       this.$root.$emit("bv::show::modal", this.productModal.id, button);
     },
     roleInfo(item, index, button) {
       this.role = JSON.parse(JSON.stringify(item, null, 2));
+      this.oldObj = JSON.parse(JSON.stringify(item, null, 2));
       this.$root.$emit("bv::show::modal", this.roleModal.id, button);
     },
     confirmDelete(item, index, button, collection) {
@@ -477,6 +521,9 @@ export default {
           this.dataContact[idx].email = this.customer.email;
           this.dataContact[idx].pdpa = this.customer.pdpa;
           this.dataContact[idx].created = this.customer.created;
+          this.writeLog(this.oldObj, this.customer, 'customer', 'update').then(() => {
+            this.$swal("Saved!", "Data has been saved", "success");
+          })
         });
     },
     saveOrderData() {
@@ -521,6 +568,9 @@ export default {
           this.dataOrder[idx].shippingPostal_code = this.order.shippingPostal_code;
           this.dataOrder[idx].orderDate = this.order.orderDate;
           this.dataOrder[idx].invNo = this.order.invNo;
+          this.writeLog(this.oldObj, this.order, 'order', 'update').then(() => {
+            this.$swal("Saved!", "Data has been saved", "success");
+          })
         });
     },
     saveProductData() {
@@ -528,7 +578,9 @@ export default {
         .doc(this.product.documentId)
         .update({
           title: this.product.title,
-          price: this.product.price
+          price: this.product.price,
+          updated: this.calcTime("Singapore", "+8"),
+          updated_by: this.user.email
         })
         .then(result => {
           var idx = this.dataProduct.findIndex(
@@ -536,6 +588,9 @@ export default {
           );
           this.dataProduct[idx].title = this.product.title;
           this.dataProduct[idx].price = this.product.price;
+          this.writeLog(this.oldObj, this.product, 'product', 'update').then(() => {
+            this.$swal("Saved!", "Data has been saved", "success");
+          })
         });
     },
     saveRoleData() {
@@ -556,6 +611,9 @@ export default {
               : "Business Admin";
           this.dataRole[idx].roleCode = this.role.roleCode;
           this.adminRole = this.role.roleCode;
+          this.writeLog(this.oldObj, this.role, 'role', 'update').then(() => {
+            this.$swal("Saved!", "Data has been saved", "success");
+          })
         });
     },
     customerDataLoad() {
@@ -621,6 +679,7 @@ export default {
             obj.created = data.created;
             obj.actions = "";
             obj.documentId = doc.id;
+            obj.updated = data.updated;
             this.dataProduct.push(obj);
           });
         })
@@ -647,6 +706,23 @@ export default {
             obj.actions = "";
             obj.documentId = doc.id;
             this.dataRole.push(obj);
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    logDataLoad() {
+      this.dataLog = [];
+      db.collection("log")
+        .where('target', '==', 'product')
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            var obj = doc.data();
+            obj.old = 'Name: ' + obj.oldVal.title + '<br/>' + 'Price: ' + obj.oldVal.price;
+            obj.new = 'Name: ' + obj.newVal.title + '<br/>' + 'Price: ' + obj.newVal.price;
+            this.dataLog.push(obj);
           });
         })
         .catch(error => {
@@ -687,6 +763,8 @@ export default {
         this.productDataLoad();
       }else if(index === 4){ // Role List
         this.roleDataLoad();
+      }else if(index === 5){ // Log List
+        this.logDataLoad();
       }
     },
     formatJson(filterVal, jsonData) {
@@ -711,7 +789,35 @@ export default {
         })
       }else if(index === 3){ // Product List
       }else if(index === 4){ // Role List
+      }else if(index === 4){ // Log List
       }
+    },
+    calcTime(city, offset) {
+      var d = new Date();
+      var utc = d.getTime() + d.getTimezoneOffset() * 60000;
+      var nd = new Date(utc + 3600000 * offset);
+      return nd.toLocaleString();
+    },
+    writeLog(oldVal, newVal, target, action){
+      return new Promise((resolve, reject) => {
+        db.collection('log')
+          .add({
+            oldVal: oldVal,
+            newVal: newVal,
+            action: action,
+            created: this.calcTime("Singapore", "+8"),
+            created_by: this.user.email,
+            updated: this.calcTime("Singapore", "+8"),
+            updated_by: this.user.email,
+            target: target
+          })
+          .then(() => {
+            resolve();
+          })
+          .catch(error => {
+            reject(error); // the request failed
+          });
+      });
     }
   }
 };

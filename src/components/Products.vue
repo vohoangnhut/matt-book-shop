@@ -569,12 +569,13 @@ export default {
                             docRef.id
                         )
                         .then(function(response) {
-                          swal({
+                          /*swal({
                             type: "success",
                             title: "Thank you !",
                             html:
                               "Your order will be on its way. Receipt of this purchase will be sent to your email"
-                          });
+                          });*/
+                          this.$router.push('/paymentsuccess');
                         })
                         .catch(function(error) {
                           swal({
