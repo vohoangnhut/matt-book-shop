@@ -2,41 +2,7 @@
   <div class="section">
     <div class="container-fluid">
       <el-tabs type="border-card" v-model="activeName">
-        <el-tab-pane label="Contact List" name="first">
-          <b-button size="sm" @click="refresh(1)" class="mr-1" variant="info">Refresh</b-button>
-          <b-table
-            hover
-            :items="dataContact"
-            id="dataContactTable"
-            :per-page="dataContactPerPage"
-            :current-page="dataContactCurrentPage"
-            :sort-by.sync="sortByContact"
-            :sort-desc.sync="sortDescContact"
-            :fields="dataContactFields"
-          >
-            <template v-slot:cell(actions)="row">
-              <b-button
-                size="sm"
-                @click="contactInfo(row.item, row.index, $event.target)"
-                class="mr-1"
-                variant="info"
-              >Update</b-button>
-              <b-button
-                size="sm"
-                @click="confirmDelete(row.item, row.index, $event.target, 'customer')"
-                class="mr-1"
-                variant="danger"
-              >Delete</b-button>
-            </template>
-          </b-table>
-          <b-pagination
-            v-model="dataContactCurrentPage"
-            :total-rows="rowsDataContact"
-            :per-page="dataContactPerPage"
-            aria-controls="dataContactTable"
-          ></b-pagination>
-        </el-tab-pane>
-        <el-tab-pane label="Order List" name="second">
+        <el-tab-pane label="Transaction Record" name="first">
           <b-button size="sm" @click="refresh(2)" class="mr-1" variant="info">Refresh</b-button>
           <b-button size="sm" @click="exportData(2)" class="mr-1" variant="info">Export Excel</b-button>
           <b-table
@@ -71,7 +37,43 @@
             aria-controls="dataOrderTable"
           ></b-pagination>
         </el-tab-pane>
-        <el-tab-pane label="Product List" name="third">
+
+        <el-tab-pane label="Contact Record" name="second">
+          <b-button size="sm" @click="refresh(1)" class="mr-1" variant="info">Refresh</b-button>
+          <b-table
+            hover
+            :items="dataContact"
+            id="dataContactTable"
+            :per-page="dataContactPerPage"
+            :current-page="dataContactCurrentPage"
+            :sort-by.sync="sortByContact"
+            :sort-desc.sync="sortDescContact"
+            :fields="dataContactFields"
+          >
+            <template v-slot:cell(actions)="row">
+              <b-button
+                size="sm"
+                @click="contactInfo(row.item, row.index, $event.target)"
+                class="mr-1"
+                variant="info"
+              >Update</b-button>
+              <b-button
+                size="sm"
+                @click="confirmDelete(row.item, row.index, $event.target, 'customer')"
+                class="mr-1"
+                variant="danger"
+              >Delete</b-button>
+            </template>
+          </b-table>
+          <b-pagination
+            v-model="dataContactCurrentPage"
+            :total-rows="rowsDataContact"
+            :per-page="dataContactPerPage"
+            aria-controls="dataContactTable"
+          ></b-pagination>
+        </el-tab-pane>
+        
+        <el-tab-pane label="Product Inventory" name="third">
           <b-button size="sm" @click="refresh(3)" class="mr-1" variant="info">Refresh</b-button>
           <b-table
             hover
@@ -97,7 +99,7 @@
             aria-controls="dataProductTable"
           ></b-pagination>
         </el-tab-pane>
-        <el-tab-pane label="User Role List" name="four">
+        <el-tab-pane label="Sys User Mgnt" name="four">
           <b-button size="sm" @click="refresh(4)" class="mr-1" variant="info">Refresh</b-button>
           <b-table
             hover
