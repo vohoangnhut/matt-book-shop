@@ -101,7 +101,7 @@
         </a>
       </div>
     </div>
-    <div class="cd-section" id="about">
+    <div class="cd-section" id="about" ref="about">
       <!--     *********     About      *********      -->
       <div class="features-3">
 

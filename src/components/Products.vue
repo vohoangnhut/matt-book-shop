@@ -418,6 +418,7 @@
         </div>
       </div>
     </div>
+    <a @click="test">ASSSSSSSSSSSS</a>
   </div>
 </template>
 <script>
@@ -474,6 +475,9 @@ export default {
     });
   },
   methods: {
+    test(){
+      this.$router.push({ name: 'Home', hash: '#about' });
+    },
     onSubmit() {
       if (!this.onValidation()) {
         return;
@@ -610,7 +614,9 @@ export default {
                             type: "success",
                             title: "Thank you !",
                             html:
-                              "Your order will be on its way. Receipt of this purchase will be sent to your email"
+                              "Your order will be on its way. Receipt of this purchase will be sent to your email",
+                            allowOutsideClick: false,
+                            allowEscapeKey: false
                           }).then(function() {
                             x.isPaymentSuccess = true;
                           });
@@ -623,8 +629,7 @@ export default {
                       swal({
                         type: "error",
                         title: "Error",
-                        html: "Error adding document: ",
-                        error
+                        html: error
                       });
                     });
                 });
@@ -634,7 +639,7 @@ export default {
         }
         x.registerListener(val => {
           this.isLoading = false;
-          this.$router.push("/");
+          this.$router.push({ name: 'Home', hash: '#about' });
         });
         x.registerListenerProgressPayment(val => {
           this.isLoading = true;
