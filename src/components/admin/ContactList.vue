@@ -72,7 +72,7 @@
             aria-controls="dataContactTable"
           ></b-pagination>
         </el-tab-pane>
-        
+
         <el-tab-pane label="Product Inventory" name="third">
           <b-button size="sm" @click="refresh(3)" class="mr-1" variant="info">Refresh</b-button>
           <b-table
@@ -90,6 +90,12 @@
                 class="mr-1"
                 variant="info"
               >Update</b-button>
+              <b-button
+                size="sm"
+                @click="logInfo(row.item, row.index, $event.target)"
+                class="mr-1"
+                variant="info"
+              >View Log</b-button>
             </template>
           </b-table>
           <b-pagination
@@ -135,12 +141,12 @@
             :current-page="dataLogCurrentPage"
             :fields="dataLogFields"
           >
-          <template v-slot:cell(old)="data">
-            <span v-html="data.value"></span>
-          </template>
-          <template v-slot:cell(new)="data">
-            <span v-html="data.value"></span>
-          </template>
+            <template v-slot:cell(old)="data">
+              <span v-html="data.value"></span>
+            </template>
+            <template v-slot:cell(new)="data">
+              <span v-html="data.value"></span>
+            </template>
           </b-table>
           <b-pagination
             v-model="dataLogCurrentPage"
@@ -171,10 +177,7 @@
       </div>
       <label>Pdpa</label>
       <div class="input-group">
-        <el-checkbox
-          v-model="customer.pdpa"
-          :disabled="adminRole === businessAdmin"
-        ></el-checkbox>
+        <el-checkbox v-model="customer.pdpa" :disabled="adminRole === businessAdmin"></el-checkbox>
       </div>
       <label>Created On</label>
       <div class="input-group">
@@ -265,7 +268,7 @@
             </el-form-item>
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
-            <el-form-item label="Product Nm">
+            <el-form-item label="Product Name">
               <el-input v-model="order.product_name" placeholder="Product Name"></el-input>
             </el-form-item>
           </el-col>
@@ -278,12 +281,7 @@
           </el-col>
           <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
             <el-form-item label="Quantity">
-              <el-input-number
-                style="width:100%"
-                v-model="order.quantity"
-                :min="1"
-                :max="10"
-              ></el-input-number>
+              <el-input-number style="width:100%" v-model="order.quantity" :min="1" :max="10"></el-input-number>
               <!-- <el-input v-model="order.quantity" placeholder="Quantity"></el-input> -->
             </el-form-item>
           </el-col>
@@ -333,6 +331,21 @@
         </el-radio-group>
       </div>
     </b-modal>
+    <!-- View Log modal -->
+    <b-modal :id="viewLogModal.id" :title="viewLogModal.title" ok-only scrollable>
+      <b-row class="bv-example-row">
+        <b-col>Old</b-col>
+        <b-col>New</b-col>
+      </b-row>
+      <b-row v-for="itemLog in logInfoList" :key="itemLog">
+        <b-col>
+          <span v-html="itemLog.old"></span>
+        </b-col>
+        <b-col>
+          <span v-html="itemLog.new"></span>
+        </b-col>
+      </b-row>
+    </b-modal>
   </div>
 </template>
 <script>
@@ -375,6 +388,10 @@ export default {
       roleModal: {
         id: "role-modal",
         title: "Role Update Data"
+      },
+      viewLogModal: {
+        id: "view-log-modal",
+        title: "View Log"
       },
       customer: {},
       order: {},
@@ -432,7 +449,8 @@ export default {
       ],
       countryOptions: [],
       oldObj: {},
-      user: firebase.auth().currentUser
+      user: firebase.auth().currentUser,
+      logInfoList: []
     };
   },
   created() {
@@ -484,6 +502,13 @@ export default {
       this.oldObj = JSON.parse(JSON.stringify(item, null, 2));
       this.$root.$emit("bv::show::modal", this.roleModal.id, button);
     },
+    logInfo(item, index, button) {
+      var obj = JSON.parse(JSON.stringify(item, null, 2));
+      //this.log = JSON.parse(JSON.stringify(item, null, 2));
+      this.getLogList(obj.documentId).then(() => {
+        this.$root.$emit("bv::show::modal", this.viewLogModal.id, button);
+      });
+    },
     confirmDelete(item, index, button, collection) {
       this.$swal({
         title: "Do you want to delete?",
@@ -523,9 +548,11 @@ export default {
           this.dataContact[idx].email = this.customer.email;
           this.dataContact[idx].pdpa = this.customer.pdpa;
           this.dataContact[idx].created = this.customer.created;
-          this.writeLog(this.oldObj, this.customer, 'customer', 'update').then(() => {
-            this.$swal("Saved!", "Data has been saved", "success");
-          })
+          this.writeLog(this.oldObj, this.customer, "customer", "update").then(
+            () => {
+              this.$swal("Saved!", "Data has been saved", "success");
+            }
+          );
         });
     },
     saveOrderData() {
@@ -563,16 +590,20 @@ export default {
           this.dataOrder[idx].total_price = this.order.total_price;
           this.dataOrder[idx].total_payment = this.order.total_payment;
           this.dataOrder[idx].shippingAddress = this.order.shippingAddress;
-          this.dataOrder[idx].shippingContact_no = this.order.shippingContact_no;
+          this.dataOrder[
+            idx
+          ].shippingContact_no = this.order.shippingContact_no;
           this.dataOrder[idx].shippingCountry = this.order.shippingCountry;
           this.dataOrder[idx].shippingEmail = this.order.shippingEmail;
           this.dataOrder[idx].shippingName = this.order.shippingName;
-          this.dataOrder[idx].shippingPostal_code = this.order.shippingPostal_code;
+          this.dataOrder[
+            idx
+          ].shippingPostal_code = this.order.shippingPostal_code;
           this.dataOrder[idx].orderDate = this.order.orderDate;
           this.dataOrder[idx].invNo = this.order.invNo;
-          this.writeLog(this.oldObj, this.order, 'order', 'update').then(() => {
+          this.writeLog(this.oldObj, this.order, "order", "update").then(() => {
             this.$swal("Saved!", "Data has been saved", "success");
-          })
+          });
         });
     },
     saveProductData() {
@@ -590,9 +621,11 @@ export default {
           );
           this.dataProduct[idx].title = this.product.title;
           this.dataProduct[idx].price = this.product.price;
-          this.writeLog(this.oldObj, this.product, 'product', 'update').then(() => {
-            this.$swal("Saved!", "Data has been saved", "success");
-          })
+          this.writeLog(this.oldObj, this.product, "product", "update").then(
+            () => {
+              this.$swal("Saved!", "Data has been saved", "success");
+            }
+          );
         });
     },
     saveRoleData() {
@@ -613,9 +646,9 @@ export default {
               : "Business Admin";
           this.dataRole[idx].roleCode = this.role.roleCode;
           this.adminRole = this.role.roleCode;
-          this.writeLog(this.oldObj, this.role, 'role', 'update').then(() => {
+          this.writeLog(this.oldObj, this.role, "role", "update").then(() => {
             this.$swal("Saved!", "Data has been saved", "success");
-          })
+          });
         });
     },
     customerDataLoad() {
@@ -717,13 +750,29 @@ export default {
     logDataLoad() {
       this.dataLog = [];
       db.collection("log")
-        .where('target', '==', 'product')
+        .where("target", "==", "product")
         .get()
         .then(snapshot => {
           snapshot.docs.forEach(doc => {
             var obj = doc.data();
-            obj.old = 'Name: ' + obj.oldVal.title + '<br/>' + 'Price: ' + obj.oldVal.price;
-            obj.new = 'Name: ' + obj.newVal.title + '<br/>' + 'Price: ' + obj.newVal.price;
+            obj.old =
+              "Product Code: " +
+              obj.oldVal.product_code +
+              "<br/>" +
+              "Name: " +
+              obj.oldVal.title +
+              "<br/>" +
+              "Price: " +
+              obj.oldVal.price;
+            obj.new =
+              "Product Code: " +
+              obj.newVal.product_code +
+              "<br/>" +
+              "Name: " +
+              obj.newVal.title +
+              "<br/>" +
+              "Price: " +
+              obj.newVal.price;
             this.dataLog.push(obj);
           });
         })
@@ -756,42 +805,82 @@ export default {
           });
       });
     },
-    refresh(index){
-      if(index === 1){ // Customer List
+    refresh(index) {
+      if (index === 1) {
+        // Customer List
         this.customerDataLoad();
-      }else if(index === 2){ // Order List
+      } else if (index === 2) {
+        // Order List
         this.orderDataLoad();
-      }else if(index === 3){ // Product List
+      } else if (index === 3) {
+        // Product List
         this.productDataLoad();
-      }else if(index === 4){ // Role List
+      } else if (index === 4) {
+        // Role List
         this.roleDataLoad();
-      }else if(index === 5){ // Log List
+      } else if (index === 5) {
+        // Log List
         this.logDataLoad();
       }
     },
     formatJson(filterVal, jsonData) {
-      return jsonData.map(v => filterVal.map(j => {
-        return v[j];
-      }))
+      return jsonData.map(v =>
+        filterVal.map(j => {
+          return v[j];
+        })
+      );
     },
-    exportData(index){
-      if(index === 1){ // Customer List
-      }else if(index === 2){ // Order List
-        import('@/vendor/Export2Excel').then(excel => {
-          const tHeader = ['Inv No', 'Order Date', 'Shipping Name', 'Shipping Country', 'Shipping Address', 'Shipping Postal Code', 'Shipping Contact No',
-                            'Shipping Email', 'Product Name', 'Unit Price', 'Quantity', 'Total Price', 'Shipping Rate', 'Total Payment'];
-          const filterVal = ['invNo', 'orderDate', 'shippingName', 'shippingCountry', 'shippingAddress', 'shippingPostal_code', 'shippingContact_no',
-                            'shippingEmail', 'product_name', 'unit_price', 'quantity', 'total_price', 'shipping_rate', 'total_payment'];
+    exportData(index) {
+      if (index === 1) {
+        // Customer List
+      } else if (index === 2) {
+        // Order List
+        import("@/vendor/Export2Excel").then(excel => {
+          const tHeader = [
+            "Inv No",
+            "Order Date",
+            "Shipping Name",
+            "Shipping Country",
+            "Shipping Address",
+            "Shipping Postal Code",
+            "Shipping Contact No",
+            "Shipping Email",
+            "Product Name",
+            "Unit Price",
+            "Quantity",
+            "Total Price",
+            "Shipping Rate",
+            "Total Payment"
+          ];
+          const filterVal = [
+            "invNo",
+            "orderDate",
+            "shippingName",
+            "shippingCountry",
+            "shippingAddress",
+            "shippingPostal_code",
+            "shippingContact_no",
+            "shippingEmail",
+            "product_name",
+            "unit_price",
+            "quantity",
+            "total_price",
+            "shipping_rate",
+            "total_payment"
+          ];
           const data = this.formatJson(filterVal, this.dataOrder);
           excel.export_json_to_excel({
             header: tHeader,
             data,
-            filename: 'Order List'
+            filename: "Order List"
           });
-        })
-      }else if(index === 3){ // Product List
-      }else if(index === 4){ // Role List
-      }else if(index === 4){ // Log List
+        });
+      } else if (index === 3) {
+        // Product List
+      } else if (index === 4) {
+        // Role List
+      } else if (index === 4) {
+        // Log List
       }
     },
     calcTime(city, offset) {
@@ -800,9 +889,9 @@ export default {
       var nd = new Date(utc + 3600000 * offset);
       return nd.toLocaleString();
     },
-    writeLog(oldVal, newVal, target, action){
+    writeLog(oldVal, newVal, target, action) {
       return new Promise((resolve, reject) => {
-        db.collection('log')
+        db.collection("log")
           .add({
             oldVal: oldVal,
             newVal: newVal,
@@ -814,6 +903,47 @@ export default {
             target: target
           })
           .then(() => {
+            resolve();
+          })
+          .catch(error => {
+            reject(error); // the request failed
+          });
+      });
+    },
+    getLogList(documentId) {
+      return new Promise((resolve, reject) => {
+        this.logInfoList = [];
+        db.collection("log")
+          .where("oldVal.documentId", "==", documentId)
+          .where("newVal.documentId", "==", documentId)
+          .orderBy('updated', 'desc')
+          .get()
+          .then(snapshot => {
+            snapshot.docs.forEach(doc => {
+              var obj = doc.data();
+              obj.old =
+                "<b>" + this.formatDate(obj.updated) + "</b>" +
+                "<br/>" +
+                "Product Code: " +
+                obj.oldVal.product_code +
+                "<br/>" +
+                "Name: " +
+                obj.oldVal.title +
+                "<br/>" +
+                "Price: " +
+                obj.oldVal.price;
+              obj.new =
+                "<br/>" +
+                "Product Code: " +
+                obj.newVal.product_code +
+                "<br/>" +
+                "Name: " +
+                obj.newVal.title +
+                "<br/>" +
+                "Price: " +
+                obj.newVal.price;
+              this.logInfoList.push(obj);
+            });
             resolve();
           })
           .catch(error => {

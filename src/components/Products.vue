@@ -1,5 +1,11 @@
 <template>
   <div class="wrapper">
+    <loading
+      :active.sync="isLoading"
+      :can-cancel="true"
+      :on-cancel="onCancel"
+      :is-full-page="fullPage"
+    ></loading>
     <div class="page-header page-header-mini">
       <div
         class="page-header-image"
@@ -419,6 +425,8 @@
 <script>
 import { db } from "../config/firebaseConfig";
 import axios from "axios";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
 export default {
   name: "Products",
   data() {
@@ -433,8 +441,13 @@ export default {
       formLabelWidth: "120px",
       order: db.collection("order"),
       countryOptions: [],
-      quantityOptions: []
+      quantityOptions: [],
+      isLoading: false,
+      fullPage: true
     };
+  },
+  components: {
+    Loading
   },
   created() {
     db.collection("product")
@@ -480,6 +493,20 @@ export default {
       var orderDate = this.formatDate(nowDate);
       var today = this.formatDateInvNo(nowDate);
       var invNo = "";
+      var x = {
+        aInternal: 10,
+        aListener: function(val) {},
+        set isPaymentSuccess(val) {
+          this.aInternal = val;
+          this.aListener(val);
+        },
+        get isPaymentSuccess() {
+          return this.aInternal;
+        },
+        registerListener: function(listener) {
+          this.aListener = listener;
+        }
+      };
 
       this.getInvNo(today).then(snapshot => {
         if (snapshot.docs.length === 0) {
@@ -575,14 +602,10 @@ export default {
                             html:
                               "Your order will be on its way. Receipt of this purchase will be sent to your email"
                           });*/
-                          this.$router.push('/paymentsuccess');
+                          x.isPaymentSuccess = true;
                         })
                         .catch(function(error) {
-                          swal({
-                            type: "error",
-                            title: "Error",
-                            html: error
-                          });
+                          console.log(error);
                         });
                     })
                     .catch(error => {
@@ -598,6 +621,9 @@ export default {
             })
             .render("#paypal-button");
         }
+        x.registerListener(val => {
+          this.$router.push("/paymentsuccess");
+        });
       });
     },
     onCancel(e) {
