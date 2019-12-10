@@ -20,11 +20,25 @@ Vue.use(VueSweetalert2);
 Vue.use(ElementUI);
 Vue.use(BootstrapVue);
 
-Vue.prototype.$scrollToTop = () => window.scrollTo(0, 0)
+Vue.prototype.$scrollToTop = () => window.scrollTo(0, 0);
+
+var scrollBehavior = function (to, from, savedPosition) {
+	if (to.hash) {
+		return {
+			selector: to.hash
+		}
+	} else {
+		return {
+			x: 0,
+			y: 0
+		}
+	}
+};
 
 const router = new VueRouter({
 	mode: 'history',
-	routes
+	routes,
+	scrollBehavior: scrollBehavior
 });
 
 router.beforeEach((to, from, next) => {

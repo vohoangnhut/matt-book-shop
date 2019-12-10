@@ -418,7 +418,6 @@
         </div>
       </div>
     </div>
-    <a @click="test">ASSSSSSSSSSSS</a>
   </div>
 </template>
 <script>
@@ -475,9 +474,6 @@ export default {
     });
   },
   methods: {
-    test(){
-      this.$router.push({ name: 'Home', hash: '#about' });
-    },
     onSubmit() {
       if (!this.onValidation()) {
         return;
@@ -639,7 +635,7 @@ export default {
         }
         x.registerListener(val => {
           this.isLoading = false;
-          this.$router.push({ name: 'Home', hash: '#about' });
+          this.$router.push({ path: '/', hash: '#about' });
         });
         x.registerListenerProgressPayment(val => {
           this.isLoading = true;
