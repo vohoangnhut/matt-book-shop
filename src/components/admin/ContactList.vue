@@ -444,6 +444,7 @@ export default {
       dataLogFields: [
         { key: "updated", sortable: true },
         { key: "updated_by", sortable: true },
+        { key: "product_code", sortable: true },
         { key: "old", sortable: true },
         { key: "new", sortable: true }
       ],
@@ -756,23 +757,18 @@ export default {
           snapshot.docs.forEach(doc => {
             var obj = doc.data();
             obj.old =
-              "Product Code: " +
-              obj.oldVal.product_code +
-              "<br/>" +
               "Name: " +
               obj.oldVal.title +
               "<br/>" +
               "Price: " +
               obj.oldVal.price;
             obj.new =
-              "Product Code: " +
-              obj.newVal.product_code +
-              "<br/>" +
               "Name: " +
               obj.newVal.title +
               "<br/>" +
               "Price: " +
               obj.newVal.price;
+              obj.product_code = obj.oldVal.product_code;
             this.dataLog.push(obj);
           });
         })

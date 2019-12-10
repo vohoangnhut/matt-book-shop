@@ -2,8 +2,6 @@
   <div class="wrapper">
     <loading
       :active.sync="isLoading"
-      :can-cancel="true"
-      :on-cancel="onCancel"
       :is-full-page="fullPage"
     ></loading>
     <div class="page-header page-header-mini">
@@ -505,6 +503,17 @@ export default {
         },
         registerListener: function(listener) {
           this.aListener = listener;
+        },
+        bListener: function(val) {},
+        set isProgressPayment(val) {
+          this.aInternal = val;
+          this.bListener(val);
+        },
+        get isProgressPayment() {
+          return this.aInternal;
+        },
+        registerListenerProgressPayment: function(listener) {
+          this.bListener = listener;
         }
       };
 
@@ -561,6 +570,7 @@ export default {
               },
               // Finalize the transaction
               onApprove: function(data, actions) {
+                x.isProgressPayment = true;
                 return actions.order.capture().then(function(details) {
                   order
                     .add({
@@ -596,13 +606,14 @@ export default {
                             docRef.id
                         )
                         .then(function(response) {
-                          /*swal({
+                          swal({
                             type: "success",
                             title: "Thank you !",
                             html:
                               "Your order will be on its way. Receipt of this purchase will be sent to your email"
-                          });*/
-                          x.isPaymentSuccess = true;
+                          }).then(function() {
+                            x.isPaymentSuccess = true;
+                          });
                         })
                         .catch(function(error) {
                           console.log(error);
@@ -622,7 +633,11 @@ export default {
             .render("#paypal-button");
         }
         x.registerListener(val => {
-          this.$router.push("/paymentsuccess");
+          this.isLoading = false;
+          this.$router.push("/");
+        });
+        x.registerListenerProgressPayment(val => {
+          this.isLoading = true;
         });
       });
     },
