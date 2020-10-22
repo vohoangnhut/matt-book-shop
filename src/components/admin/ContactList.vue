@@ -883,7 +883,7 @@ export default {
       var d = new Date();
       var utc = d.getTime() + d.getTimezoneOffset() * 60000;
       var nd = new Date(utc + 3600000 * offset);
-      return nd.toLocaleString();
+      return nd;
     },
     writeLog(oldVal, newVal, target, action) {
       return new Promise((resolve, reject) => {

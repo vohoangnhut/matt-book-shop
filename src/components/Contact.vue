@@ -204,7 +204,9 @@ export default {
                 " - " +
                 this.customer.last_name
             )
-            .then(function(response) {})
+            .then(function(response) {
+              console.log(response);
+            })
             .catch(function(error) {
               // handle error
               console.log(error);
@@ -276,7 +278,7 @@ export default {
       var d = new Date();
       var utc = d.getTime() + d.getTimezoneOffset() * 60000;
       var nd = new Date(utc + 3600000 * offset);
-      return nd.toLocaleString();
+      return nd;
     }
   }
 };

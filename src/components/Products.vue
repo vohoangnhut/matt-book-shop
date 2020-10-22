@@ -1,9 +1,6 @@
 <template>
   <div class="wrapper">
-    <loading
-      :active.sync="isLoading"
-      :is-full-page="fullPage"
-    ></loading>
+    <loading :active.sync="isLoading" :is-full-page="fullPage"></loading>
     <div class="page-header page-header-mini">
       <div
         class="page-header-image"
@@ -201,6 +198,7 @@
                         v-model="form.country"
                         placeholder="Select"
                         class="custom-class-dropdown"
+                        @change="getAddressInfo"
                       >
                         <el-option
                           v-for="item in countryOptions"
@@ -225,6 +223,7 @@
                         placeholder="Postal Code..."
                         aria-label="Postal Code..."
                         v-model="form.postal_code"
+                        @blur="getAddressInfo"
                       />
                     </div>
                   </div>
@@ -434,7 +433,8 @@ export default {
       dialogFormVisible: false,
       form: {
         country: "Singapore",
-        quantity: "1"
+        quantity: "1",
+        address: ""
       },
       formLabelWidth: "120px",
       order: db.collection("order"),
@@ -475,9 +475,9 @@ export default {
   },
   methods: {
     onSubmit() {
-      if (!this.onValidation()) {
-        return;
-      }
+      //if (!this.onValidation()) {
+      //return;
+      //}
       var productName = this.item.title;
       var unitPrice = this.form.unit_price;
       var quantity = this.form.quantity;
@@ -635,7 +635,7 @@ export default {
         }
         x.registerListener(val => {
           this.isLoading = false;
-          this.$router.push({ path: '/', hash: '#about' });
+          this.$router.push({ path: "/", hash: "#about" });
         });
         x.registerListenerProgressPayment(val => {
           this.isLoading = true;
@@ -710,7 +710,7 @@ export default {
       var d = new Date();
       var utc = d.getTime() + d.getTimezoneOffset() * 60000;
       var nd = new Date(utc + 3600000 * offset);
-      return nd.toLocaleString();
+      return nd;
     },
     getInvNo(today) {
       return new Promise((resolve, reject) => {
@@ -747,6 +747,41 @@ export default {
       return n.length >= width
         ? n
         : new Array(width - n.length + 1).join(z) + n;
+    },
+    async getAddressInfo() {
+      if (this.form.country) {
+        if (this.form.postal_code) {
+          var addressInfo = await this.getAddress(
+            this.form.country,
+            this.form.postal_code
+          );
+          this.form.address = addressInfo;
+        } else {
+          this.form.address = "";
+        }
+      } else {
+        this.form.address = "";
+      }
+    },
+    getAddress(countryCode, postalCode) {
+      return new Promise(async (resolve, reject) => {
+        axios
+          .get(
+            "https://app.zipcodebase.com/api/v1/search?codes=" +
+              postalCode +
+              "&country=" +
+              countryCode +
+              "&apikey=ed826b40-129e-11eb-b211-6567aacec870"
+          )
+          .then(function(response) {
+            if (response.status === 200) {
+              resolve(response.data.results[postalCode][0].city);
+            }
+          })
+          .catch(function(error) {
+            resolve("");
+          });
+      });
     }
   }
 };
