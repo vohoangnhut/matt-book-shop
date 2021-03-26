@@ -67,7 +67,7 @@
                             target="_blank"
                             class="btn btn-icon btn-neutral btn-danger btn-round mt-2"
                           >
-                            <i class="fa fa-tiktok"></i>
+                            <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="tiktok" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-tiktok fa-w-14 fa-2x" style="width: 15px;transform: translate(0px, 10px);"><path fill="currentColor" d="M448,209.91a210.06,210.06,0,0,1-122.77-39.25V349.38A162.55,162.55,0,1,1,185,188.31V278.2a74.62,74.62,0,1,0,52.23,71.18V0l88,0a121.18,121.18,0,0,0,1.86,22.17h0A122.18,122.18,0,0,0,381,102.39a121.43,121.43,0,0,0,67,20.14Z" class=""></path></svg>
                           </a>
                           <a
                             href="https://web.telegram.org/#/im?p=@thelandlordclub"
@@ -331,75 +331,51 @@
     <!--     *********     Author      *********      -->
     <div class="cd-section" id="event" data-background-color="black">
       <!--     *********    PROJECTS 3     *********      -->
-      <div class="features-3">
+      <div class="features-3" style="text-align: start !important;">
         <div class="container">
           <div class="row">
             <div class="col-md-8 ml-auto mr-auto text-center">
-              <h2 class="title">Event</h2>
+              <h2 class="title">The Club</h2>
             </div>
           </div>
-          <div class="section-story-overview">
-            <div class="row">
-              <div class="col-md-6">
-                <div
-                  class="image-container image-left"
-                  style="background-image: url('/assets/img/project4.jpg')"
-                >
-                  <!-- First image on the left side -->
-                  <p class="blockquote blockquote-primary">
-                    "Amber Interiors is available to assist in all aspects of a
-                    project from start to finish including consulting with
-                    Architects and Builders"
-                  </p>
-                </div>
-              </div>
-              <div class="col-md-5">
-                <!-- First image on the right side, above the article -->
-                <div
-                  class="image-container image-right"
-                  style="background-image: url('/assets/img/project21.jpg')"
-                ></div>
-                <h6 class="category text-primary">Design</h6>
-                <h4 class="card-title">Coco Kelley</h4>
-                <p>
-                  Amber Lewis’s interior design blog takes you inside the
-                  creative workings of her Los Angeles–based studio. Keep an eye
-                  on this website for an industry insider’s point of view.
-                </p>
-              </div>
-            </div>
-          </div>
-          <!-- <div class="section-story-overview">
-            <div class="row">
-              <div class="col-md-6">
-                <!-- First image on the left side -->
-                <div
-                  class="image-container image-left"
-                  style="background-image: url('/assets/img/project24.jpg')"
-                >
-                  <p class="blockquote blockquote-primary">
-                    "We provide a simple, approachable way to decorate your
-                    desired space with ease. Each e-décor is completely
-                    individualized"
-                  </p>
-                </div>
-              </div>
-              <div class="col-md-5">
-                <!-- First image on the right side, above the article -->
-                <div
-                  class="image-container image-right"
-                  style="background-image: url('/assets/img/project23.jpg')"
-                ></div>
-                <h6 class="category text-primary">E-Decor</h6>
-                <h4 class="card-title">Red Trad</h4>
-                <p>
-                  We designed this new build family home located in Santa Monica
-                  with a mission to make the large size of the property, feel
-                  cozy, collected, and unique.
-                </p>
-              </div>
-            </div>
-          </div> -->
+          <div class="col-md-8 ml-auto mr-auto">
+           <h3 class="title">Are You Ready to Become a Profitable Landlord?</h3>
+                            <p>
+                              The secret is out! The Landlord Club: Untold Strategies to Maximise Rental
+                              Property Returns invites you into the world of being a landlord and tells
+                              you real-life experiences, both good and bad, of being a landlord.
+                              While typical landlords earn money during their sleep, this book will
+                              propel you to the next level of maximising, or even better, increasing
+                              your rental property returns through simple tried-and-tested strategies
+                              used by today’s savvy landlords.
+                            </p>
+                            
+                            <p>
+                              Step by step, we will hold your hand through the whole three-step
+process from sourcing for a potential tenant, to maintaining the
+landlord-tenant relationship, to renewing or ending your rental process
+on a high note. We will also give you tips on how to foster a good
+relationship with your tenant, and some protective gear when coming
+face-to-face with a ‘monster’ tenant.
+                            </p>
+                            <p class="blockquote blockquote-primary">
+                                "Mister Boon has written a must-read book for landlords or
+anyone considering becoming one. It is an honest guide full of
+important information and real-life experiences that takes you
+through the wonderful journey of renting out your property.
+Read this book—and learn from one of the best!"
+                                <br>
+                                <small>
+                                    Benny Quek
+                                    <br>
+                                    <span style="text-transform: none !important">Vice President, Asia-Link Technology Pte Ltd</span>
+                                </small>
+                            </p>
+
+                            <p>Your membership into the exclusive Landlord Club starts today</p>
+      </div>
+
+        </div>
         </div>
       </div>
       <!--     *********    END PROJECTS 3      *********      -->
