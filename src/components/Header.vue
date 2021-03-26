@@ -3,7 +3,7 @@
   <nav id="navHeader" class="navbar navbar-expand-lg bg-white fixed-top navbar-transparent" color-on-scroll="500">
     <div class="container">
       <div class="navbar-translate">
-        <a class="navbar-brand" href="/">Project B</a>
+        <a class="navbar-brand" href="/">The Landlord Club</a>
         <button
           class="navbar-toggler"
           type="button"
@@ -21,16 +21,16 @@
       <div class="collapse navbar-collapse" id="example-navbar-primary">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a href="/#about" class="nav-link">About The Book</a>
+            <a href="/#about" class="nav-link">The Book</a>
           </li>
           <li class="nav-item">
             <a href="/#author" class="nav-link">The Author</a>
           </li>
           <li class="nav-item">
-            <a href="/#event" class="nav-link">Events</a>
+            <a href="/#event" class="nav-link">The Club</a>
           </li>
           <li class="nav-item">
-            <a href="/book/o4T0DlZoqYpLLoLGcBGe" class="nav-link">Book Shop</a>
+            <a href="/book/o4T0DlZoqYpLLoLGcBGe" class="nav-link">The Shop</a>
 
             <!-- <router-link class="nav-link" to="/book/o4T0DlZoqYpLLoLGcBGe">Book Shop</router-link> -->
           </li>

@@ -131,7 +131,7 @@
             aria-controls="dataRoleTable"
           ></b-pagination>
         </el-tab-pane>
-        <el-tab-pane label="Log List" name="five">
+        <el-tab-pane label="Sys Log" name="five">
           <b-button size="sm" @click="refresh(5)" class="mr-1" variant="info">Refresh</b-button>
           <b-table
             hover
@@ -412,9 +412,9 @@ export default {
         { key: "actions" }
       ],
       dataOrderFields: [
-        { key: "invNo", sortable: true },
-        { key: "orderDate", sortable: true },
-        { key: "shippingName", sortable: true },
+        { key: "invNo", sortable: true, label: "Invoice No." },
+        { key: "orderDate", sortable: true, label: "Order Date & Time", formatter: "formatDate" },
+        { key: "shippingName", sortable: true, label: "Name" },
         { key: "shippingCountry", sortable: true },
         { key: "shippingAddress", sortable: true },
         { key: "shippingPostal_code", sortable: true },
@@ -423,7 +423,7 @@ export default {
         { key: "product_name", sortable: true },
         { key: "unit_price", sortable: true },
         { key: "quantity", sortable: true },
-        { key: "total_price", sortable: true },
+        { key: "total_price", sortable: true, label: "Sub Total" },
         { key: "shipping_rate", sortable: true },
         { key: "total_payment", sortable: true },
         { key: "actions" }
@@ -675,7 +675,9 @@ export default {
         .where("delt_flag", "==", false)
         .get()
         .then(snapshot => {
+          let count = 0;
           snapshot.docs.forEach(doc => {
+            count++;
             var obj = {};
             var data = doc.data();
             obj.product_name = data.product_name;
@@ -690,11 +692,15 @@ export default {
             obj.shippingEmail = data.shipping.email;
             obj.shippingName = data.shipping.name;
             obj.shippingPostal_code = data.shipping.postal_code;
-            obj.orderDate = data.order_date;
+            obj.orderDate = this.getDate(data.order_date);
             obj.invNo = data.inv_no.date + data.inv_no.no;
             obj.actions = "";
             obj.documentId = doc.id;
             this.dataOrder.push(obj);
+
+            if(count === snapshot.docs.length){
+              this.dataOrder.sort(function(a, b){return b.order_date - a.order_date});
+            }
           });
         })
         .catch(error => {
@@ -946,6 +952,12 @@ export default {
             reject(error); // the request failed
           });
       });
+    },
+    getDate(date){
+      let dateVal = date.split(' ')[0].split('-');
+      let timeVal = date.split(' ')[1];
+
+      return new Date(dateVal[2] + '/' + dateVal[1] + '/' + dateVal[0] + ' ' + timeVal);
     }
   }
 };

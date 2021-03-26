@@ -117,7 +117,7 @@
                 </div>
               </form>
             </div>
-            <div class="col-md-5 ml-auto mr-auto">
+            <!-- <div class="col-md-5 ml-auto mr-auto">
               <div class="info info-horizontal" style="padding: 0px !important;">
                 <div class="icon icon-primary">
                   <i class="now-ui-icons location_pin"></i>
@@ -158,7 +158,7 @@
                   </p>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>

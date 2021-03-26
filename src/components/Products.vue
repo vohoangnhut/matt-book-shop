@@ -432,7 +432,7 @@ export default {
       dialogTableVisible: false,
       dialogFormVisible: false,
       form: {
-        country: "Singapore",
+        country: "SG",
         quantity: "1",
         address: ""
       },
@@ -749,6 +749,7 @@ export default {
         : new Array(width - n.length + 1).join(z) + n;
     },
     async getAddressInfo() {
+      this.isLoading = true;
       if (this.form.country) {
         if (this.form.postal_code) {
           var addressInfo = await this.getAddress(
@@ -756,11 +757,14 @@ export default {
             this.form.postal_code
           );
           this.form.address = addressInfo;
+          this.isLoading = false;
         } else {
           this.form.address = "";
+          this.isLoading = false;
         }
       } else {
         this.form.address = "";
+        this.isLoading = false;
       }
     },
     getAddress(countryCode, postalCode) {
@@ -774,6 +778,7 @@ export default {
               "&apikey=ed826b40-129e-11eb-b211-6567aacec870"
           )
           .then(function(response) {
+            console.log(response);
             if (response.status === 200) {
               resolve(response.data.results[postalCode][0].city);
             }
