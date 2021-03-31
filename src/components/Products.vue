@@ -5,7 +5,7 @@
       <div
         class="page-header-image"
         data-parallax="true"
-        style="background-image: url('/assets/img/pp-cov.jpg') ;"
+        style="background-image: url('/assets/img/product/Skyline Night.jpg') ;"
       ></div>
     </div>
     <div class="section">
@@ -26,9 +26,9 @@
               </ol>
               <div class="carousel-inner" role="listbox">
                 <div class="carousel-item active">
-                  <img class="d-block img-raised" src="/assets//img/pp-1.jpg" alt="First slide" />
+                  <img class="d-block img-raised" src="/assets/img/product/Book Cover.jpg" />
                 </div>
-                <div class="carousel-item">
+                <!-- <div class="carousel-item">
                   <img class="d-block img-raised" src="/assets//img/pp-2.jpg" alt="Second slide" />
                 </div>
                 <div class="carousel-item">
@@ -36,9 +36,9 @@
                 </div>
                 <div class="carousel-item">
                   <img class="d-block img-raised" src="/assets//img/pp-4.jpg" alt="Third slide" />
-                </div>
+                </div> -->
               </div>
-              <a
+              <!-- <a
                 class="carousel-control-prev"
                 href="#productCarousel"
                 role="button"
@@ -65,19 +65,19 @@
                 >
                   <i class="now-ui-icons arrows-1_minimal-right"></i>
                 </button>
-              </a>
+              </a> -->
             </div>
-            <p class="blockquote blockquote-primary">
+            <!-- <p class="blockquote blockquote-primary">
               "And thank you for turning my personal jean jacket into a couture piece. Wear yours with mirrored sunglasses on vacation."
               <br />
               <br />
               <small>Kanye West</small>
-            </p>
+            </p> -->
           </div>
           <div class="col-md-6 ml-auto mr-auto">
             <h2 class="title">{{ item.title }}</h2>
-            <h5 class="category">{{ item.category }}</h5>
-            <h2 class="main-price">${{ item.price }}</h2>
+            <!-- <h5 class="category">{{ item.category }}</h5>
+            <h2 class="main-price">${{ item.price }}</h2> -->
             <div id="accordion" role="tablist" aria-multiselectable="true" class="card-collapse">
               <div class="card card-plain">
                 <div class="card-header" role="tab" id="headingOne">
@@ -103,7 +103,7 @@
                   </div>
                 </div>
               </div>
-              <div class="card card-plain">
+              <!-- <div class="card card-plain">
                 <div class="card-header" role="tab" id="headingTwo">
                   <a
                     class="collapsed"
@@ -153,7 +153,7 @@
                     </ul>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
             <!-- <div class="row justify-content-end">
               <button @click="dialogFormVisible = true" class="btn btn-primary mr-3">BUY</button>

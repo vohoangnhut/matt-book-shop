@@ -3,7 +3,7 @@
   <nav id="navHeader" class="navbar navbar-expand-lg bg-white fixed-top navbar-transparent" color-on-scroll="500">
     <div class="container">
       <div class="navbar-translate">
-        <a class="navbar-brand" href="/">The Landlord Club</a>
+        <a class="navbar-brand" href="/"><img src="/assets/img/logo/TLC-White.png"/></a>
         <button
           class="navbar-toggler"
           type="button"

@@ -18,27 +18,45 @@
               <div class="content-center">
                 <div class="container">
                   <div class="row">
-                    <div class="col-md-8 ml-auto mr-auto">
+                    <div
+                      class="col-md-8 ml-auto mr-auto"
+                      style="font-size: 13px"
+                    >
+                      <p>Are You Ready to Become a Profitable Landlord?</p>
                       <p>
-                        The Landlord Club is an exclusive community of
-                        like-minded landlords who range from seasoned landlords
-                        to aspiring ones. It is a safe place where landlords
-                        come together regularly and gain updated market
-                        information as well as share tips on maximising rental
-                        property returns.
+                        The secret is out! The Landlord Club: Untold Strategies
+                        to Maximise Rental Property Returns invites you into the
+                        world of being a landlord and tells you real-life
+                        experiences, both good and bad, of being a landlord.
+                        While typical landlords earn money during their sleep,
+                        this book will propel you to the next level of
+                        maximising, or even better, increasing your rental
+                        property returns through simple tried-and-tested
+                        strategies used by today’s savvy landlords.
                       </p>
                       <p>
-                        Members of this club tap on one another’s knowledge and
-                        experience to get the answers to challenges that they
-                        may face, such as the different types of ‘monster’
-                        tenants and what to do during the often-overlooked
-                        maintenance phase.
+                        Step by step, we will hold your hand through the whole
+                        three-step process from sourcing for a potential tenant,
+                        to maintaining the landlord-tenant relationship, to
+                        renewing or ending your rental process on a high note.
+                        We will also give you tips on how to foster a good
+                        relationship with your tenant, and some protective gear
+                        when coming face-to-face with a ‘monster’ tenant.
                       </p>
                       <p>
-                        The Landlord Club complements the book The Landlord
-                        Club: Untold Strategies to Maximise Rental Property
-                        Returns, and takes it one step further so that landlords
-                        are not alone in their journey.
+                        "Mister Boon has written a must-read book for landlords
+                        or anyone considering becoming one. It is an honest
+                        guide full of important information and real-life
+                        experiences that takes you through the wonderful journey
+                        of renting out your property. Read this book—and learn
+                        from one of the best!"
+                      </p>
+                      <p>
+                        Benny Quek Vice President, Asia-Link Technology Pte Ltd
+                      </p>
+                      <p>
+                        Your membership into the exclusive Landlord Club starts
+                        today
                       </p>
                       <br />
                       <h5>Connect with us on:</h5>
@@ -188,23 +206,30 @@
                   <p>
                     Having more than 15 years’ experience with several leading
                     real estate agencies in Singapore, Mister Boon is a
-                    well-recognised real estate expert in the industry. His
-                    interaction with numerous landlords and tenants ranging from
-                    established corporate MNCs and SMEs to professional
+                    well-recognised real estate expert in the industry.
+                  </p>
+                  <p>
+                    His interaction with numerous landlords and tenants ranging
+                    from established corporate MNCs and SMEs to professional
                     individuals and developers gives him rare insight into how
                     different landlords think and operate, giving him an unfair
-                    advantage in handling any tenancy issue. Currently, he is
-                    also leading a team of more than 80 real estate salespersons
-                    and is often the go-to expert when it comes to landlord and
-                    tenant issues, including with his own team members and other
-                    real estate salespersons in the agencies. Over the years, he
-                    has also led and conducted many trainings for hundreds of
-                    real estate salespersons including the Continuous
-                    Professional Development (CPD) courses under the topic
-                    “Private residential property leasing: The common issues and
-                    the terms of tenancy”. These types of CPD courses are
-                    required yearly for real estate salespersons by the Council
-                    for Estate Agencies (CEA).
+                    advantage in handling any tenancy issue.
+                  </p>
+                  <p>
+                    Currently, he is also leading a team of more than 80 real
+                    estate salespersons and is often the go-to expert when it
+                    comes to landlord and tenant issues, including with his own
+                    team members and other real estate salespersons in the
+                    agencies.
+                  </p>
+                  <p>
+                    Over the years, he has also led and conducted many trainings
+                    for hundreds of real estate salespersons including the
+                    Continuous Professional Development (CPD) courses under the
+                    topic “Private residential property leasing: The common
+                    issues and the terms of tenancy”. These types of CPD courses
+                    are required yearly for real estate salespersons by the
+                    Council for Estate Agencies (CEA).
                   </p>
                 </div>
               </div>
@@ -223,47 +248,24 @@
               </div>
             </div>
             <div class="col-md-8 ml-auto mr-auto">
-              <h3 class="title">
-                Are You Ready to Become a Profitable Landlord?
-              </h3>
               <p>
-                The secret is out! The Landlord Club: Untold Strategies to
-                Maximise Rental Property Returns invites you into the world of
-                being a landlord and tells you real-life experiences, both good
-                and bad, of being a landlord. While typical landlords earn money
-                during their sleep, this book will propel you to the next level
-                of maximising, or even better, increasing your rental property
-                returns through simple tried-and-tested strategies used by
-                today’s savvy landlords.
+                The Landlord Club is an exclusive community of like-minded
+                landlords who range from seasoned landlords to aspiring ones. It
+                is a safe place where landlords come together regularly and gain
+                updated market information as well as share tips on maximising
+                rental property returns.
               </p>
 
               <p>
-                Step by step, we will hold your hand through the whole
-                three-step process from sourcing for a potential tenant, to
-                maintaining the landlord-tenant relationship, to renewing or
-                ending your rental process on a high note. We will also give you
-                tips on how to foster a good relationship with your tenant, and
-                some protective gear when coming face-to-face with a ‘monster’
-                tenant.
+                Members of this club tap on one another’s knowledge and
+                experience to get the answers to challenges that they may face,
+                such as the different types of ‘monster’ tenants and what to do
+                during the often-overlooked maintenance phase.
               </p>
-              <p class="blockquote blockquote-primary">
-                "Mister Boon has written a must-read book for landlords or
-                anyone considering becoming one. It is an honest guide full of
-                important information and real-life experiences that takes you
-                through the wonderful journey of renting out your property. Read
-                this book—and learn from one of the best!"
-                <br />
-                <small>
-                  Benny Quek
-                  <br />
-                  <span style="text-transform: none !important"
-                    >Vice President, Asia-Link Technology Pte Ltd</span
-                  >
-                </small>
-              </p>
-
               <p>
-                Your membership into the exclusive Landlord Club starts today
+                The Landlord Club complements the book The Landlord Club: Untold
+                Strategies to Maximise Rental Property Returns, and takes it one
+                step further so that landlords are not alone in their journey.
               </p>
             </div>
           </div>
