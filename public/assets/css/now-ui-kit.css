@@ -5555,6 +5555,10 @@ body {
     padding-top: 20px;
 }
 
+.navbar.navbar-transparent img {
+    content: url("../img/logo/logo-white.png");
+}
+
 .navbar.bg-white:not(.navbar-transparent) a:not(.dropdown-item):not(.btn) {
     color: #000; 
     /* nhut.vo */
