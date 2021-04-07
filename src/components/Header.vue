@@ -27,7 +27,7 @@
             <a href="/#author" class="nav-link">The Author</a>
           </li>
           <li class="nav-item">
-            <a href="/#event" class="nav-link">The Club</a>
+            <a href="/#club" class="nav-link">The Club</a>
           </li>
           <li class="nav-item">
             <a href="/book/o4T0DlZoqYpLLoLGcBGe" class="nav-link">The Shop</a>

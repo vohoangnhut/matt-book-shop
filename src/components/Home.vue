@@ -238,7 +238,7 @@
         </div>
       </div>
       <!--     *********     Author      *********      -->
-      <div class="cd-section" id="event" data-background-color="black">
+      <div class="cd-section" id="club" data-background-color="black">
         <!--     *********    PROJECTS 3     *********      -->
         <div class="features-3" style="text-align: start !important">
           <div class="container">
