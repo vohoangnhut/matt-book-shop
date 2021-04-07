@@ -9,7 +9,7 @@ import PaymentSuccess from './components/PaymentSuccess';
 export const routes = [
 	{path: '/', component: Home, name: 'Home'},
 	{path: '/book/:id', component: Products, name: 'Products'},
-	{path: '/contact', component: Contact, name: 'Contact'},
+	{path: '/joinus', component: Contact, name: 'Contact'},
 	{path: '/admin/login', component: AdminLogin, name: 'AdminLogin'},
 	{path: '/admin', component: ContactList, name: 'ContactList', meta: { requiresAuth: true }},
 	{path: '/404', component: PageNotFound, name: 'PageNotFound'},

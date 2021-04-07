@@ -35,7 +35,7 @@
             <!-- <router-link class="nav-link" to="/book/o4T0DlZoqYpLLoLGcBGe">Book Shop</router-link> -->
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" @click.native="$scrollToTop" to="/contact">Contact Us</router-link>
+            <router-link class="nav-link" @click.native="$scrollToTop" to="/joinus">Join Us</router-link>
           </li>
 
           <li class="nav-item" v-if="isLoggedIn">

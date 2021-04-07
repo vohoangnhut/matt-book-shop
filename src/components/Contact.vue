@@ -12,7 +12,7 @@
         <div class="container">
           
           <div class="col-md-8 ml-auto mr-auto text-center">
-            <h2 class="title">Contact Information</h2>
+            <h2 class="title">Join our mailing list</h2>
           </div>
 
           <div class="row" style="margin-bottom: 60px;">

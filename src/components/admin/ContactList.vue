@@ -403,7 +403,7 @@ export default {
       sortByOrder: "orderDate",
       sortDescOrder: true,
       dataContactFields: [
-        { key: "created", sortable: true },
+        { key: "created", sortable: true, formatter: "formatDate" },
         { key: "first_name", sortable: true },
         { key: "last_name", sortable: true },
         { key: "contact_no", sortable: true },
@@ -661,6 +661,7 @@ export default {
           snapshot.docs.forEach(doc => {
             var obj = doc.data();
             obj.actions = "";
+            obj.created = this.getDate(obj.created);
             obj.documentId = doc.id;
             this.dataContact.push(obj);
           });
