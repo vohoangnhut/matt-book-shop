@@ -4,7 +4,7 @@
       <div
         class="page-header-image"
         data-parallax="true"
-        style="background-image:  url('/assets/img/bg45.jpg');"
+        style="background-image:  url('/assets/img/contact/Skyline Hero Day.jpg');"
       ></div>
     </div>
     <div class="main">

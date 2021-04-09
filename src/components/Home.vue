@@ -19,9 +19,12 @@
                 <div class="container">
                   <div class="row">
                     <div
-                      class="col-md-8 ml-auto mr-auto"
-                      style="font-size: 13px"
+                      class="col-md-12 ml-auto mr-auto"
+                      
                     >
+                    <div style="
+    text-align: left;
+">
                       <p>Are You Ready to Become a Profitable Landlord?</p>
                       <p>
                         The secret is out! The Landlord Club: Untold Strategies
@@ -43,22 +46,25 @@
                         relationship with your tenant, and some protective gear
                         when coming face-to-face with a ‘monster’ tenant.
                       </p>
-                      <p>
+                      <p style="padding-left:35px">
                         "Mister Boon has written a must-read book for landlords
                         or anyone considering becoming one. It is an honest
                         guide full of important information and real-life
                         experiences that takes you through the wonderful journey
                         of renting out your property. Read this book—and learn
                         from one of the best!"
-                      </p>
-                      <p>
-                        Benny Quek Vice President, Asia-Link Technology Pte Ltd
+                        <br/>
+                        <br/>
+                        Benny Quek
+                        <br/>
+                        Vice President, Asia-Link Technology Pte Ltd
                       </p>
                       <p>
                         Your membership into the exclusive Landlord Club starts
-                        today
+                        today.
                       </p>
                       <br />
+                      </div>
                       <h5>Connect with us on:</h5>
                       <div class="buttons">
                         <a
@@ -183,26 +189,19 @@
           <div id="carousel">
             <div class="container">
               <div class="row justify-content-center">
-                <div class="col-8">
-                  <div
-                    id="carouselExampleIndicators"
-                    class="carousel slide"
-                    data-ride="carousel"
-                  >
-                    <div class="carousel-inner" role="listbox">
-                      <div class="carousel-item active">
-                        <img
-                          class="d-block"
-                          src="assets/img/home/TUP_1576v2 copy.jpg"
-                        />
-                      </div>
+                <div class="row">
+                    <div class="col-md-4 ml-auto mr-auto">
+                        <div class="card-image">
+                            <img class="img img-raised rounded" src="assets/img/home/TUP_1576v2 copy.jpg" />
+                        </div>
                     </div>
-                  </div>
                 </div>
+                
               </div>
               <div class="row">
                 <div class="col-md-12 ml-auto mr-auto">
                   <h3 class="title">About The Author</h3>
+                <div style="text-align:left">
                   <p>
                     Having more than 15 years’ experience with several leading
                     real estate agencies in Singapore, Mister Boon is a
@@ -231,6 +230,7 @@
                     are required yearly for real estate salespersons by the
                     Council for Estate Agencies (CEA).
                   </p>
+                </div>
                 </div>
               </div>
             </div>

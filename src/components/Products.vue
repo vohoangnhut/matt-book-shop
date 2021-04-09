@@ -11,70 +11,7 @@
     <div class="section">
       <div class="container">
         <div class="row">
-          <div class="col-md-5">
-            <div
-              id="productCarousel"
-              class="carousel slide"
-              data-ride="carousel"
-              data-interval="8000"
-            >
-              <ol class="carousel-indicators">
-                <li data-target="#productCarousel" data-slide-to="0" class="active"></li>
-                <li data-target="#productCarousel" data-slide-to="1"></li>
-                <li data-target="#productCarousel" data-slide-to="2"></li>
-                <li data-target="#productCarousel" data-slide-to="3"></li>
-              </ol>
-              <div class="carousel-inner" role="listbox">
-                <div class="carousel-item active">
-                  <img class="d-block img-raised" src="/assets/img/product/Book Cover.jpg" />
-                </div>
-                <!-- <div class="carousel-item">
-                  <img class="d-block img-raised" src="/assets//img/pp-2.jpg" alt="Second slide" />
-                </div>
-                <div class="carousel-item">
-                  <img class="d-block img-raised" src="/assets//img/pp-3.jpg" alt="Third slide" />
-                </div>
-                <div class="carousel-item">
-                  <img class="d-block img-raised" src="/assets//img/pp-4.jpg" alt="Third slide" />
-                </div> -->
-              </div>
-              <!-- <a
-                class="carousel-control-prev"
-                href="#productCarousel"
-                role="button"
-                data-slide="prev"
-              >
-                <button
-                  type="button"
-                  class="btn btn-primary btn-icon btn-round btn-sm"
-                  name="button"
-                >
-                  <i class="now-ui-icons arrows-1_minimal-left"></i>
-                </button>
-              </a>
-              <a
-                class="carousel-control-next"
-                href="#productCarousel"
-                role="button"
-                data-slide="next"
-              >
-                <button
-                  type="button"
-                  class="btn btn-primary btn-icon btn-round btn-sm"
-                  name="button"
-                >
-                  <i class="now-ui-icons arrows-1_minimal-right"></i>
-                </button>
-              </a> -->
-            </div>
-            <!-- <p class="blockquote blockquote-primary">
-              "And thank you for turning my personal jean jacket into a couture piece. Wear yours with mirrored sunglasses on vacation."
-              <br />
-              <br />
-              <small>Kanye West</small>
-            </p> -->
-          </div>
-          <div class="col-md-6 ml-auto mr-auto">
+          <div class="ml-auto mr-auto">
             <h2 class="title">{{ item.title }}</h2>
             <!-- <h5 class="category">{{ item.category }}</h5>
             <h2 class="main-price">${{ item.price }}</h2> -->
@@ -158,6 +95,11 @@
             <!-- <div class="row justify-content-end">
               <button @click="dialogFormVisible = true" class="btn btn-primary mr-3">BUY</button>
             </div>-->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <img class="d-block img-raised" src="/assets/img/product/Book Cover.jpg" />
           </div>
         </div>
         <div class="container">
