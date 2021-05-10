@@ -21,7 +21,7 @@
       <div class="collapse navbar-collapse" id="example-navbar-primary">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a href="/#about" class="nav-link">The Book</a>
+            <a href="#" @click="document.body.scrollTop = 0;document.documentElement.scrollTop = 0;" class="nav-link">The Book</a>
           </li>
           <li class="nav-item">
             <a href="/#author" class="nav-link">The Author</a>
