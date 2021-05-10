@@ -3,7 +3,10 @@
   <nav id="navHeader" class="navbar navbar-expand-lg bg-white fixed-top navbar-transparent" color-on-scroll="500">
     <div class="container">
       <div class="navbar-translate">
-        <a class="navbar-brand" href="/"><img id="imgLogo" src="/assets/img/logo/logo-black.png" style="width: 200px;"/></a>
+        <a class="navbar-brand" href="/">
+          <img v-if="this.$router.currentRoute.name !== 'ContactList'" id="imgLogo" src="/assets/img/logo/logo-black.png" style="width: 200px;"/>
+          <img v-if="this.$router.currentRoute.name === 'ContactList'" id="imgLogo" src="/assets/img/logo/logo-white.png" style="width: 200px;"/>
+        </a>
         <button
           class="navbar-toggler"
           type="button"
