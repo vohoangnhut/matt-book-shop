@@ -5,6 +5,7 @@ import ContactList from './components/admin/ContactList';
 import AdminLogin from './components/admin/Login';
 import PageNotFound from './components/PageNotFound';
 import PaymentSuccess from './components/PaymentSuccess';
+import Resources from './components/Resources';
 
 export const routes = [
 	{path: '/', component: Home, name: 'Home'},
@@ -14,5 +15,6 @@ export const routes = [
 	{path: '/admin', component: ContactList, name: 'ContactList', meta: { requiresAuth: true }},
 	{path: '/404', component: PageNotFound, name: 'PageNotFound'},
 	{path: '/paymentsuccess', component: PaymentSuccess, name: 'PaymentSuccess'},
+	{path: '/resources', component: Resources, name: 'Resources'},
 	{path: "*", redirect: '/404'}
 ];

@@ -1,7 +1,7 @@
 <template>
   <footer class="footer footer-white" style="border-top: 1px solid #e5e5e5">
     <div class="container">
-      <a class="footer-brand" href="mailto:quantumtech.workspace@gmail.com"
+      <a class="footer-brand" target="_blank" href="mailto:quantumtech.workspace@gmail.com"
         >Powered by Quantum Tech</a
       >
       <ul class="social-buttons pull-right">

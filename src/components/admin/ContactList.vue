@@ -965,8 +965,14 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
 .width100per {
   display: block;
+}
+
+.section {
+    padding: 120px 0;
+    position: relative;
+    background: #FFFFFF;
 }
 </style>

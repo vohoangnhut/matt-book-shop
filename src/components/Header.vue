@@ -37,6 +37,9 @@
           <li class="nav-item">
             <router-link class="nav-link" @click.native="$scrollToTop" to="/joinus">Join Us</router-link>
           </li>
+          <li class="nav-item">
+            <router-link class="nav-link" @click.native="$scrollToTop" to="/resources">Resources</router-link>
+          </li>
 
           <li class="nav-item" v-if="isLoggedIn">
             <a href="/admin" class="nav-link">ADMIN</a>
