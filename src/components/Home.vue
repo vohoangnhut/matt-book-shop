@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <div class="cd-section" id="headers">
+    <div class="cd-section" id="book">
       <div id="carouselExampleIndicators" class="carousel slide">
         <div class="carousel-inner" role="listbox">
           <div class="carousel-item active">
@@ -46,7 +46,7 @@
                         relationship with your tenant, and some protective gear
                         when coming face-to-face with a ‘monster’ tenant.
                       </p>
-                      <p style="padding-left:35px">
+                      <!-- <p style="padding-left:35px">
                         "Mister Boon has written a must-read book for landlords
                         or anyone considering becoming one. It is an honest
                         guide full of important information and real-life
@@ -58,7 +58,7 @@
                         Benny Quek
                         <br/>
                         Vice President, Asia-Link Technology Pte Ltd
-                      </p>
+                      </p> -->
                       <p>
                         Your membership into the exclusive Landlord Club starts
                         today.
