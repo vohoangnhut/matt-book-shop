@@ -399,7 +399,7 @@ export default {
           this.item = data;
           this.form.product_name = data.title;
           this.form.unit_price = data.price;
-          this.form.shipping_rate = "5";
+          this.form.shipping_rate = "4";
           this.onPaymentCal();
         } else {
           // snapshot.data() will be undefined in this case
@@ -408,7 +408,7 @@ export default {
       });
 
     this.getAllCountries().then(result => {
-      this.countryOptions = result;
+      this.countryOptions = result.filter(x => x.value === 'SG');
     });
 
     this.getQuantity().then(result => {
