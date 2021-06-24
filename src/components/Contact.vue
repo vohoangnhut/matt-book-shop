@@ -195,7 +195,7 @@ export default {
         .then(() => {
           axios
             .get(
-              "https://us-central1-book-store-sg-x.cloudfunctions.net/sendMail?to=" +
+              "https://book-store-sg-x.herokuapp.com/sendMail?to=" +
                 "book.store.sg.x@gmail.com" +
                 "&subject=" +
                 "Contact" +

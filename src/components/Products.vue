@@ -592,7 +592,7 @@ export default {
                     .then(docRef => {
                       axios
                         .get(
-                          "https://us-central1-book-store-sg-x.cloudfunctions.net/sendMailHTML?to=" +
+                          "https://book-store-sg-x.herokuapp.com/sendMailHTML?to=" +
                             form.email +
                             "&subject=" +
                             "[thelandlordclub] Your payment has been completed" +
@@ -699,8 +699,8 @@ export default {
     onPaymentCal() {
       this.form.total_price =
         parseFloat(this.form.unit_price) * parseFloat(this.form.quantity);
-      this.form.total_payment =
-        parseFloat(this.form.total_price) + parseFloat(this.form.shipping_rate);
+      this.form.total_payment = parseFloat(this.form.total_price) -
+        (this.form.discountValue ? parseFloat(this.form.discountValue) : 0) + parseFloat(this.form.shipping_rate);
     },
     calcTime(city, offset) {
       var d = new Date();
@@ -819,8 +819,8 @@ export default {
           });
         this.form.discountValue = '';
       }else{
-        console.log(validPromoCode.value);
         this.form.discountValue = (parseFloat(this.form.total_price) * validPromoCode.value) / 100;
+        this.onPaymentCal();
       }
     },
     async updateRemainPromoCode() {
