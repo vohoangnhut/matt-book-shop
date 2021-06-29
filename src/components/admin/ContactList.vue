@@ -105,7 +105,34 @@
             aria-controls="dataProductTable"
           ></b-pagination>
         </el-tab-pane>
-        <el-tab-pane label="Sys User Mgnt" name="four">
+        <el-tab-pane label="Promo Code" name="four">
+          <b-button size="sm" @click="refresh(4)" class="mr-1" variant="info">Refresh</b-button>
+          <b-button size="sm" @click="newPromoCode($event.target)" class="mr-1" variant="info">New</b-button>
+          <b-table
+            hover
+            :items="dataPromoCode"
+            id="dataContactTable"
+            :per-page="dataPromoCodePerPage"
+            :current-page="dataPromoCodeCurrentPage"
+            :fields="dataPromoCodeFields"
+          >
+            <template v-slot:cell(actions)="row">
+              <b-button
+                size="sm"
+                @click="promoCodeInfo(row.item, row.index, $event.target)"
+                class="mr-1"
+                variant="info"
+              >Update</b-button>
+            </template>
+          </b-table>
+          <b-pagination
+            v-model="dataPromoCodeCurrentPage"
+            :total-rows="rowsDataPromoCode"
+            :per-page="dataPromoCodePerPage"
+            aria-controls="dataPromoCodeTable"
+          ></b-pagination>
+        </el-tab-pane>
+        <el-tab-pane label="Sys User Mgnt" name="five">
           <b-button size="sm" @click="refresh(4)" class="mr-1" variant="info">Refresh</b-button>
           <b-table
             hover
@@ -131,7 +158,7 @@
             aria-controls="dataRoleTable"
           ></b-pagination>
         </el-tab-pane>
-        <el-tab-pane label="Sys Log" name="five">
+        <el-tab-pane label="Sys Log" name="six">
           <b-button size="sm" @click="refresh(5)" class="mr-1" variant="info">Refresh</b-button>
           <b-table
             hover
@@ -317,6 +344,29 @@
         <el-input placeholder="Unit Price" v-model="product.price"></el-input>
       </div>
     </b-modal>
+    <!-- PromoCode modal -->
+    <b-modal :id="promoCodeModal.id" :title="promoCodeModal.title" @ok="savePromoCodeData">
+      <label>Name</label>
+      <div class="input-group">
+        <el-input placeholder="Name" v-model="promoCode.name"></el-input>
+      </div>
+      <label v-if="!isNewPromoCode">Active</label>
+      <div class="input-group" v-if="!isNewPromoCode">
+        <el-checkbox v-model="promoCode.active"></el-checkbox>
+      </div>
+      <label>Total</label>
+      <div class="input-group">
+        <el-input placeholder="Total" v-model="promoCode.total"></el-input>
+      </div>
+      <label v-if="!isNewPromoCode">Remain</label>
+      <div class="input-group" v-if="!isNewPromoCode">
+        <el-input placeholder="Remain" v-model="promoCode.remain" disabled></el-input>
+      </div>
+      <label>Value (%)</label>
+      <div class="input-group">
+        <el-input placeholder="Value" v-model="promoCode.value"></el-input>
+      </div>
+    </b-modal>
     <!-- Role modal -->
     <b-modal :id="roleModal.id" :title="roleModal.title" @ok="saveRoleData">
       <label>Email</label>
@@ -361,6 +411,7 @@ export default {
       dataContact: [],
       dataOrder: [],
       dataProduct: [],
+      dataPromoCode: [],
       dataRole: [],
       dataLog: [],
       dataContactPerPage: 10,
@@ -369,6 +420,8 @@ export default {
       dataOrderCurrentPage: 1,
       dataProductPerPage: 10,
       dataProductCurrentPage: 1,
+      dataPromoCodePerPage: 10,
+      dataPromoCodeCurrentPage: 1,
       dataRolePerPage: 10,
       dataRoleCurrentPage: 1,
       dataLogPerPage: 10,
@@ -385,6 +438,10 @@ export default {
         id: "product-modal",
         title: "Product Update Data"
       },
+      promoCodeModal: {
+        id: "promo-code-modal",
+        title: "Promo Code Update Data"
+      },
       roleModal: {
         id: "role-modal",
         title: "Role Update Data"
@@ -396,6 +453,7 @@ export default {
       customer: {},
       order: {},
       product: {},
+      promoCode: {},
       role: {},
       activeName: "first",
       sortByContact: "created",
@@ -436,6 +494,16 @@ export default {
         { key: "updated", sortable: true },
         { key: "actions" }
       ],
+      dataPromoCodeFields: [
+        { key: "name", sortable: true },
+        { key: "active", sortable: true },
+        { key: "total", sortable: true },
+        { key: "remain", sortable: true },
+        { key: "value", sortable: true },
+        { key: "created", sortable: true },
+        { key: "updated", sortable: true },
+        { key: "actions" }
+      ],
       dataRoleFields: [
         { key: "email", sortable: true },
         { key: "role", sortable: true },
@@ -451,13 +519,15 @@ export default {
       countryOptions: [],
       oldObj: {},
       user: firebase.auth().currentUser,
-      logInfoList: []
+      logInfoList: [],
+      isNewPromoCode: false
     };
   },
   created() {
     this.customerDataLoad();
     this.orderDataLoad();
     this.productDataLoad();
+    this.promoCodeDataLoad();
     this.roleDataLoad();
     this.logDataLoad();
 
@@ -474,6 +544,9 @@ export default {
     },
     rowsDataProduct() {
       return this.dataProduct.length;
+    },
+    rowsDataPromoCode() {
+      return this.dataPromoCode.length;
     },
     rowsDataRole() {
       return this.dataRole.length;
@@ -497,6 +570,12 @@ export default {
       this.product = JSON.parse(JSON.stringify(item, null, 2));
       this.oldObj = JSON.parse(JSON.stringify(item, null, 2));
       this.$root.$emit("bv::show::modal", this.productModal.id, button);
+    },
+    promoCodeInfo(item, index, button) {
+      this.isNewPromoCode = false;
+      this.promoCode= JSON.parse(JSON.stringify(item, null, 2));
+      this.oldObj = JSON.parse(JSON.stringify(item, null, 2));
+      this.$root.$emit("bv::show::modal", this.promoCodeModal.id, button);
     },
     roleInfo(item, index, button) {
       this.role = JSON.parse(JSON.stringify(item, null, 2));
@@ -730,6 +809,26 @@ export default {
           console.log(error);
         });
     },
+    promoCodeDataLoad() {
+      this.dataPromoCode = [];
+      db.collection("promo")
+        .get()
+        .then(snapshot => {
+          snapshot.docs.forEach(doc => {
+            var obj = {};
+            var data = doc.data();
+            obj = data;
+            obj.created = this.formatDate(data.created.toDate());
+            obj.updated = this.formatDate(data.updated.toDate());
+            obj.actions = "";
+            obj.documentId = doc.id;
+            this.dataPromoCode.push(obj);
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
     roleDataLoad() {
       this.dataRole = [];
       var user = firebase.auth().currentUser;
@@ -819,9 +918,12 @@ export default {
         // Product List
         this.productDataLoad();
       } else if (index === 4) {
+        // Promo Code List
+        this.promoCodeDataLoad();
+      } else if (index === 5) {
         // Role List
         this.roleDataLoad();
-      } else if (index === 5) {
+      } else if (index === 6) {
         // Log List
         this.logDataLoad();
       }
@@ -959,7 +1061,57 @@ export default {
       let timeVal = date.split(' ')[1];
 
       return new Date(dateVal[2] + '/' + dateVal[1] + '/' + dateVal[0] + ' ' + timeVal);
-    }
+    },
+    newPromoCode(button) {
+      this.promoCode = {};
+      this.isNewPromoCode = true;
+      this.$root.$emit("bv::show::modal", this.promoCodeModal.id, button);
+    },
+    savePromoCodeData() {
+      if(this.isNewPromoCode){
+        db.collection("promo")
+        .add({
+          name: this.promoCode.name,
+          active: true,
+          total: this.promoCode.total,
+          value: this.promoCode.value,
+          remain: this.promoCode.total,
+          updated: this.calcTime("Singapore", "+8"),
+          updated_by: this.user.email,
+          created: this.calcTime("Singapore", "+8"),
+          created_by: this.user.email
+        })
+        .then(result => {
+          this.$swal("Saved!", "Data has been saved", "success");
+          this.refresh(4);
+        });
+      }else{
+        db.collection("promo")
+        .doc(this.promoCode.documentId)
+        .update({
+          name: this.promoCode.name,
+          active: this.promoCode.active,
+          total: this.promoCode.total,
+          value: this.promoCode.value,
+          updated: this.calcTime("Singapore", "+8"),
+          updated_by: this.user.email
+        })
+        .then(result => {
+          var idx = this.dataPromoCode.findIndex(
+            x => x.documentId === this.promoCode.documentId
+          );
+          this.dataPromoCode[idx].name = this.promoCode.name;
+          this.dataPromoCode[idx].total = this.promoCode.total;
+          this.dataPromoCode[idx].active = this.promoCode.active;
+          this.dataPromoCode[idx].value = this.promoCode.value;
+          this.writeLog(this.oldObj, this.promoCode, "promoCode", "update").then(
+            () => {
+              this.$swal("Saved!", "Data has been saved", "success");
+            }
+          );
+        });
+      }
+    },
   }
 };
 </script>

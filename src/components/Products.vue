@@ -278,6 +278,38 @@
                     </div>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-lg-6 col-md-8 col-sm-5">
+                    <label>Promo Code</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="now-ui-icons shopping_tag-content"></i>
+                        </span>
+                      </div>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Promo Code..."
+                        aria-label="Promo Code..."
+                        v-model="form.promo_code"
+                        style="text-transform: uppercase;"
+                        @blur="applyPromoCode"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-8 col-sm-5">
+                    <label></label>
+                    <div class="input-group">
+                      <input
+                        type="button"
+                        class="btn btn-primary btn-raised btn-round"
+                        value="Apply"
+                        @click="applyPromoCode"
+                      />
+                    </div>
+                  </div>
+                </div>
                 <div class="section-space-cus"></div>
                 <div class="alert alert-info" role="alert">
                   <div class="container">
@@ -316,6 +348,22 @@
                     placeholder="Shipping Rate..."
                     aria-label="Shipping Rate..."
                     v-model="form.shipping_rate"
+                    disabled
+                  />
+                </div>
+                <label>Discount</label>
+                <div class="input-group" disabled>
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      <i class="now-ui-icons objects_globe"></i>
+                    </span>
+                  </div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Discount..."
+                    aria-label="Discount..."
+                    v-model="form.discountValue"
                     disabled
                   />
                 </div>
@@ -376,7 +424,9 @@ export default {
       form: {
         country: "SG",
         quantity: "1",
-        address: ""
+        address: "",
+        promo_code: '',
+        discountValue: ''
       },
       formLabelWidth: "120px",
       order: db.collection("order"),
@@ -399,7 +449,7 @@ export default {
           this.item = data;
           this.form.product_name = data.title;
           this.form.unit_price = data.price;
-          this.form.shipping_rate = "5";
+          this.form.shipping_rate = "4";
           this.onPaymentCal();
         } else {
           // snapshot.data() will be undefined in this case
@@ -408,7 +458,7 @@ export default {
       });
 
     this.getAllCountries().then(result => {
-      this.countryOptions = result;
+      this.countryOptions = result.filter(x => x.value === 'SG');
     });
 
     this.getQuantity().then(result => {
@@ -473,7 +523,7 @@ export default {
           paypal
             .Buttons({
               // Set up the transaction
-              createOrder: function(data, actions) {
+              createOrder: (data, actions) => {
                 return actions.order.create({
                   purchase_units: [
                     {
@@ -511,9 +561,9 @@ export default {
                 });
               },
               // Finalize the transaction
-              onApprove: function(data, actions) {
+              onApprove: (data, actions) => {
                 x.isProgressPayment = true;
-                return actions.order.capture().then(function(details) {
+                return actions.order.capture().then((details) => {
                   order
                     .add({
                       product_name: form.product_name,
@@ -535,19 +585,22 @@ export default {
                         date: today,
                         no: invNo
                       },
-                      delt_flag: false
+                      delt_flag: false,
+                      promo_code: form.promo_code,
+                      discount: form.discountValue
                     })
                     .then(docRef => {
                       axios
                         .get(
-                          "https://us-central1-book-store-sg-x.cloudfunctions.net/sendMailHTML?to=" +
+                          "https://book-store-sg-x.herokuapp.com/sendMailHTML?to=" +
                             form.email +
                             "&subject=" +
                             "[thelandlordclub] Your payment has been completed" +
                             "&id=" +
                             docRef.id
                         )
-                        .then(function(response) {
+                        .then((response) => {
+                          this.updateRemainPromoCode();
                           swal({
                             type: "success",
                             title: "Thank you !",
@@ -592,6 +645,7 @@ export default {
       this.form.address = "";
       this.form.contact_no = "";
       this.form.email = "";
+      this.form.discountValue = "";
     },
     onValidation() {
       var message = "";
@@ -645,8 +699,8 @@ export default {
     onPaymentCal() {
       this.form.total_price =
         parseFloat(this.form.unit_price) * parseFloat(this.form.quantity);
-      this.form.total_payment =
-        parseFloat(this.form.total_price) + parseFloat(this.form.shipping_rate);
+      this.form.total_payment = parseFloat(this.form.total_price) -
+        (this.form.discountValue ? parseFloat(this.form.discountValue) : 0) + parseFloat(this.form.shipping_rate);
     },
     calcTime(city, offset) {
       var d = new Date();
@@ -729,6 +783,61 @@ export default {
             resolve("");
           });
       });
+    },
+    checkPromoCode(promoCode) {
+      return new Promise((resolve, reject) => {
+        db.collection("promo")
+          .where("name", "==", promoCode.toLowerCase())
+          .where("active", "==", true)
+          .get()
+          .then(snapshot => {
+            if(snapshot.docs.length > 0){
+              let obj = snapshot.docs[0].data();
+              if(obj.remain > 0){
+                resolve({
+                  value: obj.value,
+                  remain: obj.remain,
+                  documentId: snapshot.docs[0].id
+                });
+              }
+            }
+            resolve(false);
+          })
+          .catch(error => {
+            reject(error); // the request failed
+          });
+      });
+    },
+    async applyPromoCode() {
+      let validPromoCode = await this.checkPromoCode(this.form.promo_code);
+      
+      if(!validPromoCode){
+        this.$swal({
+            type: "warning",
+            title: "Promo Code is not valid",
+            html: "Please check your Promo Code"
+          });
+        this.form.discountValue = '';
+      }else{
+        this.form.discountValue = (parseFloat(this.form.total_price) * validPromoCode.value) / 100;
+        this.onPaymentCal();
+      }
+    },
+    async updateRemainPromoCode() {
+      if(this.form.promo_code){
+        let validPromoCode = await this.checkPromoCode(this.form.promo_code);
+
+        db.collection("promo")
+          .doc(validPromoCode.documentId)
+          .update({
+            remain: validPromoCode.remain - 1
+          })
+          .then(snapshot => {
+          })
+          .catch(error => {
+            console.log(error);
+          });
+      }
     }
   }
 };
