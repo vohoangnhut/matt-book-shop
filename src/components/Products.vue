@@ -5,7 +5,7 @@
       <div
         class="page-header-image"
         data-parallax="true"
-        style="background-image: url('/assets/img/product/Skyline Night.jpg') ;"
+        style="background-image: url('/assets/img/home/Sentosa Day.jpg');"
       ></div>
     </div>
     <div class="section">
@@ -476,6 +476,7 @@ export default {
       var totalPrice = this.form.total_price;
       var shippingRate = this.form.shipping_rate;
       var totalPayment = this.form.total_payment;
+      var discount = this.form.discountValue ? parseFloat(this.form.discountValue) : 0;
       var order = this.order;
       var form = this.form;
       var swal = this.$swal;
@@ -542,8 +543,12 @@ export default {
                           shipping: {
                             currency_code: "USD",
                             value: shippingRate.toString()
+                          },
+                          discount: {
+                            currency_code: "USD",
+                            value: discount.toString()
                           }
-                        }
+                        },
                       },
                       items: [
                         {
@@ -592,7 +597,7 @@ export default {
                     .then(docRef => {
                       axios
                         .get(
-                          "https://book-store-sg-x.herokuapp.com/sendMailHTML?to=" +
+                          "https://us-central1-book-store-sg-x.cloudfunctions.net/sendMailHTML?to=" +
                             form.email +
                             "&subject=" +
                             "[thelandlordclub] Your payment has been completed" +
@@ -699,8 +704,7 @@ export default {
     onPaymentCal() {
       this.form.total_price =
         parseFloat(this.form.unit_price) * parseFloat(this.form.quantity);
-      this.form.total_payment = parseFloat(this.form.total_price) -
-        (this.form.discountValue ? parseFloat(this.form.discountValue) : 0) + parseFloat(this.form.shipping_rate);
+      this.form.total_payment = parseFloat(this.form.total_price) + parseFloat(this.form.shipping_rate) - (this.form.discountValue ? parseFloat(this.form.discountValue) : 0);
     },
     calcTime(city, offset) {
       var d = new Date();

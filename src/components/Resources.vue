@@ -4,7 +4,7 @@
       <div
         class="page-header-image"
         data-parallax="true"
-        style="background-image:  url('/assets/img/resources/Skyline Hero Night.jpg');"
+        style="background-image: url('/assets/img/home/Sentosa Day.jpg');"
       ></div>
     </div>
     <div class="main">
@@ -91,7 +91,7 @@ export default {
         .then(() => {
           axios
             .get(
-              "https://book-store-sg-x.herokuapp.com/sendMail?to=" +
+              "https://us-central1-book-store-sg-x.cloudfunctions.net/sendMail?to=" +
                 "book.store.sg.x@gmail.com" +
                 "&subject=" +
                 "Contact" +
