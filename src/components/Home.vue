@@ -25,7 +25,7 @@
                     <div style="
     text-align: left;
 ">
-                      <p>Are You Ready to Become a Profitable Landlord?</p>
+                      <p style="font-size: 20px; font-weight: bold;">Are You Ready to Become a Profitable Landlord?</p>
                       <p>
                         The secret is out! The Landlord Club: Untold Strategies
                         to Maximise Rental Property Returns invites you into the
@@ -59,13 +59,13 @@
                         <br/>
                         Vice President, Asia-Link Technology Pte Ltd
                       </p> -->
-                      <p>
+                      <p style="font-size: 20px; font-weight: bold;">
                         Your membership into the exclusive Landlord Club starts
                         today.
                       </p>
                       <br />
                       </div>
-                      <h5>Connect with us on:</h5>
+                      <p style="font-size: 20px; font-weight: bold;">Connect with us on:</p>
                       <div class="buttons">
                         <a
                           href="https://www.linkedin.com/in/misterboon/"

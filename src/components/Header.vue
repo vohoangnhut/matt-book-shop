@@ -33,12 +33,12 @@
             <a href="/#club" class="nav-link">The Club</a>
           </li>
           <li class="nav-item">
+            <router-link class="nav-link" @click.native="$scrollToTop" to="/joinus">Join Us</router-link>
+          </li>
+          <li class="nav-item">
             <a href="/book/o4T0DlZoqYpLLoLGcBGe" class="nav-link">The Shop</a>
 
             <!-- <router-link class="nav-link" to="/book/o4T0DlZoqYpLLoLGcBGe">Book Shop</router-link> -->
-          </li>
-          <li class="nav-item">
-            <router-link class="nav-link" @click.native="$scrollToTop" to="/joinus">Join Us</router-link>
           </li>
           <li class="nav-item">
             <router-link class="nav-link" @click.native="$scrollToTop" to="/resources">Resources</router-link>
