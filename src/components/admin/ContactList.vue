@@ -327,6 +327,11 @@
           </el-col>
         </el-row>
         <el-row>
+          <el-form-item label="Discount">
+            <el-input v-model="order.discount" placeholder="Discount"></el-input>
+          </el-form-item>
+        </el-row>
+        <el-row>
           <el-form-item label="Total Payment">
             <el-input v-model="order.total_payment" placeholder="Total Payment"></el-input>
           </el-form-item>
@@ -483,6 +488,7 @@ export default {
         { key: "quantity", sortable: true },
         { key: "total_price", sortable: true, label: "Sub Total" },
         { key: "shipping_rate", sortable: true },
+        { key: "discount", sortable: true },
         { key: "total_payment", sortable: true },
         { key: "actions" }
       ],
@@ -645,6 +651,7 @@ export default {
           shipping_rate: this.order.shipping_rate,
           total_price: this.order.total_price,
           total_payment: this.order.total_payment,
+          discount: this.order.discount,
           shipping: {
             address: this.order.shippingAddress,
             contact_no: this.order.shippingContact_no,
@@ -669,6 +676,7 @@ export default {
           this.dataOrder[idx].shipping_rate = this.order.shipping_rate;
           this.dataOrder[idx].total_price = this.order.total_price;
           this.dataOrder[idx].total_payment = this.order.total_payment;
+          this.dataOrder[idx].discount = this.order.discount;
           this.dataOrder[idx].shippingAddress = this.order.shippingAddress;
           this.dataOrder[
             idx
@@ -766,6 +774,7 @@ export default {
             obj.shipping_rate = data.shipping_rate;
             obj.total_price = data.total_price;
             obj.total_payment = data.total_payment;
+            obj.discount = data.discount;
             obj.shippingAddress = data.shipping.address;
             obj.shippingContact_no = data.shipping.contact_no;
             obj.shippingCountry = data.shipping.country;
@@ -955,6 +964,7 @@ export default {
             "Quantity",
             "Total Price",
             "Shipping Rate",
+            "Discount",
             "Total Payment"
           ];
           const filterVal = [
@@ -971,6 +981,7 @@ export default {
             "quantity",
             "total_price",
             "shipping_rate",
+            "discount",
             "total_payment"
           ];
           const data = this.formatJson(filterVal, this.dataOrder);
