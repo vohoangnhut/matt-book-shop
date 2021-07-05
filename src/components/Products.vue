@@ -528,24 +528,24 @@ export default {
                 return actions.order.create({
                   purchase_units: [
                     {
-                      description: "Matt Book Shop",
+                      description: "The Landlord Club",
 
                       custom_id: "CUST-MattBookShop",
-                      soft_descriptor: "MattBookShop",
+                      soft_descriptor: "TheLandlordClub",
                       amount: {
-                        currency_code: "USD",
+                        currency_code: "SGD",
                         value: totalPayment.toString(),
                         breakdown: {
                           item_total: {
-                            currency_code: "USD",
+                            currency_code: "SGD",
                             value: totalPrice.toString()
                           },
                           shipping: {
-                            currency_code: "USD",
+                            currency_code: "SGD",
                             value: shippingRate.toString()
                           },
                           discount: {
-                            currency_code: "USD",
+                            currency_code: "SGD",
                             value: discount.toString()
                           }
                         },
@@ -555,7 +555,7 @@ export default {
                           name: productName.toString(),
                           sku: "sku01",
                           unit_amount: {
-                            currency_code: "USD",
+                            currency_code: "SGD",
                             value: unitPrice.toString()
                           },
                           quantity: quantity.toString()
@@ -791,21 +791,29 @@ export default {
     checkPromoCode(promoCode) {
       return new Promise((resolve, reject) => {
         db.collection("promo")
-          .where("name", "==", promoCode.toLowerCase())
           .where("active", "==", true)
           .get()
           .then(snapshot => {
-            if(snapshot.docs.length > 0){
-              let obj = snapshot.docs[0].data();
-              if(obj.remain > 0){
-                resolve({
-                  value: obj.value,
-                  remain: obj.remain,
-                  documentId: snapshot.docs[0].id
-                });
+            let count = 0;
+            snapshot.docs.forEach(item => {
+              count++;
+
+              if(item.data().name.toLowerCase() === promoCode.toLowerCase()){
+                let obj = item.data();
+
+                if(obj.remain > 0){
+                  resolve({
+                    value: obj.value,
+                    remain: obj.remain,
+                    documentId: item.id
+                  });
+                }
               }
-            }
-            resolve(false);
+
+              if(count === snapshot.docs.length){
+                resolve(false);
+              }
+            });
           })
           .catch(error => {
             reject(error); // the request failed
@@ -822,8 +830,10 @@ export default {
             html: "Please check your Promo Code"
           });
         this.form.discountValue = '';
+        this.onPaymentCal();
       }else{
-        this.form.discountValue = (parseFloat(this.form.total_price) * validPromoCode.value) / 100;
+        // this.form.discountValue = (parseFloat(this.form.total_price) * validPromoCode.value) / 100;
+        this.form.discountValue = validPromoCode.value;
         this.onPaymentCal();
       }
     },

@@ -327,9 +327,16 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-form-item label="Discount">
+          <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+            <el-form-item label="Promo Code">
+            <el-input v-model="order.promo_code" placeholder="Promo Code"></el-input>
+          </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+            <el-form-item label="Discount">
             <el-input v-model="order.discount" placeholder="Discount"></el-input>
           </el-form-item>
+          </el-col>
         </el-row>
         <el-row>
           <el-form-item label="Total Payment">
@@ -367,7 +374,7 @@
       <div class="input-group" v-if="!isNewPromoCode">
         <el-input placeholder="Remain" v-model="promoCode.remain" disabled></el-input>
       </div>
-      <label>Value (%)</label>
+      <label>Value</label>
       <div class="input-group">
         <el-input placeholder="Value" v-model="promoCode.value"></el-input>
       </div>
@@ -488,6 +495,7 @@ export default {
         { key: "quantity", sortable: true },
         { key: "total_price", sortable: true, label: "Sub Total" },
         { key: "shipping_rate", sortable: true },
+        { key: "promo_code", sortable: true },
         { key: "discount", sortable: true },
         { key: "total_payment", sortable: true },
         { key: "actions" }
@@ -651,6 +659,7 @@ export default {
           shipping_rate: this.order.shipping_rate,
           total_price: this.order.total_price,
           total_payment: this.order.total_payment,
+          promo_code: this.order.promo_code,
           discount: this.order.discount,
           shipping: {
             address: this.order.shippingAddress,
@@ -676,6 +685,7 @@ export default {
           this.dataOrder[idx].shipping_rate = this.order.shipping_rate;
           this.dataOrder[idx].total_price = this.order.total_price;
           this.dataOrder[idx].total_payment = this.order.total_payment;
+          this.dataOrder[idx].promo_code = this.order.promo_code;
           this.dataOrder[idx].discount = this.order.discount;
           this.dataOrder[idx].shippingAddress = this.order.shippingAddress;
           this.dataOrder[
@@ -774,6 +784,7 @@ export default {
             obj.shipping_rate = data.shipping_rate;
             obj.total_price = data.total_price;
             obj.total_payment = data.total_payment;
+            obj.promo_code = data.promo_code;
             obj.discount = data.discount;
             obj.shippingAddress = data.shipping.address;
             obj.shippingContact_no = data.shipping.contact_no;
@@ -964,6 +975,7 @@ export default {
             "Quantity",
             "Total Price",
             "Shipping Rate",
+            "Promo Code",
             "Discount",
             "Total Payment"
           ];
@@ -981,6 +993,7 @@ export default {
             "quantity",
             "total_price",
             "shipping_rate",
+            "promo_code",
             "discount",
             "total_payment"
           ];
