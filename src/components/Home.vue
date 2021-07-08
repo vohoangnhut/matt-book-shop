@@ -261,8 +261,52 @@
         </div>
       </div>
       <!--     *********     Author      *********      -->
-      <div class="cd-section" id="club" data-background-color="black">
-        <!--     *********    PROJECTS 3     *********      -->
+      <div class="page-header header-filter">
+        <div style="width: 100%; height: 100%; background-color: #0000007d">
+          <div
+            class="page-header-image"
+            style="background-image: url('/assets/img/home/Sentosa Day.jpg')"
+          ></div>
+        </div>
+        <div class="content-center" id="club">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-8 ml-auto mr-auto text-center">
+                <h2 class="title">The Club</h2>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 ml-auto mr-auto">
+                <div style="text-align: left">
+                  <p>
+                    The Landlord Club is an exclusive community of like-minded
+                    landlords who range from seasoned landlords to aspiring
+                    ones. It is a safe place where landlords come together
+                    regularly and gain updated market information as well as
+                    share tips on maximising rental property returns.
+                  </p>
+
+                  <p>
+                    Members of this club tap on one another’s knowledge and
+                    experience to get the answers to challenges that they may
+                    face, such as the different types of ‘monster’ tenants and
+                    what to do during the often-overlooked maintenance phase.
+                  </p>
+                  <p>
+                    The Landlord Club complements the book The Landlord Club:
+                    Untold Strategies to Maximise Rental Property Returns, and
+                    takes it one step further so that landlords are not alone in
+                    their journey.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="cd-section" id="club" style="
+                    background-image: url('/assets/img/home/Sentosa Day.jpg');
+                  ">
         <div class="features-3" style="text-align: start !important">
           <div class="container">
             <div class="row">
@@ -293,8 +337,7 @@
             </div>
           </div>
         </div>
-      </div>
-      <!--     *********    END PROJECTS 3      *********      -->
+      </div> -->
     </div>
   </div>
 </template>

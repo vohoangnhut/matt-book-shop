@@ -439,7 +439,9 @@ export default {
   components: {
     Loading
   },
-  created() {
+  async created() {
+    let commonSetting = await this.loadCommonSetting();
+
     db.collection("product")
       .doc(this.$route.params.id)
       .get()
@@ -449,7 +451,7 @@ export default {
           this.item = data;
           this.form.product_name = data.title;
           this.form.unit_price = data.price;
-          this.form.shipping_rate = "4";
+          this.form.shipping_rate = commonSetting.shippingRate;
           this.onPaymentCal();
         } else {
           // snapshot.data() will be undefined in this case
@@ -466,6 +468,21 @@ export default {
     });
   },
   methods: {
+    loadCommonSetting() {
+      return new Promise((resolve, reject) => {
+        db.collection("common")
+          .doc("setting")
+          .get()
+          .then(snapshot => {
+            if (snapshot.exists) {
+              resolve(snapshot.data());
+            } else {
+              resolve({});
+              console.log("No such document!");
+            }
+          });
+      });
+    },
     onSubmit() {
       //if (!this.onValidation()) {
       //return;

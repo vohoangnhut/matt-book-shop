@@ -182,6 +182,32 @@
             aria-controls="dataLogTable"
           ></b-pagination>
         </el-tab-pane>
+        <el-tab-pane label="Common Setting" name="seven">
+          <b-button size="sm" @click="refresh(7)" class="mr-1" variant="info">Refresh</b-button>
+          <b-table
+            hover
+            :items="dataCommonSetting"
+            id="dataCommonSettingTable"
+            :per-page="dataCommonSettingPerPage"
+            :current-page="dataCommonSettingCurrentPage"
+            :fields="dataCommonSettingFields"
+          >
+            <template v-slot:cell(actions)="row">
+              <b-button
+                size="sm"
+                @click="commonSettingInfo(row.item, row.index, $event.target)"
+                class="mr-1"
+                variant="info"
+              >Update</b-button>
+            </template>
+          </b-table>
+          <b-pagination
+            v-model="dataLogCurrentPage"
+            :total-rows="rowsDataLog"
+            :per-page="dataLogPerPage"
+            aria-controls="dataLogTable"
+          ></b-pagination>
+        </el-tab-pane>
       </el-tabs>
     </div>
     <!-- Contact modal -->
@@ -408,6 +434,13 @@
         </b-col>
       </b-row>
     </b-modal>
+    <!-- Common Settting modal -->
+    <b-modal :id="commonSettingModal.id" :title="commonSettingModal.title" @ok="saveCommonSettingData">
+      <label>Shipping Rate</label>
+      <div class="input-group">
+        <el-input placeholder="Email" v-model="commonSetting.shippingRate"></el-input>
+      </div>
+    </b-modal>
   </div>
 </template>
 <script>
@@ -426,6 +459,7 @@ export default {
       dataPromoCode: [],
       dataRole: [],
       dataLog: [],
+      dataCommonSetting: [],
       dataContactPerPage: 10,
       dataContactCurrentPage: 1,
       dataOrderPerPage: 10,
@@ -438,6 +472,8 @@ export default {
       dataRoleCurrentPage: 1,
       dataLogPerPage: 10,
       dataLogCurrentPage: 1,
+      dataCommonSettingPerPage: 10,
+      dataCommonSettingCurrentPage: 1,
       contactModal: {
         id: "contact-modal",
         title: "Contact Update Data"
@@ -462,11 +498,16 @@ export default {
         id: "view-log-modal",
         title: "View Log"
       },
+      commonSettingModal: {
+        id: "common-setting-modal",
+        title: "Common Setting"
+      },
       customer: {},
       order: {},
       product: {},
       promoCode: {},
       role: {},
+      commonSetting: {},
       activeName: "first",
       sortByContact: "created",
       sortDescContact: true,
@@ -530,6 +571,12 @@ export default {
         { key: "old", sortable: true },
         { key: "new", sortable: true }
       ],
+      dataCommonSettingFields: [
+        { key: "shippingRate", sortable: true },
+        { key: "updated", sortable: true },
+        { key: "updated_by", sortable: true },
+        { key: "actions" }
+      ],
       countryOptions: [],
       oldObj: {},
       user: firebase.auth().currentUser,
@@ -544,6 +591,7 @@ export default {
     this.promoCodeDataLoad();
     this.roleDataLoad();
     this.logDataLoad();
+    this.commonSettingDataLoad();
 
     this.getAllCountries().then(result => {
       this.countryOptions = result;
@@ -567,6 +615,9 @@ export default {
     },
     rowsDataLog() {
       return this.dataLog.length;
+    },
+    rowsDataCommonSetting() {
+      return this.dataCommonSetting.length;
     }
   },
   methods: {
@@ -602,6 +653,11 @@ export default {
       this.getLogList(obj.documentId).then(() => {
         this.$root.$emit("bv::show::modal", this.viewLogModal.id, button);
       });
+    },
+    commonSettingInfo(item, index, button) {
+      this.commonSetting = JSON.parse(JSON.stringify(item, null, 2));
+      this.oldObj = JSON.parse(JSON.stringify(item, null, 2));
+      this.$root.$emit("bv::show::modal", this.commonSettingModal.id, button);
     },
     confirmDelete(item, index, button, collection) {
       this.$swal({
@@ -747,6 +803,30 @@ export default {
           this.writeLog(this.oldObj, this.role, "role", "update").then(() => {
             this.$swal("Saved!", "Data has been saved", "success");
           });
+        });
+    },
+    saveCommonSettingData() {
+      let updated = this.calcTime("Singapore", "+8");
+
+      db.collection("common")
+        .doc(this.commonSetting.documentId)
+        .update({
+          shippingRate: this.commonSetting.shippingRate,
+          updated: updated,
+          updated_by: this.user.email
+        })
+        .then(result => {
+          var idx = this.dataCommonSetting.findIndex(
+            x => x.documentId === this.commonSetting.documentId
+          );
+          this.dataCommonSetting[idx].shippingRate = this.commonSetting.shippingRate;
+          this.dataCommonSetting[idx].updated = this.formatDate(updated);
+          this.dataCommonSetting[idx].updated_by = this.user.email;
+          this.writeLog(this.oldObj, this.commonSetting, "commonSetting", "update").then(
+            () => {
+              this.$swal("Saved!", "Data has been saved", "success");
+            }
+          );
         });
     },
     customerDataLoad() {
@@ -902,6 +982,25 @@ export default {
           console.log(error);
         });
     },
+    commonSettingDataLoad() {
+      this.dataCommonSetting = [];
+      db.collection("common")
+        .get()
+        .then(snapshot => {
+          console.log();
+          snapshot.docs.forEach(doc => {
+            var obj = {};
+            var data = doc.data();
+            obj = data;
+            obj.updated = this.formatDate(data.updated.toDate());
+            obj.documentId = doc.id;
+            this.dataCommonSetting.push(obj);
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
     deleteRowData(collection, documentId) {
       return new Promise((resolve, reject) => {
         db.collection(collection)
@@ -946,6 +1045,9 @@ export default {
       } else if (index === 6) {
         // Log List
         this.logDataLoad();
+      } else if (index === 7) {
+        // Common Setting List
+        this.commonSettingDataLoad();
       }
     },
     formatJson(filterVal, jsonData) {
