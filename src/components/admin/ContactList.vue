@@ -182,20 +182,21 @@
             aria-controls="dataLogTable"
           ></b-pagination>
         </el-tab-pane>
-        <el-tab-pane label="Common Setting" name="seven">
+        <el-tab-pane label="Shipping Rate" name="seven">
           <b-button size="sm" @click="refresh(7)" class="mr-1" variant="info">Refresh</b-button>
+          <b-button size="sm" @click="newShippingRate($event.target)" class="mr-1" variant="info">New</b-button>
           <b-table
             hover
-            :items="dataCommonSetting"
-            id="dataCommonSettingTable"
-            :per-page="dataCommonSettingPerPage"
-            :current-page="dataCommonSettingCurrentPage"
-            :fields="dataCommonSettingFields"
+            :items="dataShippingRate"
+            id="dataShippingRateTable"
+            :per-page="dataShippingRatePerPage"
+            :current-page="dataShippingRateCurrentPage"
+            :fields="dataShippingRateFields"
           >
             <template v-slot:cell(actions)="row">
               <b-button
                 size="sm"
-                @click="commonSettingInfo(row.item, row.index, $event.target)"
+                @click="shippingRateInfo(row.item, row.index, $event.target)"
                 class="mr-1"
                 variant="info"
               >Update</b-button>
@@ -434,11 +435,15 @@
         </b-col>
       </b-row>
     </b-modal>
-    <!-- Common Settting modal -->
-    <b-modal :id="commonSettingModal.id" :title="commonSettingModal.title" @ok="saveCommonSettingData">
+    <!-- Shipping Rate modal -->
+    <b-modal :id="shippingRateModal.id" :title="shippingRateModal.title" @ok="saveShippingRateData">
       <label>Shipping Rate</label>
       <div class="input-group">
-        <el-input placeholder="Email" v-model="commonSetting.shippingRate"></el-input>
+        <el-input placeholder="Shipping Rate" v-model="shippingRate.shippingRate"></el-input>
+      </div>
+      <label>Country Code</label>
+      <div class="input-group">
+        <el-input placeholder="Country Code" v-model="shippingRate.countryCode"></el-input>
       </div>
     </b-modal>
   </div>
@@ -459,7 +464,7 @@ export default {
       dataPromoCode: [],
       dataRole: [],
       dataLog: [],
-      dataCommonSetting: [],
+      dataShippingRate: [],
       dataContactPerPage: 10,
       dataContactCurrentPage: 1,
       dataOrderPerPage: 10,
@@ -472,8 +477,8 @@ export default {
       dataRoleCurrentPage: 1,
       dataLogPerPage: 10,
       dataLogCurrentPage: 1,
-      dataCommonSettingPerPage: 10,
-      dataCommonSettingCurrentPage: 1,
+      dataShippingRatePerPage: 10,
+      dataShippingRateCurrentPage: 1,
       contactModal: {
         id: "contact-modal",
         title: "Contact Update Data"
@@ -498,16 +503,16 @@ export default {
         id: "view-log-modal",
         title: "View Log"
       },
-      commonSettingModal: {
-        id: "common-setting-modal",
-        title: "Common Setting"
+      shippingRateModal: {
+        id: "shipping-rate-modal",
+        title: "Shipping Rate"
       },
       customer: {},
       order: {},
       product: {},
       promoCode: {},
       role: {},
-      commonSetting: {},
+      shippingRate: {},
       activeName: "first",
       sortByContact: "created",
       sortDescContact: true,
@@ -571,8 +576,9 @@ export default {
         { key: "old", sortable: true },
         { key: "new", sortable: true }
       ],
-      dataCommonSettingFields: [
+      dataShippingRateFields: [
         { key: "shippingRate", sortable: true },
+        { key: "countryCode", sortable: true },
         { key: "updated", sortable: true },
         { key: "updated_by", sortable: true },
         { key: "actions" }
@@ -581,7 +587,8 @@ export default {
       oldObj: {},
       user: firebase.auth().currentUser,
       logInfoList: [],
-      isNewPromoCode: false
+      isNewPromoCode: false,
+      isNewShippingRate: false
     };
   },
   created() {
@@ -591,7 +598,7 @@ export default {
     this.promoCodeDataLoad();
     this.roleDataLoad();
     this.logDataLoad();
-    this.commonSettingDataLoad();
+    this.shippingRateDataLoad();
 
     this.getAllCountries().then(result => {
       this.countryOptions = result;
@@ -616,8 +623,8 @@ export default {
     rowsDataLog() {
       return this.dataLog.length;
     },
-    rowsDataCommonSetting() {
-      return this.dataCommonSetting.length;
+    rowsDataShippingRate() {
+      return this.dataShippingRate.length;
     }
   },
   methods: {
@@ -654,10 +661,10 @@ export default {
         this.$root.$emit("bv::show::modal", this.viewLogModal.id, button);
       });
     },
-    commonSettingInfo(item, index, button) {
-      this.commonSetting = JSON.parse(JSON.stringify(item, null, 2));
+    shippingRateInfo(item, index, button) {
+      this.shippingRate = JSON.parse(JSON.stringify(item, null, 2));
       this.oldObj = JSON.parse(JSON.stringify(item, null, 2));
-      this.$root.$emit("bv::show::modal", this.commonSettingModal.id, button);
+      this.$root.$emit("bv::show::modal", this.shippingRateModal.id, button);
     },
     confirmDelete(item, index, button, collection) {
       this.$swal({
@@ -805,29 +812,48 @@ export default {
           });
         });
     },
-    saveCommonSettingData() {
+    saveShippingRateData() {
       let updated = this.calcTime("Singapore", "+8");
 
-      db.collection("common")
-        .doc(this.commonSetting.documentId)
-        .update({
-          shippingRate: this.commonSetting.shippingRate,
+      if(this.isNewShippingRate){
+        db.collection("shipping_rate")
+        .add({
+          shippingRate: this.shippingRate.shippingRate,
+          active: true,
+          countryCode: this.shippingRate.countryCode,
           updated: updated,
-          updated_by: this.user.email
+          updated_by: this.user.email,
+          created: updated,
+          created_by: this.user.email
         })
         .then(result => {
-          var idx = this.dataCommonSetting.findIndex(
-            x => x.documentId === this.commonSetting.documentId
-          );
-          this.dataCommonSetting[idx].shippingRate = this.commonSetting.shippingRate;
-          this.dataCommonSetting[idx].updated = this.formatDate(updated);
-          this.dataCommonSetting[idx].updated_by = this.user.email;
-          this.writeLog(this.oldObj, this.commonSetting, "commonSetting", "update").then(
-            () => {
-              this.$swal("Saved!", "Data has been saved", "success");
-            }
-          );
+          this.$swal("Saved!", "Data has been saved", "success");
+          this.refresh(7);
         });
+      }else{
+        db.collection("shipping_rate")
+          .doc(this.shippingRate.documentId)
+          .update({
+            shippingRate: this.shippingRate.shippingRate,
+            countryCode: this.shippingRate.countryCode,
+            updated: updated,
+            updated_by: this.user.email
+          })
+          .then(result => {
+            var idx = this.dataShippingRate.findIndex(
+              x => x.documentId === this.shippingRate.documentId
+            );
+            this.dataShippingRate[idx].shippingRate = this.shippingRate.shippingRate;
+            this.dataShippingRate[idx].countryCode = this.shippingRate.countryCode;
+            this.dataShippingRate[idx].updated = this.formatDate(updated);
+            this.dataShippingRate[idx].updated_by = this.user.email;
+            this.writeLog(this.oldObj, this.shippingRate, "shippingRate", "update").then(
+              () => {
+                this.$swal("Saved!", "Data has been saved", "success");
+              }
+            );
+          });
+      }
     },
     customerDataLoad() {
       this.dataContact = [];
@@ -982,9 +1008,9 @@ export default {
           console.log(error);
         });
     },
-    commonSettingDataLoad() {
-      this.dataCommonSetting = [];
-      db.collection("common")
+    shippingRateDataLoad() {
+      this.dataShippingRate = [];
+      db.collection("shipping_rate")
         .get()
         .then(snapshot => {
           console.log();
@@ -992,9 +1018,13 @@ export default {
             var obj = {};
             var data = doc.data();
             obj = data;
-            obj.updated = this.formatDate(data.updated.toDate());
+
+            if(data.updated){
+              obj.updated = this.formatDate(data.updated.toDate());
+            }
+            
             obj.documentId = doc.id;
-            this.dataCommonSetting.push(obj);
+            this.dataShippingRate.push(obj);
           });
         })
         .catch(error => {
@@ -1046,8 +1076,8 @@ export default {
         // Log List
         this.logDataLoad();
       } else if (index === 7) {
-        // Common Setting List
-        this.commonSettingDataLoad();
+        // Shipping Rate List
+        this.shippingRateDataLoad();
       }
     },
     formatJson(filterVal, jsonData) {
@@ -1192,6 +1222,11 @@ export default {
       this.promoCode = {};
       this.isNewPromoCode = true;
       this.$root.$emit("bv::show::modal", this.promoCodeModal.id, button);
+    },
+    newShippingRate(button) {
+      this.shippingRate = {};
+      this.isNewShippingRate = true;
+      this.$root.$emit("bv::show::modal", this.shippingRateModal.id, button);
     },
     savePromoCodeData() {
       if(this.isNewPromoCode){

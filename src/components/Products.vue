@@ -433,14 +433,17 @@ export default {
       countryOptions: [],
       quantityOptions: [],
       isLoading: false,
-      fullPage: true
+      fullPage: true,
+      arrShippingRateData: []
     };
   },
   components: {
     Loading
   },
   async created() {
-    let commonSetting = await this.loadCommonSetting();
+    await this.loadShippingRate();
+
+    let getShippingRate = this.arrShippingRateData.filter(x => x.countryCode === this.form.country).length > 0 ? this.arrShippingRateData.filter(x => x.countryCode === this.form.country)[0].shippingRate : 0;
 
     db.collection("product")
       .doc(this.$route.params.id)
@@ -451,7 +454,7 @@ export default {
           this.item = data;
           this.form.product_name = data.title;
           this.form.unit_price = data.price;
-          this.form.shipping_rate = commonSetting.shippingRate;
+          this.form.shipping_rate = getShippingRate;
           this.onPaymentCal();
         } else {
           // snapshot.data() will be undefined in this case
@@ -468,18 +471,23 @@ export default {
     });
   },
   methods: {
-    loadCommonSetting() {
+    loadShippingRate() {
       return new Promise((resolve, reject) => {
-        db.collection("common")
-          .doc("setting")
+        db.collection("shipping_rate")
           .get()
           .then(snapshot => {
-            if (snapshot.exists) {
-              resolve(snapshot.data());
-            } else {
-              resolve({});
-              console.log("No such document!");
-            }
+            let count = 0;
+
+            snapshot.docs.forEach(doc => {
+              count++;
+
+              var obj = doc.data();
+              this.arrShippingRateData.push({countryCode: obj.countryCode, shippingRate: obj.shippingRate});
+
+              if(count === snapshot.docs.length){
+                resolve(true);
+              }
+            });
           });
       });
     },
@@ -767,6 +775,8 @@ export default {
     },
     async getAddressInfo() {
       this.isLoading = true;
+      let getShippingRate = this.arrShippingRateData.filter(x => x.countryCode === this.form.country).length > 0 ? this.arrShippingRateData.filter(x => x.countryCode === this.form.country)[0].shippingRate : 0;
+      this.form.shipping_rate = getShippingRate;
       if (this.form.country) {
         if (this.form.postal_code) {
           var addressInfo = await this.getAddress(
