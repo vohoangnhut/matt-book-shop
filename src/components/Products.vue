@@ -172,7 +172,7 @@
                 </div>
 
                 <div class="form-group">
-                  <label>Address</label>
+                  <label>Street Name</label>
                   <textarea
                     name="message"
                     class="form-control"
@@ -180,6 +180,45 @@
                     rows="6"
                     v-model="form.address"
                   ></textarea>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-6 col-md-8 col-sm-5">
+                    <label>Block No.</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="now-ui-icons location_pin"></i>
+                        </span>
+                      </div>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Block No..."
+                        aria-label="Block No..."
+                        maxlength="30"
+                        v-model="form.block_no"
+                      />
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-8 col-sm-5">
+                    <label>Unit No.</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          <i class="now-ui-icons location_pin"></i>
+                        </span>
+                      </div>
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Unit No..."
+                        aria-label="Unit No..."
+                        v-model="form.unit_no"
+                        maxlength="30"
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <label>Contact No</label>
@@ -608,7 +647,9 @@ export default {
                         country: form.country,
                         email: form.email,
                         name: form.name,
-                        postal_code: form.postal_code
+                        postal_code: form.postal_code,
+                        block_no: form.block_no,
+                        unit_no: form.unit_no
                       },
                       order_date: orderDate,
                       inv_no: {

@@ -207,7 +207,6 @@
             <div class="container">
               <div class="row">
                 <div class="col-md-12 ml-auto mr-auto">
-                  <h3 class="title">About The Author</h3>
                   <div class="row">
                     <div class="col-md-4">
                       <div class="card-image">
@@ -219,6 +218,7 @@
                     </div>
 
                     <div class="col-md-8">
+                      <h3 class="title" style="padding-top: 0px;text-align: left;">About The Author</h3>
                       <div style="text-align: left">
                         <p>
                           Having more than 15 years’ experience with several
