@@ -473,7 +473,8 @@ export default {
       quantityOptions: [],
       isLoading: false,
       fullPage: true,
-      arrShippingRateData: []
+      arrShippingRateData: [],
+      firstTimePromoCode: false
     };
   },
   components: {
@@ -534,6 +535,14 @@ export default {
       //if (!this.onValidation()) {
       //return;
       //}
+      if(this.firstTimePromoCode === false){
+        this.$swal({
+            type: "warning",
+            title: "Promo Code is not valid",
+            html: "Please enter a valid Promo Code"
+          });
+        this.firstTimePromoCode = true;
+      }
       var productName = this.item.title;
       var unitPrice = this.form.unit_price;
       var quantity = this.form.quantity;
@@ -889,13 +898,14 @@ export default {
       });
     },
     async applyPromoCode() {
+      this.firstTimePromoCode = true;
       let validPromoCode = await this.checkPromoCode(this.form.promo_code);
       
       if(!validPromoCode){
         this.$swal({
             type: "warning",
             title: "Promo Code is not valid",
-            html: "Please check your Promo Code"
+            html: "Please enter a valid Promo Code"
           });
         this.form.discountValue = '';
         this.onPaymentCal();

@@ -201,7 +201,7 @@
       </div>
       <!--     *********     Author      *********      -->
 
-      <div data-background-color="gray" id="author">
+      <div data-background-color="gray" id="author" style="padding-top: 50px;">
         <div class="features-3">
           <div id="carousel">
             <div class="container">

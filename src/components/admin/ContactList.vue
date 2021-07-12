@@ -169,6 +169,7 @@
             :per-page="dataLogPerPage"
             :current-page="dataLogCurrentPage"
             :fields="dataLogFields"
+            @sort-changed="sortLogChanged"
           >
             <template v-slot:cell(old)="data">
               <span v-html="data.value"></span>
@@ -546,7 +547,7 @@ export default {
         { key: "orderDate", sortable: true, label: "Order Date & Time", formatter: "formatDate" },
         { key: "shippingName", sortable: true, label: "Name" },
         { key: "shippingCountry", sortable: true },
-        { key: "shippingAddress", sortable: true },
+        { key: "shippingAddress", sortable: true, label: "Shipping Street Name" },
         { key: "shippingBlockNo", sortable: true },
         { key: "shippingUnitNo", sortable: true },
         { key: "shippingPostal_code", sortable: true },
@@ -586,7 +587,7 @@ export default {
         { key: "actions" }
       ],
       dataLogFields: [
-        { key: "updated", sortable: true },
+        { key: "updated" },
         { key: "updated_by", sortable: true },
         { key: "product_code", sortable: true },
         { key: "old", sortable: true },
@@ -951,7 +952,7 @@ export default {
             obj.created = data.created;
             obj.actions = "";
             obj.documentId = doc.id;
-            obj.updated = data.updated;
+            obj.updated = this.formatDate(data.updated.toDate());
             this.dataProduct.push(obj);
           });
         })
@@ -1010,7 +1011,9 @@ export default {
         .where("target", "==", "product")
         .get()
         .then(snapshot => {
+          let count = 0;
           snapshot.docs.forEach(doc => {
+            count++;
             var obj = doc.data();
             obj.old =
               "Name: " +
@@ -1025,7 +1028,13 @@ export default {
               "Price: " +
               obj.newVal.price;
               obj.product_code = obj.oldVal.product_code;
+              obj.updated_sort = obj.updated;
+              obj.updated = this.formatDate(obj.updated.toDate());
             this.dataLog.push(obj);
+
+            if(count === snapshot.docs.length){
+              this.dataLog.sort(function(a, b){return new Date(b.updated) - new Date(a.updated)});
+            }
           });
         })
         .catch(error => {
@@ -1347,6 +1356,19 @@ export default {
         });
       }
     },
+    sortLogChanged(sortProps){
+      let prop = sortProps.sortBy;
+
+      if(prop === 'updated'){
+        if (sortProps.sortDesc) {
+          console.log('A');
+          this.dataLog.sort((a, b) => {return this.formatDateSort(new Date(b.updated_sort)) - this.formatDateSort(new Date(a.updated_sort))});
+        }else{
+          console.log('B');
+          this.dataLog.sort((a, b) => {return this.formatDateSort(new Date(a.updated_sort)) - this.formatDateSort(new Date(b.updated_sort))});
+        }
+      }
+    }
   }
 };
 </script>
