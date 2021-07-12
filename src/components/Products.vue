@@ -474,7 +474,8 @@ export default {
       isLoading: false,
       fullPage: true,
       arrShippingRateData: [],
-      firstTimePromoCode: false
+      firstTimePromoCode: false,
+      country_name: ''
     };
   },
   components: {
@@ -504,6 +505,7 @@ export default {
 
     this.getAllCountries().then(result => {
       this.countryOptions = result.filter(x => x.value === 'SG');
+      this.country_name = this.countryOptions[0].label;
     });
 
     this.getQuantity().then(result => {
@@ -556,6 +558,7 @@ export default {
       var nowDate = this.calcTime("Singapore", "+8");
       var orderDate = this.formatDate(nowDate);
       var today = this.formatDateInvNo(nowDate);
+      var country_name = this.country_name;
       var invNo = "";
       var x = {
         aInternal: 10,
@@ -654,6 +657,7 @@ export default {
                         address: form.address,
                         contact_no: form.contact_no,
                         country: form.country,
+                        country_name: country_name,
                         email: form.email,
                         name: form.name,
                         postal_code: form.postal_code,
