@@ -200,12 +200,11 @@
         </div>
       </div>
       <!--     *********     Author      *********      -->
-
-      <div data-background-color="gray" id="author" style="padding-top: 50px;">
+      <div data-background-color="gray" id="author">
         <div class="features-3">
           <div id="carousel">
             <div class="container">
-              <div class="row">
+              <div class="row padding">
                 <div class="col-md-12 ml-auto mr-auto">
                   <div class="row">
                     <div class="col-md-4">
@@ -218,7 +217,12 @@
                     </div>
 
                     <div class="col-md-8">
-                      <h3 class="title" style="padding-top: 0px;text-align: left;">About The Author</h3>
+                      <h3
+                        class="title"
+                        style="padding-top: 0px; text-align: left"
+                      >
+                        About The Author
+                      </h3>
                       <div style="text-align: left">
                         <p>
                           Having more than 15 years’ experience with several
@@ -260,8 +264,8 @@
           </div>
         </div>
       </div>
-      <!--     *********     Author      *********      -->
-      <div class="page-header header-filter" id="club">
+      <!--     *********     Clud      *********      -->
+      <div class="page-header header-filter" id="club" style="height:70vh; min-height: 70vh;">
         <div style="width: 100%; height: 100%; background-color: #0000007d">
           <div
             class="page-header-image"
@@ -304,40 +308,6 @@
           </div>
         </div>
       </div>
-      <!-- <div class="cd-section" id="club" style="
-                    background-image: url('/assets/img/home/Sentosa Day.jpg');
-                  ">
-        <div class="features-3" style="text-align: start !important">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-8 ml-auto mr-auto text-center">
-                <h2 class="title">The Club</h2>
-              </div>
-            </div>
-            <div class="col-md-8 ml-auto mr-auto">
-              <p>
-                The Landlord Club is an exclusive community of like-minded
-                landlords who range from seasoned landlords to aspiring ones. It
-                is a safe place where landlords come together regularly and gain
-                updated market information as well as share tips on maximising
-                rental property returns.
-              </p>
-
-              <p>
-                Members of this club tap on one another’s knowledge and
-                experience to get the answers to challenges that they may face,
-                such as the different types of ‘monster’ tenants and what to do
-                during the often-overlooked maintenance phase.
-              </p>
-              <p>
-                The Landlord Club complements the book The Landlord Club: Untold
-                Strategies to Maximise Rental Property Returns, and takes it one
-                step further so that landlords are not alone in their journey.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div> -->
     </div>
   </div>
 </template>
@@ -346,3 +316,8 @@ export default {
   name: "Home",
 };
 </script>
+<style scoped>
+.padding {
+  padding: 50px 0 50px 0;
+}
+</style>
