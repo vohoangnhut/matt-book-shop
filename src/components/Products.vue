@@ -116,7 +116,7 @@
                     <strong>Shipping Information</strong>
                   </div>
                 </div>
-                <label>Your name</label>
+                <label>Your name  <span class="display-error">*</span></label>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
@@ -129,12 +129,15 @@
                     placeholder="Your Name..."
                     aria-label="Your Name..."
                     v-model="form.name"
+                    id="inputNameId"
+                    
                   />
                 </div>
+                <div id="errorName" class="display-error" style="display: none;">Please input Your Name</div>
 
                 <div class="row">
                   <div class="col-lg-6 col-md-8 col-sm-5 remove-margin-top">
-                    <label>Country</label>
+                    <label>Country   <span class="display-error">*</span></label>
                     <div class="input-group">
                       <el-select
                         v-model="form.country"
@@ -152,7 +155,7 @@
                     </div>
                   </div>
                   <div class="col-lg-6 col-md-8 col-sm-5">
-                    <label>Postal Code</label>
+                    <label>Postal Code   <span class="display-error">*</span></label>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text">
@@ -165,21 +168,22 @@
                         placeholder="Postal Code..."
                         aria-label="Postal Code..."
                         v-model="form.postal_code"
-                        @blur="getAddressInfo"
+                        id="inputPostalCodeId"
                       />
                     </div>
+                    <div id="errorPostalCode" class="display-error" style="display: none;">Please input Postal Code</div>
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label>Street Name</label>
+                  <label>Street Name   <span class="display-error">*</span></label>
                   <textarea
-                    name="message"
                     class="form-control"
-                    id="message"
                     rows="6"
                     v-model="form.address"
+                    id="inputAddressId"
                   ></textarea>
+                  <div id="errorAddress" class="display-error" style="display: none;">Please input Address</div>
                 </div>
 
                 <div class="row">
@@ -202,7 +206,7 @@
                     </div>
                   </div>
                   <div class="col-lg-6 col-md-8 col-sm-5">
-                    <label>Unit No.</label>
+                    <label>Unit No.   <span class="display-error">*</span></label>
                     <div class="input-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text">
@@ -216,12 +220,14 @@
                         aria-label="Unit No..."
                         v-model="form.unit_no"
                         maxlength="30"
+                        id="inputUnitNoId"
                       />
                     </div>
+                    <div id="errorUnitNo" class="display-error" style="display: none;">Please input Unit No</div>
                   </div>
                 </div>
 
-                <label>Contact No</label>
+                <label>Contact No   <span class="display-error">*</span></label>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
@@ -233,10 +239,12 @@
                     class="form-control"
                     placeholder="Number Here..."
                     v-model="form.contact_no"
+                    id="inputContactNoId"
                   />
                 </div>
+                <div id="errorContactNo" class="display-error" style="display: none;">Please input Contact No</div>
 
-                <label>Email</label>
+                <label>Email   <span class="display-error">*</span></label>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
@@ -249,8 +257,11 @@
                     placeholder="Email Here..."
                     aria-label="Email Here..."
                     v-model="form.email"
+                    id="inputEmailId"
                   />
                 </div>
+                <div id="errorEmail" class="display-error" style="display: none;">Please input Email</div>
+                <div id="errorEmailPattern" class="display-error" style="display: none;">Your email is not valid</div>
 
                 <div class="section-space-cus"></div>
                 <div class="alert alert-info" role="alert">
@@ -299,7 +310,7 @@
                     </div>
                   </div>
                   <div class="col-lg-6 col-md-8 col-sm-5 remove-margin-top">
-                    <label>Quantity</label>
+                    <label>Quantity   <span class="display-error">*</span></label>
                     <div class="input-group">
                       <el-select
                         v-model="form.quantity"
@@ -315,6 +326,7 @@
                         ></el-option>
                       </el-select>
                     </div>
+                    <div id="errorQuantity" class="display-error" style="display: none;">Please input Quantity</div>
                   </div>
                 </div>
                 <div class="row">
@@ -333,7 +345,6 @@
                         aria-label="Promo Code..."
                         v-model="form.promo_code"
                         style="text-transform: uppercase;"
-                        @blur="applyPromoCode"
                       />
                     </div>
                   </div>
@@ -511,6 +522,13 @@ export default {
     this.getQuantity().then(result => {
       this.quantityOptions = result;
     });
+
+    document.getElementById('inputNameId').addEventListener('blur', () => {this.validateForm('name')});
+    document.getElementById('inputAddressId').addEventListener('blur', () => {this.validateForm('address')});
+    document.getElementById('inputUnitNoId').addEventListener('blur', () => {this.validateForm('unit_no')});
+    document.getElementById('inputContactNoId').addEventListener('blur', () => {this.validateForm('contact_no')});
+    document.getElementById('inputEmailId').addEventListener('blur', () => {this.validateForm('email')});
+    document.getElementById('inputPostalCodeId').addEventListener('blur', () => {this.validateForm('postal_code'); this.getAddressInfo()});
   },
   methods: {
     loadShippingRate() {
@@ -537,189 +555,193 @@ export default {
       //if (!this.onValidation()) {
       //return;
       //}
-      if(this.firstTimePromoCode === false){
-        this.$swal({
-            type: "warning",
-            title: "Promo Code is not valid",
-            html: "Please enter a valid Promo Code"
+      // if(this.firstTimePromoCode === false){
+      //   this.$swal({
+      //       type: "warning",
+      //       title: "Promo Code is not valid",
+      //       html: "Please enter a valid Promo Code"
+      //     });
+      //   this.firstTimePromoCode = true;
+      // }
+      if(!this.validateForm()){
+        var productName = this.item.title;
+        var unitPrice = this.form.unit_price;
+        var quantity = this.form.quantity;
+        var totalPrice = this.form.total_price;
+        var shippingRate = this.form.shipping_rate;
+        var totalPayment = this.form.total_payment;
+        var discount = this.form.discountValue ? parseFloat(this.form.discountValue) : 0;
+        var order = this.order;
+        var form = this.form;
+        var swal = this.$swal;
+        var nowDate = this.calcTime("Singapore", "+8");
+        var orderDate = this.formatDate(nowDate);
+        var today = this.formatDateInvNo(nowDate);
+        var country_name = this.country_name;
+        var invNo = "";
+        var x = {
+          aInternal: 10,
+          aListener: function(val) {},
+          set isPaymentSuccess(val) {
+            this.aInternal = val;
+            this.aListener(val);
+          },
+          get isPaymentSuccess() {
+            return this.aInternal;
+          },
+          registerListener: function(listener) {
+            this.aListener = listener;
+          },
+          bListener: function(val) {},
+          set isProgressPayment(val) {
+            this.aInternal = val;
+            this.bListener(val);
+          },
+          get isProgressPayment() {
+            return this.aInternal;
+          },
+          registerListenerProgressPayment: function(listener) {
+            this.bListener = listener;
+          }
+        };
+
+        this.getInvNo(today).then(snapshot => {
+          if (snapshot.docs.length === 0) {
+            invNo = "0001";
+          }
+
+          snapshot.docs.forEach(doc => {
+            var data = doc.data();
+            invNo = this.pad(parseInt(data.inv_no.no) + 1, 4);
           });
-        this.firstTimePromoCode = true;
-      }
-      var productName = this.item.title;
-      var unitPrice = this.form.unit_price;
-      var quantity = this.form.quantity;
-      var totalPrice = this.form.total_price;
-      var shippingRate = this.form.shipping_rate;
-      var totalPayment = this.form.total_payment;
-      var discount = this.form.discountValue ? parseFloat(this.form.discountValue) : 0;
-      var order = this.order;
-      var form = this.form;
-      var swal = this.$swal;
-      var nowDate = this.calcTime("Singapore", "+8");
-      var orderDate = this.formatDate(nowDate);
-      var today = this.formatDateInvNo(nowDate);
-      var country_name = this.country_name;
-      var invNo = "";
-      var x = {
-        aInternal: 10,
-        aListener: function(val) {},
-        set isPaymentSuccess(val) {
-          this.aInternal = val;
-          this.aListener(val);
-        },
-        get isPaymentSuccess() {
-          return this.aInternal;
-        },
-        registerListener: function(listener) {
-          this.aListener = listener;
-        },
-        bListener: function(val) {},
-        set isProgressPayment(val) {
-          this.aInternal = val;
-          this.bListener(val);
-        },
-        get isProgressPayment() {
-          return this.aInternal;
-        },
-        registerListenerProgressPayment: function(listener) {
-          this.bListener = listener;
-        }
-      };
+          if ($("#paypal-button").is(":empty")) {
+            // Render the PayPal button into #paypal-button-container
+            paypal
+              .Buttons({
+                // Set up the transaction
+                createOrder: (data, actions) => {
+                  return actions.order.create({
+                    purchase_units: [
+                      {
+                        description: "The Landlord Club",
 
-      this.getInvNo(today).then(snapshot => {
-        if (snapshot.docs.length === 0) {
-          invNo = "0001";
-        }
-
-        snapshot.docs.forEach(doc => {
-          var data = doc.data();
-          invNo = this.pad(parseInt(data.inv_no.no) + 1, 4);
-        });
-        if ($("#paypal-button").is(":empty")) {
-          // Render the PayPal button into #paypal-button-container
-          paypal
-            .Buttons({
-              // Set up the transaction
-              createOrder: (data, actions) => {
-                return actions.order.create({
-                  purchase_units: [
-                    {
-                      description: "The Landlord Club",
-
-                      custom_id: "CUST-MattBookShop",
-                      soft_descriptor: "TheLandlordClub",
-                      amount: {
-                        currency_code: "SGD",
-                        value: totalPayment.toString(),
-                        breakdown: {
-                          item_total: {
-                            currency_code: "SGD",
-                            value: totalPrice.toString()
+                        custom_id: "CUST-MattBookShop",
+                        soft_descriptor: "TheLandlordClub",
+                        amount: {
+                          currency_code: "SGD",
+                          value: totalPayment.toString(),
+                          breakdown: {
+                            item_total: {
+                              currency_code: "SGD",
+                              value: totalPrice.toString()
+                            },
+                            shipping: {
+                              currency_code: "SGD",
+                              value: shippingRate.toString()
+                            },
+                            discount: {
+                              currency_code: "SGD",
+                              value: discount.toString()
+                            }
                           },
-                          shipping: {
-                            currency_code: "SGD",
-                            value: shippingRate.toString()
-                          },
-                          discount: {
-                            currency_code: "SGD",
-                            value: discount.toString()
-                          }
                         },
-                      },
-                      items: [
-                        {
-                          name: productName.toString(),
-                          sku: "sku01",
-                          unit_amount: {
-                            currency_code: "SGD",
-                            value: unitPrice.toString()
-                          },
-                          quantity: quantity.toString()
-                        }
-                      ]
-                    }
-                  ]
-                });
-              },
-              // Finalize the transaction
-              onApprove: (data, actions) => {
-                x.isProgressPayment = true;
-                return actions.order.capture().then((details) => {
-                  order
-                    .add({
-                      product_name: form.product_name,
-                      quantity: form.quantity,
-                      shipping_rate: form.shipping_rate,
-                      total_payment: form.total_payment,
-                      total_price: form.total_price,
-                      unit_price: form.unit_price,
-                      shipping: {
-                        address: form.address,
-                        contact_no: form.contact_no,
-                        country: form.country,
-                        country_name: country_name,
-                        email: form.email,
-                        name: form.name,
-                        postal_code: form.postal_code,
-                        block_no: form.block_no,
-                        unit_no: form.unit_no
-                      },
-                      order_date: orderDate,
-                      inv_no: {
-                        date: today,
-                        no: invNo
-                      },
-                      delt_flag: false,
-                      promo_code: form.promo_code,
-                      discount: form.discountValue
-                    })
-                    .then(docRef => {
-                      axios
-                        .get(
-                          "https://us-central1-book-store-sg-x.cloudfunctions.net/sendMailHTML?to=" +
-                            form.email +
-                            "&subject=" +
-                            "[thelandlordclub] Your payment has been completed" +
-                            "&id=" +
-                            docRef.id
-                        )
-                        .then((response) => {
-                          this.updateRemainPromoCode();
-                          swal({
-                            type: "success",
-                            title: "Thank you !",
-                            html:
-                              "Your order will be on its way. Receipt of this purchase will be sent to your email",
-                            allowOutsideClick: false,
-                            allowEscapeKey: false
-                          }).then(function() {
-                            x.isPaymentSuccess = true;
+                        items: [
+                          {
+                            name: productName.toString(),
+                            sku: "sku01",
+                            unit_amount: {
+                              currency_code: "SGD",
+                              value: unitPrice.toString()
+                            },
+                            quantity: quantity.toString()
+                          }
+                        ]
+                      }
+                    ]
+                  });
+                },
+                // Finalize the transaction
+                onApprove: (data, actions) => {
+                  x.isProgressPayment = true;
+                  return actions.order.capture().then((details) => {
+                    order
+                      .add({
+                        product_name: form.product_name,
+                        quantity: form.quantity,
+                        shipping_rate: form.shipping_rate,
+                        total_payment: form.total_payment,
+                        total_price: form.total_price,
+                        unit_price: form.unit_price,
+                        shipping: {
+                          address: form.address,
+                          contact_no: form.contact_no,
+                          country: form.country,
+                          country_name: country_name,
+                          email: form.email,
+                          name: form.name,
+                          postal_code: form.postal_code,
+                          block_no: form.block_no ? form.block_no : '',
+                          unit_no: form.unit_no
+                        },
+                        order_date: orderDate,
+                        inv_no: {
+                          date: today,
+                          no: invNo
+                        },
+                        delt_flag: false,
+                        promo_code: form.promo_code,
+                        discount: form.discountValue
+                      })
+                      .then(docRef => {
+                        axios
+                          .get(
+                            "https://us-central1-book-store-sg-x.cloudfunctions.net/sendMailHTML?to=" +
+                              form.email +
+                              "&subject=" +
+                              "[thelandlordclub] Your payment has been completed" +
+                              "&id=" +
+                              docRef.id
+                          )
+                          .then((response) => {
+                            this.updateRemainPromoCode();
+                            swal({
+                              type: "success",
+                              title: "Thank you !",
+                              html:
+                                "Your order will be on its way. Receipt of this purchase will be sent to your email",
+                              allowOutsideClick: false,
+                              allowEscapeKey: false
+                            }).then(function() {
+                              x.isPaymentSuccess = true;
+                            });
+                          })
+                          .catch(function(error) {
+                            console.log(error);
                           });
-                        })
-                        .catch(function(error) {
-                          console.log(error);
+                      })
+                      .catch(error => {
+                        swal({
+                          type: "error",
+                          title: "Error",
+                          html: error
                         });
-                    })
-                    .catch(error => {
-                      swal({
-                        type: "error",
-                        title: "Error",
-                        html: error
                       });
-                    });
-                });
-              }
-            })
-            .render("#paypal-button");
-        }
-        x.registerListener(val => {
-          this.isLoading = false;
-          this.$router.push({ path: "/", hash: "#about" });
+                  });
+                }
+              })
+              .render("#paypal-button");
+          }
+          x.registerListener(val => {
+            this.isLoading = false;
+            this.$router.push({ path: "/", hash: "#about" });
+          });
+          x.registerListenerProgressPayment(val => {
+            this.isLoading = true;
+          });
         });
-        x.registerListenerProgressPayment(val => {
-          this.isLoading = true;
-        });
-      });
+      }else{
+        return false;
+      }
     },
     onCancel(e) {
       e.preventDefault();
@@ -934,6 +956,102 @@ export default {
             console.log(error);
           });
       }
+    },
+    validateForm(field){
+      let flagError = false;
+      let flagValidataField = false;
+
+      if(field){
+        flagValidataField = true;
+      }
+
+      if(!flagValidataField){
+        field  = 'all';
+      }
+
+      // Your Name
+      if((!this.form.name && field === 'all') || (!this.form.name && field === 'name')){
+        document.getElementById("errorName").setAttribute("style", "display: block;");
+        flagError = true;
+      }else{
+        if(this.form.name)
+          document.getElementById("errorName").setAttribute("style", "display: none;");
+      }
+
+      // // Country
+      // if((!this.form.country && field === 'all') || (!this.form.country && field === 'country')){
+      //   document.getElementById("errorCountry").setAttribute("style", "display: block;");
+      //   flagError = true;
+      // }else{
+      //   document.getElementById("errorCountry").setAttribute("style", "display: none;");
+      // }
+
+      // Postal Code
+      if((!this.form.postal_code && field === 'all') || (!this.form.postal_code && field === 'postal_code')){
+        document.getElementById("errorPostalCode").setAttribute("style", "display: block;");
+        flagError = true;
+      }else{
+        if(this.form.postal_code)
+          document.getElementById("errorPostalCode").setAttribute("style", "display: none;");
+      }
+
+      // Address
+      if((!this.form.address && field === 'all') || (!this.form.address && field === 'address')){
+        document.getElementById("errorAddress").setAttribute("style", "display: block;");
+        flagError = true;
+      }else{
+        if(this.form.address)
+          document.getElementById("errorAddress").setAttribute("style", "display: none;");
+      }
+
+      // Unit No
+      if((!this.form.unit_no && field === 'all') || (!this.form.unit_no && field === 'unit_no')){
+        document.getElementById("errorUnitNo").setAttribute("style", "display: block;");
+        flagError = true;
+      }else{
+        if(this.form.unit_no)
+          document.getElementById("errorUnitNo").setAttribute("style", "display: none;");
+      }
+
+      // Contact No
+      if((!this.form.contact_no && field === 'all') || (!this.form.contact_no && field === 'contact_no')){
+        document.getElementById("errorContactNo").setAttribute("style", "display: block;");
+        flagError = true;
+      }else{
+        if(this.form.contact_no)
+          document.getElementById("errorContactNo").setAttribute("style", "display: none;");
+      }
+
+      // Email
+      if((!this.form.email && field === 'all') || (!this.form.email && field === 'email')){
+        document.getElementById("errorEmail").setAttribute("style", "display: block;");
+        document.getElementById("errorEmailPattern").setAttribute("style", "display: none;");
+        flagError = true;
+      }else{
+        if(this.form.email){
+          document.getElementById("errorEmail").setAttribute("style", "display: none;");
+
+          const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          
+          if(!re.test(String(this.form.email).toLowerCase())){
+            document.getElementById("errorEmailPattern").setAttribute("style", "display: block;");
+            flagError = true;
+          }else{
+            document.getElementById("errorEmailPattern").setAttribute("style", "display: none;");
+          }
+        }
+      }
+
+      // Quantity
+      if((!this.form.quantity && field === 'all') || (!this.form.quantity && field === 'quantity')){
+        document.getElementById("errorQuantity").setAttribute("style", "display: block;");
+        flagError = true;
+      }else{
+        if(this.form.quantity)
+          document.getElementById("errorQuantity").setAttribute("style", "display: none;");
+      }
+
+      return flagError;
     }
   }
 };
@@ -959,5 +1077,9 @@ export default {
   border-radius: 30px;
   font-size: 0.8571em;
   height: 36px;
+}
+.display-error {
+  color: red;
+  font-style: italic;
 }
 </style>

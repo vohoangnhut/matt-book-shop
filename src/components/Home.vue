@@ -261,14 +261,14 @@
         </div>
       </div>
       <!--     *********     Author      *********      -->
-      <div class="page-header header-filter">
+      <div class="page-header header-filter" id="club">
         <div style="width: 100%; height: 100%; background-color: #0000007d">
           <div
             class="page-header-image"
             style="background-image: url('/assets/img/home/Sentosa Day.jpg')"
           ></div>
         </div>
-        <div class="content-center" id="club">
+        <div class="content-center">
           <div class="container">
             <div class="row">
               <div class="col-md-8 ml-auto mr-auto text-center">
