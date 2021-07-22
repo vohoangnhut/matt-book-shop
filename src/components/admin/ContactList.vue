@@ -14,6 +14,7 @@
             :sort-by.sync="sortByOrder"
             :sort-desc.sync="sortDescOrder"
             :fields="dataOrderFields"
+            responsive
           >
             <template v-slot:cell(actions)="row">
               <b-button
@@ -40,6 +41,7 @@
 
         <el-tab-pane label="Contact Record" name="second">
           <b-button size="sm" @click="refresh(1)" class="mr-1" variant="info">Refresh</b-button>
+          <b-button size="sm" @click="exportData(1)" class="mr-1" variant="info">Export Excel</b-button>
           <b-table
             hover
             :items="dataContact"
@@ -167,12 +169,40 @@
             :per-page="dataLogPerPage"
             :current-page="dataLogCurrentPage"
             :fields="dataLogFields"
+            @sort-changed="sortLogChanged"
           >
             <template v-slot:cell(old)="data">
               <span v-html="data.value"></span>
             </template>
             <template v-slot:cell(new)="data">
               <span v-html="data.value"></span>
+            </template>
+          </b-table>
+          <b-pagination
+            v-model="dataLogCurrentPage"
+            :total-rows="rowsDataLog"
+            :per-page="dataLogPerPage"
+            aria-controls="dataLogTable"
+          ></b-pagination>
+        </el-tab-pane>
+        <el-tab-pane label="Shipping Rate" name="seven">
+          <b-button size="sm" @click="refresh(7)" class="mr-1" variant="info">Refresh</b-button>
+          <b-button size="sm" @click="newShippingRate($event.target)" class="mr-1" variant="info">New</b-button>
+          <b-table
+            hover
+            :items="dataShippingRate"
+            id="dataShippingRateTable"
+            :per-page="dataShippingRatePerPage"
+            :current-page="dataShippingRateCurrentPage"
+            :fields="dataShippingRateFields"
+          >
+            <template v-slot:cell(actions)="row">
+              <b-button
+                size="sm"
+                @click="shippingRateInfo(row.item, row.index, $event.target)"
+                class="mr-1"
+                variant="info"
+              >Update</b-button>
             </template>
           </b-table>
           <b-pagination
@@ -278,6 +308,18 @@
         </el-row>
         <el-row>
           <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+            <el-form-item label="Block No.">
+              <el-input v-model="order.shippingBlockNo" placeholder="Block No."></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+            <el-form-item label="Unit No.">
+              <el-input v-model="order.shippingUnitNo" placeholder="Unit No."></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
             <el-form-item label="Postal Code">
               <el-input v-model="order.shippingPostal_code" placeholder="Postal Code"></el-input>
             </el-form-item>
@@ -327,9 +369,16 @@
           </el-col>
         </el-row>
         <el-row>
-          <el-form-item label="Discount">
+          <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+            <el-form-item label="Promo Code">
+            <el-input v-model="order.promo_code" placeholder="Promo Code"></el-input>
+          </el-form-item>
+          </el-col>
+          <el-col :xs="24" :sm="24" :md="12" :lg="12" :xl="12">
+            <el-form-item label="Discount">
             <el-input v-model="order.discount" placeholder="Discount"></el-input>
           </el-form-item>
+          </el-col>
         </el-row>
         <el-row>
           <el-form-item label="Total Payment">
@@ -367,7 +416,7 @@
       <div class="input-group" v-if="!isNewPromoCode">
         <el-input placeholder="Remain" v-model="promoCode.remain" disabled></el-input>
       </div>
-      <label>Value (%)</label>
+      <label>Value</label>
       <div class="input-group">
         <el-input placeholder="Value" v-model="promoCode.value"></el-input>
       </div>
@@ -401,6 +450,17 @@
         </b-col>
       </b-row>
     </b-modal>
+    <!-- Shipping Rate modal -->
+    <b-modal :id="shippingRateModal.id" :title="shippingRateModal.title" @ok="saveShippingRateData">
+      <label>Shipping Rate</label>
+      <div class="input-group">
+        <el-input placeholder="Shipping Rate" v-model="shippingRate.shippingRate"></el-input>
+      </div>
+      <label>Country Code</label>
+      <div class="input-group">
+        <el-input placeholder="Country Code" v-model="shippingRate.countryCode"></el-input>
+      </div>
+    </b-modal>
   </div>
 </template>
 <script>
@@ -419,6 +479,7 @@ export default {
       dataPromoCode: [],
       dataRole: [],
       dataLog: [],
+      dataShippingRate: [],
       dataContactPerPage: 10,
       dataContactCurrentPage: 1,
       dataOrderPerPage: 10,
@@ -431,6 +492,8 @@ export default {
       dataRoleCurrentPage: 1,
       dataLogPerPage: 10,
       dataLogCurrentPage: 1,
+      dataShippingRatePerPage: 10,
+      dataShippingRateCurrentPage: 1,
       contactModal: {
         id: "contact-modal",
         title: "Contact Update Data"
@@ -455,11 +518,16 @@ export default {
         id: "view-log-modal",
         title: "View Log"
       },
+      shippingRateModal: {
+        id: "shipping-rate-modal",
+        title: "Shipping Rate"
+      },
       customer: {},
       order: {},
       product: {},
       promoCode: {},
       role: {},
+      shippingRate: {},
       activeName: "first",
       sortByContact: "created",
       sortDescContact: true,
@@ -479,7 +547,9 @@ export default {
         { key: "orderDate", sortable: true, label: "Order Date & Time", formatter: "formatDate" },
         { key: "shippingName", sortable: true, label: "Name" },
         { key: "shippingCountry", sortable: true },
-        { key: "shippingAddress", sortable: true },
+        { key: "shippingAddress", sortable: true, label: "Shipping Street Name" },
+        { key: "shippingBlockNo", sortable: true },
+        { key: "shippingUnitNo", sortable: true },
         { key: "shippingPostal_code", sortable: true },
         { key: "shippingContact_no", sortable: true },
         { key: "shippingEmail", sortable: true },
@@ -488,6 +558,7 @@ export default {
         { key: "quantity", sortable: true },
         { key: "total_price", sortable: true, label: "Sub Total" },
         { key: "shipping_rate", sortable: true },
+        { key: "promo_code", sortable: true },
         { key: "discount", sortable: true },
         { key: "total_payment", sortable: true },
         { key: "actions" }
@@ -516,17 +587,25 @@ export default {
         { key: "actions" }
       ],
       dataLogFields: [
-        { key: "updated", sortable: true },
+        { key: "updated" },
         { key: "updated_by", sortable: true },
         { key: "product_code", sortable: true },
         { key: "old", sortable: true },
         { key: "new", sortable: true }
       ],
+      dataShippingRateFields: [
+        { key: "shippingRate", sortable: true },
+        { key: "countryCode", sortable: true },
+        { key: "updated", sortable: true },
+        { key: "updated_by", sortable: true },
+        { key: "actions" }
+      ],
       countryOptions: [],
       oldObj: {},
       user: firebase.auth().currentUser,
       logInfoList: [],
-      isNewPromoCode: false
+      isNewPromoCode: false,
+      isNewShippingRate: false
     };
   },
   created() {
@@ -536,6 +615,7 @@ export default {
     this.promoCodeDataLoad();
     this.roleDataLoad();
     this.logDataLoad();
+    this.shippingRateDataLoad();
 
     this.getAllCountries().then(result => {
       this.countryOptions = result;
@@ -559,6 +639,9 @@ export default {
     },
     rowsDataLog() {
       return this.dataLog.length;
+    },
+    rowsDataShippingRate() {
+      return this.dataShippingRate.length;
     }
   },
   methods: {
@@ -569,6 +652,7 @@ export default {
     },
     orderInfo(item, index, button) {
       this.order = JSON.parse(JSON.stringify(item, null, 2));
+      this.order.orderDate = this.formatDate(this.order.orderDate);
       this.oldObj = JSON.parse(JSON.stringify(item, null, 2));
       this.$root.$emit("bv::show::modal", this.orderModal.id, button);
     },
@@ -594,6 +678,11 @@ export default {
       this.getLogList(obj.documentId).then(() => {
         this.$root.$emit("bv::show::modal", this.viewLogModal.id, button);
       });
+    },
+    shippingRateInfo(item, index, button) {
+      this.shippingRate = JSON.parse(JSON.stringify(item, null, 2));
+      this.oldObj = JSON.parse(JSON.stringify(item, null, 2));
+      this.$root.$emit("bv::show::modal", this.shippingRateModal.id, button);
     },
     confirmDelete(item, index, button, collection) {
       this.$swal({
@@ -651,6 +740,7 @@ export default {
           shipping_rate: this.order.shipping_rate,
           total_price: this.order.total_price,
           total_payment: this.order.total_payment,
+          promo_code: this.order.promo_code,
           discount: this.order.discount,
           shipping: {
             address: this.order.shippingAddress,
@@ -658,7 +748,9 @@ export default {
             country: this.order.shippingCountry,
             email: this.order.shippingEmail,
             name: this.order.shippingName,
-            postal_code: this.order.shippingPostal_code
+            postal_code: this.order.shippingPostal_code,
+            block_no: this.order.shippingBlockNo,
+            unit_no: this.order.shippingUnitNo
           },
           order_date: this.order.orderDate,
           inv_no: {
@@ -667,30 +759,34 @@ export default {
           }
         })
         .then(result => {
-          var idx = this.dataOrder.findIndex(
-            x => x.documentId === this.order.documentId
-          );
-          this.dataOrder[idx].product_name = this.order.product_name;
-          this.dataOrder[idx].quantity = this.order.quantity;
-          this.dataOrder[idx].unit_price = this.order.unit_price;
-          this.dataOrder[idx].shipping_rate = this.order.shipping_rate;
-          this.dataOrder[idx].total_price = this.order.total_price;
-          this.dataOrder[idx].total_payment = this.order.total_payment;
-          this.dataOrder[idx].discount = this.order.discount;
-          this.dataOrder[idx].shippingAddress = this.order.shippingAddress;
-          this.dataOrder[
-            idx
-          ].shippingContact_no = this.order.shippingContact_no;
-          this.dataOrder[idx].shippingCountry = this.order.shippingCountry;
-          this.dataOrder[idx].shippingEmail = this.order.shippingEmail;
-          this.dataOrder[idx].shippingName = this.order.shippingName;
-          this.dataOrder[
-            idx
-          ].shippingPostal_code = this.order.shippingPostal_code;
-          this.dataOrder[idx].orderDate = this.order.orderDate;
-          this.dataOrder[idx].invNo = this.order.invNo;
+          // var idx = this.dataOrder.findIndex(
+          //   x => x.documentId === this.order.documentId
+          // );
+          // this.dataOrder[idx].product_name = this.order.product_name;
+          // this.dataOrder[idx].quantity = this.order.quantity;
+          // this.dataOrder[idx].unit_price = this.order.unit_price;
+          // this.dataOrder[idx].shipping_rate = this.order.shipping_rate;
+          // this.dataOrder[idx].total_price = this.order.total_price;
+          // this.dataOrder[idx].total_payment = this.order.total_payment;
+          // this.dataOrder[idx].promo_code = this.order.promo_code;
+          // this.dataOrder[idx].discount = this.order.discount;
+          // this.dataOrder[idx].shippingAddress = this.order.shippingAddress;
+          // this.dataOrder[idx].shippingBlockNo = this.order.shippingBlockNo;
+          // this.dataOrder[idx].shippingUnitNo = this.order.shippingUnitNo;
+          // this.dataOrder[
+          //   idx
+          // ].shippingContact_no = this.order.shippingContact_no;
+          // this.dataOrder[idx].shippingCountry = this.order.shippingCountry;
+          // this.dataOrder[idx].shippingEmail = this.order.shippingEmail;
+          // this.dataOrder[idx].shippingName = this.order.shippingName;
+          // this.dataOrder[
+          //   idx
+          // ].shippingPostal_code = this.order.shippingPostal_code;
+          // this.dataOrder[idx].orderDate = this.order.orderDate;
+          // this.dataOrder[idx].invNo = this.order.invNo;
           this.writeLog(this.oldObj, this.order, "order", "update").then(() => {
             this.$swal("Saved!", "Data has been saved", "success");
+            this.refresh(2);
           });
         });
     },
@@ -739,6 +835,49 @@ export default {
           });
         });
     },
+    saveShippingRateData() {
+      let updated = this.calcTime("Singapore", "+8");
+
+      if(this.isNewShippingRate){
+        db.collection("shipping_rate")
+        .add({
+          shippingRate: this.shippingRate.shippingRate,
+          active: true,
+          countryCode: this.shippingRate.countryCode,
+          updated: updated,
+          updated_by: this.user.email,
+          created: updated,
+          created_by: this.user.email
+        })
+        .then(result => {
+          this.$swal("Saved!", "Data has been saved", "success");
+          this.refresh(7);
+        });
+      }else{
+        db.collection("shipping_rate")
+          .doc(this.shippingRate.documentId)
+          .update({
+            shippingRate: this.shippingRate.shippingRate,
+            countryCode: this.shippingRate.countryCode,
+            updated: updated,
+            updated_by: this.user.email
+          })
+          .then(result => {
+            var idx = this.dataShippingRate.findIndex(
+              x => x.documentId === this.shippingRate.documentId
+            );
+            this.dataShippingRate[idx].shippingRate = this.shippingRate.shippingRate;
+            this.dataShippingRate[idx].countryCode = this.shippingRate.countryCode;
+            this.dataShippingRate[idx].updated = this.formatDate(updated);
+            this.dataShippingRate[idx].updated_by = this.user.email;
+            this.writeLog(this.oldObj, this.shippingRate, "shippingRate", "update").then(
+              () => {
+                this.$swal("Saved!", "Data has been saved", "success");
+              }
+            );
+          });
+      }
+    },
     customerDataLoad() {
       this.dataContact = [];
       db.collection("customer")
@@ -774,8 +913,11 @@ export default {
             obj.shipping_rate = data.shipping_rate;
             obj.total_price = data.total_price;
             obj.total_payment = data.total_payment;
+            obj.promo_code = data.promo_code;
             obj.discount = data.discount;
             obj.shippingAddress = data.shipping.address;
+            obj.shippingBlockNo = data.shipping.block_no ? data.shipping.block_no : '';
+            obj.shippingUnitNo = data.shipping.unit_no ? data.shipping.unit_no : '';
             obj.shippingContact_no = data.shipping.contact_no;
             obj.shippingCountry = data.shipping.country;
             obj.shippingEmail = data.shipping.email;
@@ -810,7 +952,7 @@ export default {
             obj.created = data.created;
             obj.actions = "";
             obj.documentId = doc.id;
-            obj.updated = data.updated;
+            obj.updated = this.formatDate(data.updated.toDate());
             this.dataProduct.push(obj);
           });
         })
@@ -869,7 +1011,9 @@ export default {
         .where("target", "==", "product")
         .get()
         .then(snapshot => {
+          let count = 0;
           snapshot.docs.forEach(doc => {
+            count++;
             var obj = doc.data();
             obj.old =
               "Name: " +
@@ -884,7 +1028,36 @@ export default {
               "Price: " +
               obj.newVal.price;
               obj.product_code = obj.oldVal.product_code;
+              obj.updated_sort = obj.updated;
+              obj.updated = this.formatDate(obj.updated.toDate());
             this.dataLog.push(obj);
+
+            if(count === snapshot.docs.length){
+              this.dataLog.sort(function(a, b){return new Date(b.updated) - new Date(a.updated)});
+            }
+          });
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+    shippingRateDataLoad() {
+      this.dataShippingRate = [];
+      db.collection("shipping_rate")
+        .get()
+        .then(snapshot => {
+          console.log();
+          snapshot.docs.forEach(doc => {
+            var obj = {};
+            var data = doc.data();
+            obj = data;
+
+            if(data.updated){
+              obj.updated = this.formatDate(data.updated.toDate());
+            }
+            
+            obj.documentId = doc.id;
+            this.dataShippingRate.push(obj);
           });
         })
         .catch(error => {
@@ -935,6 +1108,9 @@ export default {
       } else if (index === 6) {
         // Log List
         this.logDataLoad();
+      } else if (index === 7) {
+        // Shipping Rate List
+        this.shippingRateDataLoad();
       }
     },
     formatJson(filterVal, jsonData) {
@@ -947,6 +1123,41 @@ export default {
     exportData(index) {
       if (index === 1) {
         // Customer List
+        import("@/vendor/Export2Excel").then(excel => {
+          const tHeader = [
+            "Created",
+            "First Name",
+            "Last Name",
+            "Contact No",
+            "Email",
+            "Pdpa",
+          ];
+          const filterVal = [
+            "created",
+            "first_name",
+            "last_name",
+            "contact_no",
+            "email",
+            "pdpa"
+          ];
+
+          let count = 0;
+          let cloneArrayObject = JSON.parse(JSON.stringify(this.dataContact));
+          
+          cloneArrayObject.forEach(item => {
+            count++;
+            item.created = this.formatDate(item.created)
+
+            if(count === cloneArrayObject.length){
+              const data = this.formatJson(filterVal, cloneArrayObject);
+              excel.export_json_to_excel({
+                header: tHeader,
+                data,
+                filename: "Contact List"
+              });
+            }
+          });
+        });
       } else if (index === 2) {
         // Order List
         import("@/vendor/Export2Excel").then(excel => {
@@ -955,7 +1166,9 @@ export default {
             "Order Date",
             "Shipping Name",
             "Shipping Country",
-            "Shipping Address",
+            "Shipping Street Name",
+            "Shipping Block No.",
+            "Shipping Unit No.",
             "Shipping Postal Code",
             "Shipping Contact No",
             "Shipping Email",
@@ -964,6 +1177,7 @@ export default {
             "Quantity",
             "Total Price",
             "Shipping Rate",
+            "Promo Code",
             "Discount",
             "Total Payment"
           ];
@@ -973,6 +1187,8 @@ export default {
             "shippingName",
             "shippingCountry",
             "shippingAddress",
+            "shippingBlockNo",
+            "shippingUnitNo",
             "shippingPostal_code",
             "shippingContact_no",
             "shippingEmail",
@@ -981,14 +1197,26 @@ export default {
             "quantity",
             "total_price",
             "shipping_rate",
+            "promo_code",
             "discount",
             "total_payment"
           ];
-          const data = this.formatJson(filterVal, this.dataOrder);
-          excel.export_json_to_excel({
-            header: tHeader,
-            data,
-            filename: "Order List"
+
+          let count = 0;
+          let cloneArrayObject = JSON.parse(JSON.stringify(this.dataOrder));
+          
+          cloneArrayObject.forEach(item => {
+            count++;
+            item.orderDate = this.formatDate(item.orderDate)
+
+            if(count === cloneArrayObject.length){
+              const data = this.formatJson(filterVal, cloneArrayObject);
+              excel.export_json_to_excel({
+                header: tHeader,
+                data,
+                filename: "Order List"
+              });
+            }
           });
         });
       } else if (index === 3) {
@@ -1078,6 +1306,11 @@ export default {
       this.isNewPromoCode = true;
       this.$root.$emit("bv::show::modal", this.promoCodeModal.id, button);
     },
+    newShippingRate(button) {
+      this.shippingRate = {};
+      this.isNewShippingRate = true;
+      this.$root.$emit("bv::show::modal", this.shippingRateModal.id, button);
+    },
     savePromoCodeData() {
       if(this.isNewPromoCode){
         db.collection("promo")
@@ -1123,6 +1356,19 @@ export default {
         });
       }
     },
+    sortLogChanged(sortProps){
+      let prop = sortProps.sortBy;
+
+      if(prop === 'updated'){
+        if (sortProps.sortDesc) {
+          console.log('A');
+          this.dataLog.sort((a, b) => {return this.formatDateSort(new Date(b.updated_sort)) - this.formatDateSort(new Date(a.updated_sort))});
+        }else{
+          console.log('B');
+          this.dataLog.sort((a, b) => {return this.formatDateSort(new Date(a.updated_sort)) - this.formatDateSort(new Date(b.updated_sort))});
+        }
+      }
+    }
   }
 };
 </script>

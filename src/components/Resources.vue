@@ -27,7 +27,7 @@
           </div>
           <div class="row">
             <div class="col-md-6 ml-auto mr-auto" style="margin-top: 15px;">
-              <a href="https://www.dropbox.com/sh/7ebhwpt27fqpbbl/AABW84ZilKNbLuwh_69MHtDda/Upload%20Documents/Checklist/Lease%20-%20Compliance%20to%20women%2039%20s%20charter%20%26%20immigration%20act%20%28version-2%29.pdf?dl=0" target="_blank">Lease - Compliance to Women 39 S Charter & Immigration Act (version-2)</a>
+              <a href="https://www.dropbox.com/sh/7ebhwpt27fqpbbl/AABW84ZilKNbLuwh_69MHtDda/Upload%20Documents/Checklist/Lease%20-%20Compliance%20to%20women%2039%20s%20charter%20%26%20immigration%20act%20%28version-2%29.pdf?dl=0" target="_blank">Lease - Compliance with the Immigration Act and Women's Charter</a>
             </div>
           </div>
           <div class="row">

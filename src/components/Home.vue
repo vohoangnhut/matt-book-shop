@@ -18,35 +18,34 @@
               <div class="content-center">
                 <div class="container">
                   <div class="row">
-                    <div
-                      class="col-md-12 ml-auto mr-auto"
-                      
-                    >
-                    <div style="
-    text-align: left;
-">
-                      <p style="font-size: 20px; font-weight: bold;">Are You Ready to Become a Profitable Landlord?</p>
-                      <p>
-                        The secret is out! The Landlord Club: Untold Strategies
-                        to Maximise Rental Property Returns invites you into the
-                        world of being a landlord and tells you real-life
-                        experiences, both good and bad, of being a landlord.
-                        While typical landlords earn money during their sleep,
-                        this book will propel you to the next level of
-                        maximising, or even better, increasing your rental
-                        property returns through simple tried-and-tested
-                        strategies used by today’s savvy landlords.
-                      </p>
-                      <p>
-                        Step by step, we will hold your hand through the whole
-                        three-step process from sourcing for a potential tenant,
-                        to maintaining the landlord-tenant relationship, to
-                        renewing or ending your rental process on a high note.
-                        We will also give you tips on how to foster a good
-                        relationship with your tenant, and some protective gear
-                        when coming face-to-face with a ‘monster’ tenant.
-                      </p>
-                      <!-- <p style="padding-left:35px">
+                    <div class="col-md-12 ml-auto mr-auto">
+                      <div style="text-align: left">
+                        <p style="font-size: 20px; font-weight: bold">
+                          Are You Ready to Become a Profitable Landlord?
+                        </p>
+                        <p>
+                          The secret is out! The Landlord Club: Untold
+                          Strategies to Maximise Rental Property Returns invites
+                          you into the world of being a landlord and tells you
+                          real-life experiences, both good and bad, of being a
+                          landlord. While typical landlords earn money during
+                          their sleep, this book will propel you to the next
+                          level of maximising, or even better, increasing your
+                          rental property returns through simple
+                          tried-and-tested strategies used by today’s savvy
+                          landlords.
+                        </p>
+                        <p>
+                          Step by step, we will hold your hand through the whole
+                          three-step process from sourcing for a potential
+                          tenant, to maintaining the landlord-tenant
+                          relationship, to renewing or ending your rental
+                          process on a high note. We will also give you tips on
+                          how to foster a good relationship with your tenant,
+                          and some protective gear when coming face-to-face with
+                          a ‘monster’ tenant.
+                        </p>
+                        <!-- <p style="padding-left:35px">
                         "Mister Boon has written a must-read book for landlords
                         or anyone considering becoming one. It is an honest
                         guide full of important information and real-life
@@ -59,39 +58,53 @@
                         <br/>
                         Vice President, Asia-Link Technology Pte Ltd
                       </p> -->
-                      <p style="font-size: 20px; font-weight: bold;">
-                        Your membership into the exclusive Landlord Club starts
-                        today.
-                      </p>
-                      <br />
+                        <p style="font-size: 20px; font-weight: bold">
+                          Your membership into the exclusive Landlord Club
+                          starts today.
+                        </p>
+                        <br />
                       </div>
-                      <p style="font-size: 20px; font-weight: bold;">Connect with us on:</p>
+                      <p style="font-size: 20px; font-weight: bold">
+                        Connect with us on:
+                      </p>
                       <div class="buttons">
                         <a
                           href="https://www.linkedin.com/in/misterboon/"
                           target="_blank"
-                          class="btn btn-icon btn-neutral btn-danger btn-round mt-2"
+                          class="
+                            btn btn-icon btn-neutral btn-danger btn-round
+                            mt-2
+                          "
                         >
                           <i class="fa fa-linkedin-square"></i>
                         </a>
                         <a
                           href="https://www.facebook.com/thelandlordclub"
                           target="_blank"
-                          class="btn btn-icon btn-neutral btn-danger btn-round mt-2"
+                          class="
+                            btn btn-icon btn-neutral btn-danger btn-round
+                            mt-2
+                          "
                         >
                           <i class="fa fa-facebook-square"></i>
                         </a>
                         <a
                           href="https://www.instagram.com/thelandlordclub"
                           target="_blank"
-                          class="btn btn-icon btn-neutral btn-danger btn-round mt-2"
+                          class="
+                            btn btn-icon btn-neutral btn-danger btn-round
+                            mt-2
+                          "
                         >
                           <i class="fa fa-instagram"></i>
                         </a>
                         <a
                           href="https://www.tiktok.com/@wwwmisterbooncom"
                           target="_blank"
-                          class="btn btn-icon btn-neutral btn-danger btn-round mt-2"
+                          class="
+                            btn btn-icon btn-neutral btn-danger btn-round
+                            mt-2
+                          "
                         >
                           <svg
                             aria-hidden="true"
@@ -114,7 +127,10 @@
                         <a
                           href="https://web.telegram.org/#/im?p=@thelandlordclub"
                           target="_blank"
-                          class="btn btn-icon btn-neutral btn-danger btn-round mt-2"
+                          class="
+                            btn btn-icon btn-neutral btn-danger btn-round
+                            mt-2
+                          "
                         >
                           <i class="fa fa-telegram"></i>
                         </a>
@@ -184,53 +200,60 @@
         </div>
       </div>
       <!--     *********     Author      *********      -->
-      <div data-background-color="gray" id="author">
+
+      <div data-background-color="gray" id="author" style="padding-top: 50px;">
         <div class="features-3">
           <div id="carousel">
             <div class="container">
-              <div class="row justify-content-center">
-                <div class="row">
-                    <div class="col-md-4 ml-auto mr-auto">
-                        <div class="card-image">
-                            <img class="img img-raised rounded" src="assets/img/home/TUP_1576v2 copy.jpg" />
-                        </div>
-                    </div>
-                </div>
-                
-              </div>
               <div class="row">
                 <div class="col-md-12 ml-auto mr-auto">
-                  <h3 class="title">About The Author</h3>
-                <div style="text-align:left">
-                  <p>
-                    Having more than 15 years’ experience with several leading
-                    real estate agencies in Singapore, Mister Boon is a
-                    well-recognised real estate expert in the industry.
-                  </p>
-                  <p>
-                    His interaction with numerous landlords and tenants ranging
-                    from established corporate MNCs and SMEs to professional
-                    individuals and developers gives him rare insight into how
-                    different landlords think and operate, giving him an unfair
-                    advantage in handling any tenancy issue.
-                  </p>
-                  <p>
-                    Currently, he is also leading a team of more than 80 real
-                    estate salespersons and is often the go-to expert when it
-                    comes to landlord and tenant issues, including with his own
-                    team members and other real estate salespersons in the
-                    agencies.
-                  </p>
-                  <p>
-                    Over the years, he has also led and conducted many trainings
-                    for hundreds of real estate salespersons including the
-                    Continuous Professional Development (CPD) courses under the
-                    topic “Private residential property leasing: The common
-                    issues and the terms of tenancy”. These types of CPD courses
-                    are required yearly for real estate salespersons by the
-                    Council for Estate Agencies (CEA).
-                  </p>
-                </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="card-image">
+                        <img
+                          class="img img-raised rounded"
+                          src="assets/img/home/TUP_1576v2 copy.jpg"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="col-md-8">
+                      <h3 class="title" style="padding-top: 0px;text-align: left;">About The Author</h3>
+                      <div style="text-align: left">
+                        <p>
+                          Having more than 15 years’ experience with several
+                          leading real estate agencies in Singapore, Mister Boon
+                          is a well-recognised real estate expert in the
+                          industry.
+                        </p>
+                        <p>
+                          His interaction with numerous landlords and tenants
+                          ranging from established corporate MNCs and SMEs to
+                          professional individuals and developers gives him rare
+                          insight into how different landlords think and
+                          operate, giving him an unfair advantage in handling
+                          any tenancy issue.
+                        </p>
+                        <p>
+                          Currently, he is also leading a team of more than 80
+                          real estate salespersons and is often the go-to expert
+                          when it comes to landlord and tenant issues, including
+                          with his own team members and other real estate
+                          salespersons in the agencies.
+                        </p>
+                        <p>
+                          Over the years, he has also led and conducted many
+                          trainings for hundreds of real estate salespersons
+                          including the Continuous Professional Development
+                          (CPD) courses under the topic “Private residential
+                          property leasing: The common issues and the terms of
+                          tenancy”. These types of CPD courses are required
+                          yearly for real estate salespersons by the Council for
+                          Estate Agencies (CEA).
+                        </p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -238,8 +261,52 @@
         </div>
       </div>
       <!--     *********     Author      *********      -->
-      <div class="cd-section" id="club" data-background-color="black">
-        <!--     *********    PROJECTS 3     *********      -->
+      <div class="page-header header-filter" id="club">
+        <div style="width: 100%; height: 100%; background-color: #0000007d">
+          <div
+            class="page-header-image"
+            style="background-image: url('/assets/img/home/Sentosa Day.jpg')"
+          ></div>
+        </div>
+        <div class="content-center">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-8 ml-auto mr-auto text-center">
+                <h2 class="title">The Club</h2>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 ml-auto mr-auto">
+                <div style="text-align: left">
+                  <p>
+                    The Landlord Club is an exclusive community of like-minded
+                    landlords who range from seasoned landlords to aspiring
+                    ones. It is a safe place where landlords come together
+                    regularly and gain updated market information as well as
+                    share tips on maximising rental property returns.
+                  </p>
+
+                  <p>
+                    Members of this club tap on one another’s knowledge and
+                    experience to get the answers to challenges that they may
+                    face, such as the different types of ‘monster’ tenants and
+                    what to do during the often-overlooked maintenance phase.
+                  </p>
+                  <p>
+                    The Landlord Club complements the book The Landlord Club:
+                    Untold Strategies to Maximise Rental Property Returns, and
+                    takes it one step further so that landlords are not alone in
+                    their journey.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="cd-section" id="club" style="
+                    background-image: url('/assets/img/home/Sentosa Day.jpg');
+                  ">
         <div class="features-3" style="text-align: start !important">
           <div class="container">
             <div class="row">
@@ -270,8 +337,7 @@
             </div>
           </div>
         </div>
-      </div>
-      <!--     *********    END PROJECTS 3      *********      -->
+      </div> -->
     </div>
   </div>
 </template>
