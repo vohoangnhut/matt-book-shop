@@ -486,7 +486,8 @@ export default {
       fullPage: true,
       arrShippingRateData: [],
       firstTimePromoCode: false,
-      country_name: ''
+      country_name: '',
+      flagFocus: false
     };
   },
   components: {
@@ -563,6 +564,8 @@ export default {
       //     });
       //   this.firstTimePromoCode = true;
       // }
+      this.flagFocus = false;
+
       if(!this.validateForm()){
         var productName = this.item.title;
         var unitPrice = this.form.unit_price;
@@ -861,6 +864,7 @@ export default {
           );
           this.form.address = addressInfo;
           this.isLoading = false;
+          this.validateForm('address');
         } else {
           this.form.address = "";
           this.isLoading = false;
@@ -972,6 +976,12 @@ export default {
       // Your Name
       if((!this.form.name && field === 'all') || (!this.form.name && field === 'name')){
         document.getElementById("errorName").setAttribute("style", "display: block;");
+
+        if(!this.flagFocus){
+          document.getElementById("inputNameId").focus();
+          this.flagFocus = true;
+        }
+        
         flagError = true;
       }else{
         if(this.form.name)
@@ -989,6 +999,12 @@ export default {
       // Postal Code
       if((!this.form.postal_code && field === 'all') || (!this.form.postal_code && field === 'postal_code')){
         document.getElementById("errorPostalCode").setAttribute("style", "display: block;");
+        
+        if(!this.flagFocus){
+          document.getElementById("inputPostalCodeId").focus();
+          this.flagFocus = true;
+        }
+
         flagError = true;
       }else{
         if(this.form.postal_code)
@@ -998,6 +1014,12 @@ export default {
       // Address
       if((!this.form.address && field === 'all') || (!this.form.address && field === 'address')){
         document.getElementById("errorAddress").setAttribute("style", "display: block;");
+        
+        if(!this.flagFocus){
+          document.getElementById("inputAddressId").focus();
+          this.flagFocus = true;
+        }
+
         flagError = true;
       }else{
         if(this.form.address)
@@ -1007,6 +1029,12 @@ export default {
       // Unit No
       if((!this.form.unit_no && field === 'all') || (!this.form.unit_no && field === 'unit_no')){
         document.getElementById("errorUnitNo").setAttribute("style", "display: block;");
+
+        if(!this.flagFocus){
+          document.getElementById("inputUnitNoId").focus();
+          this.flagFocus = true;
+        }
+
         flagError = true;
       }else{
         if(this.form.unit_no)
@@ -1016,6 +1044,12 @@ export default {
       // Contact No
       if((!this.form.contact_no && field === 'all') || (!this.form.contact_no && field === 'contact_no')){
         document.getElementById("errorContactNo").setAttribute("style", "display: block;");
+
+        if(!this.flagFocus){
+          document.getElementById("inputContactNoId").focus();
+          this.flagFocus = true;
+        }
+
         flagError = true;
       }else{
         if(this.form.contact_no)
@@ -1026,6 +1060,13 @@ export default {
       if((!this.form.email && field === 'all') || (!this.form.email && field === 'email')){
         document.getElementById("errorEmail").setAttribute("style", "display: block;");
         document.getElementById("errorEmailPattern").setAttribute("style", "display: none;");
+
+        if(!this.flagFocus){
+          document.getElementById("inputEmailId").focus();
+
+          this.flagFocus = true;
+        }
+
         flagError = true;
       }else{
         if(this.form.email){
@@ -1035,6 +1076,13 @@ export default {
           
           if(!re.test(String(this.form.email).toLowerCase())){
             document.getElementById("errorEmailPattern").setAttribute("style", "display: block;");
+
+            if(!this.flagFocus){
+              document.getElementById("inputEmailId").focus();
+
+              this.flagFocus = true;
+            }
+            
             flagError = true;
           }else{
             document.getElementById("errorEmailPattern").setAttribute("style", "display: none;");
@@ -1045,6 +1093,7 @@ export default {
       // Quantity
       if((!this.form.quantity && field === 'all') || (!this.form.quantity && field === 'quantity')){
         document.getElementById("errorQuantity").setAttribute("style", "display: block;");
+
         flagError = true;
       }else{
         if(this.form.quantity)
